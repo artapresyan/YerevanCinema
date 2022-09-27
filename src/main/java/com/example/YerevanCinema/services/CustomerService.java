@@ -4,6 +4,7 @@ import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.exceptions.NoSuchCustomerException;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UsernameExistsException;
+import com.example.YerevanCinema.exceptions.WrongPasswordException;
 import com.example.YerevanCinema.repositories.CustomerRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,17 @@ public class CustomerService {
                 customerEmail, passwordEncoder.encode(customerPassword)));
     }
 
+    public void removeCustomer(Long customerID, String password) throws WrongPasswordException{
+        try {
+            Customer customer = getCustomerByID(customerID);
+            if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
+                customerRepository.deleteById(customerID);
+            }else
+                throw new WrongPasswordException("Entered wrong password");
+        }catch (NoSuchCustomerException e){
+            e.printStackTrace();
+        }
+    }
     private void validateData(String customerName, String customerSurname, Integer customerAge,
                               String customerUsername, String customerEmail, String customerPassword)
             throws UsernameExistsException, NullPointerException, RegisteredEmailException {

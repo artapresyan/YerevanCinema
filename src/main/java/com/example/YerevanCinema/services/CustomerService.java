@@ -35,15 +35,18 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public void registerCustomer(String customerName, String customerSurname, Integer customerAge,
+    public Customer registerCustomer(String customerName, String customerSurname, Integer customerAge,
                                  String customerUsername, String customerEmail, String customerPassword) {
         try {
             validateData(customerName, customerSurname, customerAge, customerUsername, customerEmail, customerPassword);
+            Customer customer = new Customer(customerName, customerSurname, customerAge, customerUsername,
+                    customerEmail, passwordEncoder.encode(customerPassword));
+            customerRepository.save(customer);
+            return customer;
         } catch (UsernameExistsException | RegisteredEmailException | NullPointerException e) {
             e.printStackTrace();
         }
-        customerRepository.save(new Customer(customerName, customerSurname, customerAge, customerUsername,
-                customerEmail, passwordEncoder.encode(customerPassword)));
+       return null;
     }
 
     public void removeCustomer(Long customerID, String password) throws WrongPasswordException {

@@ -32,9 +32,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long customerID, String customerName, String customerSurname,
+    public Customer(String customerName, String customerSurname,
                     Integer customerAge, String customerUsername, String customerEmail, String customerPassword) {
-        this.customerID = customerID;
         this.customerName = customerName;
         this.customerSurname = customerSurname;
         this.customerAge = customerAge;

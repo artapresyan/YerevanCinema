@@ -28,5 +28,9 @@ public class CustomerService {
             throw new NoSuchCustomerException(String.format("No customer with %s id", customerID));
     }
 
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
+    }
+
 
 }

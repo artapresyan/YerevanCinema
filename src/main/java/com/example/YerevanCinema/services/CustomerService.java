@@ -46,17 +46,48 @@ public class CustomerService {
                 customerEmail, passwordEncoder.encode(customerPassword)));
     }
 
-    public void removeCustomer(Long customerID, String password) throws WrongPasswordException{
+    public void removeCustomer(Long customerID, String password) throws WrongPasswordException {
         try {
             Customer customer = getCustomerByID(customerID);
             if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
                 customerRepository.deleteById(customerID);
-            }else
+            } else
                 throw new WrongPasswordException("Entered wrong password");
-        }catch (NoSuchCustomerException e){
+        } catch (NoSuchCustomerException e) {
             e.printStackTrace();
         }
     }
+
+    public void updateCustomerData(Long customerID, String name, String surname, Integer age,
+                                   String username, String email, String password)
+            throws RegisteredEmailException, UsernameExistsException, WrongPasswordException {
+        try {
+            Customer customer = getCustomerByID(customerID);
+            if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
+                if (name != null)
+                    customer.setCustomerName(name);
+                if (surname != null)
+                    customer.setCustomerSurname(surname);
+                if (age != null)
+                    customer.setCustomerAge(age);
+                if (username != null) {
+                    if (customerRepository.getByCustomerUsername(username) == null)
+                        customer.setCustomerUsername(username);
+                    else
+                        throw new UsernameExistsException("Username already exists. Try to get another one");
+                }
+                if (email != null){
+                    if (customerRepository.getByCustomerEmail(email) == null)
+                        customer.setCustomerEmail(email);
+                    else throw new RegisteredEmailException("Email already registered. Try to get another one");
+                }
+            } else
+                throw new WrongPasswordException("Entered wrong password");
+        } catch (NoSuchCustomerException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void validateData(String customerName, String customerSurname, Integer customerAge,
                               String customerUsername, String customerEmail, String customerPassword)
             throws UsernameExistsException, NullPointerException, RegisteredEmailException {

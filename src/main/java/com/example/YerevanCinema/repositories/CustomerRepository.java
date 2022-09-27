@@ -4,4 +4,6 @@ import com.example.YerevanCinema.entities.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer,Long> {
+
+    Customer getByCustomerUsername(String customerUsername);
 }

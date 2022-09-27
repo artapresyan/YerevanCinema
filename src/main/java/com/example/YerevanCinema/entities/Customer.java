@@ -20,10 +20,10 @@ public class Customer {
     @Column(name = "age", nullable = false)
     private Integer customerAge;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username",unique = true, nullable = false)
     private String customerUsername;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email",unique = true, nullable = false)
     private String customerEmail;
 
     @Column(name = "password", nullable = false)

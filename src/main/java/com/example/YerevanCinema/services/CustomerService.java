@@ -34,7 +34,16 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-
+    public void registerCustomer(String customerName, String customerSurname, Integer customerAge,
+                                 String customerUsername, String customerEmail, String customerPassword) {
+        try {
+            validateData(customerName, customerSurname, customerAge, customerUsername, customerEmail, customerPassword);
+        } catch (UsernameExistsException | RegisteredEmailException | NullPointerException e) {
+            e.printStackTrace();
+        }
+        customerRepository.save(new Customer(customerName, customerSurname, customerAge, customerUsername,
+                customerEmail, passwordEncoder.encode(customerPassword)));
+    }
 
     private void validateData(String customerName, String customerSurname, Integer customerAge,
                               String customerUsername, String customerEmail, String customerPassword)

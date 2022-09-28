@@ -1,7 +1,7 @@
 package com.example.YerevanCinema.services;
 
 import com.example.YerevanCinema.entities.Customer;
-import com.example.YerevanCinema.exceptions.NoSuchCustomerException;
+import com.example.YerevanCinema.exceptions.NoSuchUserException;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UsernameExistsException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
@@ -23,12 +23,12 @@ public class CustomerService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Customer getCustomerByID(Long customerID) throws NoSuchCustomerException {
+    public Customer getCustomerByID(Long customerID) throws NoSuchUserException {
         Optional<Customer> customer = customerRepository.findById(customerID);
         if (customer.isPresent()) {
             return customer.get();
         } else
-            throw new NoSuchCustomerException(String.format("No customer with %s id", customerID));
+            throw new NoSuchUserException(String.format("No customer with %s id", customerID));
     }
 
     public List<Customer> getAllCustomers() {
@@ -36,7 +36,7 @@ public class CustomerService {
     }
 
     public Customer registerCustomer(String customerName, String customerSurname, Integer customerAge,
-                                 String customerUsername, String customerEmail, String customerPassword) {
+                                     String customerUsername, String customerEmail, String customerPassword) {
         try {
             validateData(customerName, customerSurname, customerAge, customerUsername, customerEmail, customerPassword);
             Customer customer = new Customer(customerName, customerSurname, customerAge, customerUsername,
@@ -46,23 +46,25 @@ public class CustomerService {
         } catch (UsernameExistsException | RegisteredEmailException | NullPointerException e) {
             e.printStackTrace();
         }
-       return null;
+        return null;
     }
 
-    public void removeCustomer(Long customerID, String password) throws WrongPasswordException {
+    public Customer removeCustomer(Long customerID, String password) throws WrongPasswordException {
         try {
             Customer customer = getCustomerByID(customerID);
             if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
                 customerRepository.deleteById(customerID);
+                return customer;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchCustomerException e) {
+        } catch (NoSuchUserException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    public void updateCustomerData(Long customerID, String name, String surname, Integer age,
-                                   String username, String email, String password)
+    public Customer updateCustomerData(Long customerID, String name, String surname, Integer age,
+                                       String username, String email, String password)
             throws RegisteredEmailException, UsernameExistsException, WrongPasswordException {
         try {
             Customer customer = getCustomerByID(customerID);
@@ -79,16 +81,19 @@ public class CustomerService {
                     else
                         throw new UsernameExistsException("Username already exists. Try to get another one");
                 }
-                if (email != null){
+                if (email != null) {
                     if (customerRepository.getByCustomerEmail(email) == null)
                         customer.setCustomerEmail(email);
                     else throw new RegisteredEmailException("Email already registered. Try to get another one");
                 }
+                customerRepository.save(customer);
+                return customer;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchCustomerException e) {
+        } catch (NoSuchUserException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     private void validateData(String customerName, String customerSurname, Integer customerAge,

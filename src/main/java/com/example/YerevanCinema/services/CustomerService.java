@@ -109,6 +109,7 @@ public class CustomerService {
             return customer;
         else throw new NoSuchUserException(String.format("No customer registered with %s email", email));
     }
+
     private void validateData(String customerName, String customerSurname, Integer customerAge,
                               String customerUsername, String customerEmail, String customerPassword)
             throws UsernameExistsException, NullPointerException, RegisteredEmailException {

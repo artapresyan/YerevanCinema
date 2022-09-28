@@ -5,6 +5,7 @@ import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.exceptions.NoSuchUserException;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UsernameExistsException;
+import com.example.YerevanCinema.exceptions.WrongPasswordException;
 import com.example.YerevanCinema.repositories.AdminRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,19 @@ public class AdminService {
         }
         return null;
     }
-
+    public Admin removeCustomer(Long adminID, String password) throws WrongPasswordException {
+        try {
+            Admin admin = getAdminByID(adminID);
+            if (passwordEncoder.matches(password, admin.getAdminPassword())) {
+                adminRepository.deleteById(adminID);
+                return admin;
+            } else
+                throw new WrongPasswordException("Entered wrong password");
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     private void validateData(String adminName, String adminSurname, String adminEmail, String adminUsername,
                               String adminPassword)
             throws UsernameExistsException, NullPointerException, RegisteredEmailException {

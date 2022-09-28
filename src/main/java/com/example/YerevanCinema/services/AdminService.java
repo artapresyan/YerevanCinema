@@ -7,9 +7,13 @@ import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UsernameExistsException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
 import com.example.YerevanCinema.repositories.AdminRepository;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +22,14 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ValidationService validationService;
+    private final Logger logger = LogManager.getLogger();
 
-    public AdminService(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
+    public AdminService(AdminRepository adminRepository, PasswordEncoder passwordEncoder,
+                        ValidationService validationService) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
+        this.validationService = validationService;
     }
 
     public Admin getAdminByID(Long adminID) throws NoSuchUserException {
@@ -38,17 +46,20 @@ public class AdminService {
 
     public Admin registerAdmin(String adminName, String adminSurname, String adminEmail, String adminUsername,
                                String adminPassword) {
-        try {
-            validateData(adminName, adminSurname, adminEmail, adminUsername, adminPassword);
+            try {
+                validationService.validateName(adminName);
+                validationService.validateSurname(adminSurname);
+                validationService.validateUsername(adminUsername);
+                validationService.validateEmail(adminEmail);
+                validationService.validatePassword(adminPassword);
+            } catch (IOException | UsernameExistsException | RegisteredEmailException e) {
+                return null;
+            }
             Admin admin = new Admin(adminName, adminSurname, adminEmail, adminUsername, adminPassword);
             adminRepository.save(admin);
             return admin;
-        } catch (NullPointerException | UsernameExistsException | RegisteredEmailException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
-    public Admin removeCustomer(Long adminID, String password) throws WrongPasswordException {
+    public Admin removeAdmin(Long adminID, String password)  {
         try {
             Admin admin = getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
@@ -56,39 +67,43 @@ public class AdminService {
                 return admin;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException e) {
-            e.printStackTrace();
+        } catch (NoSuchUserException | WrongPasswordException e) {
+            logger.log(Level.FATAL,e.getMessage());
         }
         return null;
     }
 
-    public Admin updateCustomerData(Long adminID, String name, String surname, String username,
-                                    String email, String password)
-            throws RegisteredEmailException, UsernameExistsException, WrongPasswordException {
+    public Admin updateAdminData(Long adminID, String name, String surname, String username,
+                                    String email, String password) {
         try {
             Admin admin = getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
-                if (name != null)
+                try{
+                    validationService.validateName(name);
                     admin.setAdminName(name);
-                if (surname != null)
-                    admin.setAdminSurname(surname);
-                if (username != null) {
-                    if (adminRepository.getByAdminUsername(username) == null)
-                        admin.setAdminUsername(username);
-                    else
-                        throw new UsernameExistsException("Username already exists. Try to get another one");
+                }catch (IOException ignored){
                 }
-                if (email != null) {
-                    if (adminRepository.getByAdminEmail(email) == null)
-                        admin.setAdminEmail(email);
-                    else throw new RegisteredEmailException("Email already registered. Try to get another one");
+                try {
+                    validationService.validateSurname(surname);
+                    admin.setAdminSurname(surname);
+                }catch (IOException ignored){
+                }
+                try {
+                    validationService.validateUsername(username);
+                    admin.setAdminUsername(username);
+                }catch (IOException | UsernameExistsException ignored){
+                }
+                try {
+                    validationService.validateEmail(email);
+                    admin.setAdminEmail(email);
+                }catch (IOException | RegisteredEmailException ignored){
                 }
                 adminRepository.save(admin);
                 return admin;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException e) {
-            e.printStackTrace();
+        } catch (NoSuchUserException | WrongPasswordException e) {
+            logger.log(Level.FATAL,e.getMessage());
         }
         return null;
     }
@@ -97,7 +112,8 @@ public class AdminService {
         Admin admin = adminRepository.getByAdminUsername(username);
         if (admin != null)
             return admin;
-        else throw new NoSuchUserException(String.format("No admin with %s username", username));
+        else
+            throw new NoSuchUserException(String.format("No admin with %s username", username));
     }
 
     public Admin getAdminByEmail(String email) throws NoSuchUserException {
@@ -107,23 +123,4 @@ public class AdminService {
         else throw new NoSuchUserException(String.format("No admin registered with %s email", email));
     }
 
-    private void validateData(String adminName, String adminSurname, String adminEmail, String adminUsername,
-                              String adminPassword)
-            throws UsernameExistsException, NullPointerException, RegisteredEmailException {
-        if (adminName == null) {
-            throw new NullPointerException("Name is missing, fill it in");
-        } else if (adminSurname == null) {
-            throw new NullPointerException("Surname is missing, fill it in");
-        } else if (adminUsername == null) {
-            throw new NullPointerException("Username is missing, fill it in");
-        } else if (adminRepository.getByAdminUsername(adminUsername) != null) {
-            throw new UsernameExistsException("Username already exists. Try to get another one");
-        } else if (adminEmail == null) {
-            throw new NullPointerException("Email is missing, fill it in");
-        } else if (adminRepository.getByAdminEmail(adminEmail) != null) {
-            throw new RegisteredEmailException("Email already registered. Try to get another one");
-        } else if (adminPassword == null) {
-            throw new NullPointerException("Password is missing, fill it in");
-        }
-    }
 }

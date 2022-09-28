@@ -61,6 +61,38 @@ public class AdminService {
         }
         return null;
     }
+
+    public Admin updateCustomerData(Long adminID, String name, String surname, String username,
+                                    String email, String password)
+            throws RegisteredEmailException, UsernameExistsException, WrongPasswordException {
+        try {
+            Admin admin = getAdminByID(adminID);
+            if (passwordEncoder.matches(password, admin.getAdminPassword())) {
+                if (name != null)
+                    admin.setAdminName(name);
+                if (surname != null)
+                    admin.setAdminSurname(surname);
+                if (username != null) {
+                    if (adminRepository.getByAdminUsername(username) == null)
+                        admin.setAdminUsername(username);
+                    else
+                        throw new UsernameExistsException("Username already exists. Try to get another one");
+                }
+                if (email != null) {
+                    if (adminRepository.getByAdminEmail(email) == null)
+                        admin.setAdminEmail(email);
+                    else throw new RegisteredEmailException("Email already registered. Try to get another one");
+                }
+                adminRepository.save(admin);
+                return admin;
+            } else
+                throw new WrongPasswordException("Entered wrong password");
+        } catch (NoSuchUserException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private void validateData(String adminName, String adminSurname, String adminEmail, String adminUsername,
                               String adminPassword)
             throws UsernameExistsException, NullPointerException, RegisteredEmailException {

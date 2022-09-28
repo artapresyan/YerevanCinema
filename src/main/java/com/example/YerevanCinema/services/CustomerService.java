@@ -96,6 +96,19 @@ public class CustomerService {
         return null;
     }
 
+    public Customer getCustomerByUsername(String username) throws NoSuchUserException {
+        Customer customer = customerRepository.getByCustomerUsername(username);
+        if (customer != null)
+            return customer;
+        else throw new NoSuchUserException(String.format("No customer with %s username", username));
+    }
+
+    public Customer getCustomerByEmail(String email) throws NoSuchUserException {
+        Customer customer = customerRepository.getByCustomerEmail(email);
+        if (customer != null)
+            return customer;
+        else throw new NoSuchUserException(String.format("No customer registered with %s email", email));
+    }
     private void validateData(String customerName, String customerSurname, Integer customerAge,
                               String customerUsername, String customerEmail, String customerPassword)
             throws UsernameExistsException, NullPointerException, RegisteredEmailException {

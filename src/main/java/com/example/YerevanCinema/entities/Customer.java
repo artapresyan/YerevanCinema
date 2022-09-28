@@ -1,9 +1,16 @@
 package com.example.YerevanCinema.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "customers")
+@Getter @Setter
+@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -11,26 +18,30 @@ public class Customer {
     @Column(name = "id")
     private Long customerID;
 
-    @Column(name = "name", nullable = false)
+
+    @Column(name = "name")
+    @NotBlank
     private String customerName;
 
-    @Column(name = "surname", nullable = false)
+    @Column(name = "surname")
+    @NotBlank
     private String customerSurname;
 
-    @Column(name = "age", nullable = false)
+    @Column(name = "age")
+    @NotBlank
     private Integer customerAge;
 
-    @Column(name = "username",unique = true, nullable = false)
+    @Column(name = "username",unique = true)
+    @NotBlank
     private String customerUsername;
 
-    @Column(name = "email",unique = true, nullable = false)
+    @Column(name = "email",unique = true)
+    @NotBlank
     private String customerEmail;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
+    @NotBlank
     private String customerPassword;
-
-    public Customer() {
-    }
 
     public Customer(String customerName, String customerSurname,
                     Integer customerAge, String customerUsername, String customerEmail, String customerPassword) {
@@ -39,62 +50,6 @@ public class Customer {
         this.customerAge = customerAge;
         this.customerUsername = customerUsername;
         this.customerEmail = customerEmail;
-        this.customerPassword = customerPassword;
-    }
-
-    public Long getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(Long customerID) {
-        this.customerID = customerID;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getCustomerSurname() {
-        return customerSurname;
-    }
-
-    public void setCustomerSurname(String customerSurname) {
-        this.customerSurname = customerSurname;
-    }
-
-    public Integer getCustomerAge() {
-        return customerAge;
-    }
-
-    public void setCustomerAge(Integer customerAge) {
-        this.customerAge = customerAge;
-    }
-
-    public String getCustomerUsername() {
-        return customerUsername;
-    }
-
-    public void setCustomerUsername(String customerUsername) {
-        this.customerUsername = customerUsername;
-    }
-
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
-
-    public String getCustomerPassword() {
-        return customerPassword;
-    }
-
-    public void setCustomerPassword(String customerPassword) {
         this.customerPassword = customerPassword;
     }
 }

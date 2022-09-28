@@ -1,9 +1,15 @@
 package com.example.YerevanCinema.entities;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "admins")
+@Getter @Setter
+@NoArgsConstructor
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,62 +31,11 @@ public class Admin {
     @Column(name = "password")
     private String adminPassword;
 
-    public Admin() {
-    }
-
     public Admin(String adminName, String adminSurname, String adminEmail, String adminUsername, String adminPassword) {
         this.adminName = adminName;
         this.adminSurname = adminSurname;
         this.adminEmail = adminEmail;
         this.adminUsername = adminUsername;
-        this.adminPassword = adminPassword;
-    }
-
-    public Long getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(Long adminId) {
-        this.adminId = adminId;
-    }
-
-    public String getAdminName() {
-        return adminName;
-    }
-
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
-    }
-
-    public String getAdminSurname() {
-        return adminSurname;
-    }
-
-    public void setAdminSurname(String adminSurname) {
-        this.adminSurname = adminSurname;
-    }
-
-    public String getAdminEmail() {
-        return adminEmail;
-    }
-
-    public void setAdminEmail(String adminEmail) {
-        this.adminEmail = adminEmail;
-    }
-
-    public String getAdminUsername() {
-        return adminUsername;
-    }
-
-    public void setAdminUsername(String adminUsername) {
-        this.adminUsername = adminUsername;
-    }
-
-    public String getAdminPassword() {
-        return adminPassword;
-    }
-
-    public void setAdminPassword(String adminPassword) {
         this.adminPassword = adminPassword;
     }
 }

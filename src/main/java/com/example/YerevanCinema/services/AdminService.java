@@ -93,6 +93,20 @@ public class AdminService {
         return null;
     }
 
+    public Admin getAdminByUsername(String username) throws NoSuchUserException {
+        Admin admin = adminRepository.getByAdminUsername(username);
+        if (admin != null)
+            return admin;
+        else throw new NoSuchUserException(String.format("No admin with %s username", username));
+    }
+
+    public Admin getAdminByEmail(String email) throws NoSuchUserException {
+        Admin admin = adminRepository.getByAdminEmail(email);
+        if (admin != null)
+            return admin;
+        else throw new NoSuchUserException(String.format("No admin registered with %s email", email));
+    }
+
     private void validateData(String adminName, String adminSurname, String adminEmail, String adminUsername,
                               String adminPassword)
             throws UsernameExistsException, NullPointerException, RegisteredEmailException {

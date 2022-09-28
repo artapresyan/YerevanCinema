@@ -1,7 +1,6 @@
 package com.example.YerevanCinema.services;
 
 import com.example.YerevanCinema.entities.Admin;
-import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.exceptions.NoSuchUserException;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UsernameExistsException;

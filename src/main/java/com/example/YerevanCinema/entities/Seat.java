@@ -30,7 +30,9 @@ public class Seat {
     @NotNull
     private Boolean isSold;
 
-
+    @ManyToOne
+    @JoinColumn(name = "hall_id", nullable = false)
+    private Hall hall;
 
     public Seat(Integer seatRow, Integer seatNumber, Boolean isSold) {
         this.seatRow = seatRow;

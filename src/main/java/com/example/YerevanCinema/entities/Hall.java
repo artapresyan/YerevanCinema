@@ -2,12 +2,12 @@ package com.example.YerevanCinema.entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "halls")
@@ -27,6 +27,9 @@ public class Hall {
     @Column(name = "capacity")
     @NotNull
     private Integer hallCapacity;
+
+    @OneToMany(mappedBy = "hall")
+    private List<Seat> hallSeats;
 
     public Hall(String hallName, Integer hallCapacity) {
         this.hallName = hallName;

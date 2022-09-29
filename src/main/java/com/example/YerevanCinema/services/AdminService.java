@@ -21,14 +21,14 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ValidationService validationService;
+    private final UserValidationService userValidationService;
     private final Logger logger = LogManager.getLogger();
 
     public AdminService(AdminRepository adminRepository, PasswordEncoder passwordEncoder,
-                        ValidationService validationService) {
+                        UserValidationService userValidationService) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
-        this.validationService = validationService;
+        this.userValidationService = userValidationService;
     }
 
     public Admin getAdminByID(Long adminID) throws NoSuchUserException {
@@ -46,11 +46,11 @@ public class AdminService {
     public Admin registerAdmin(String adminName, String adminSurname, String adminEmail, String adminUsername,
                                String adminPassword) {
             try {
-                validationService.validateName(adminName);
-                validationService.validateSurname(adminSurname);
-                validationService.validateUsername(adminUsername);
-                validationService.validateEmail(adminEmail);
-                validationService.validatePassword(adminPassword);
+                userValidationService.validateName(adminName);
+                userValidationService.validateSurname(adminSurname);
+                userValidationService.validateUsername(adminUsername);
+                userValidationService.validateEmail(adminEmail);
+                userValidationService.validatePassword(adminPassword);
             } catch (IOException | UsernameExistsException | RegisteredEmailException e) {
                 return null;
             }
@@ -78,22 +78,22 @@ public class AdminService {
             Admin admin = getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 try{
-                    validationService.validateName(name);
+                    userValidationService.validateName(name);
                     admin.setAdminName(name);
                 }catch (IOException ignored){
                 }
                 try {
-                    validationService.validateSurname(surname);
+                    userValidationService.validateSurname(surname);
                     admin.setAdminSurname(surname);
                 }catch (IOException ignored){
                 }
                 try {
-                    validationService.validateUsername(username);
+                    userValidationService.validateUsername(username);
                     admin.setAdminUsername(username);
                 }catch (IOException | UsernameExistsException ignored){
                 }
                 try {
-                    validationService.validateEmail(email);
+                    userValidationService.validateEmail(email);
                     admin.setAdminEmail(email);
                 }catch (IOException | RegisteredEmailException ignored){
                 }

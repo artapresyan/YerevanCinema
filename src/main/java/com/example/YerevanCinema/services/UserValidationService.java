@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class ValidationService {
+public class UserValidationService {
 
     private final AdminRepository adminRepository;
     private final CustomerRepository customerRepository;
     private final Logger logger = LogManager.getLogger();
 
-    public ValidationService(AdminRepository adminRepository, CustomerRepository customerRepository) {
+    public UserValidationService(AdminRepository adminRepository, CustomerRepository customerRepository) {
         this.adminRepository = adminRepository;
         this.customerRepository = customerRepository;
     }

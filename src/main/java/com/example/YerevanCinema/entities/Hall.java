@@ -19,7 +19,7 @@ public class Hall {
     @Column(name = "id")
     private Long hallID;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     @NotBlank
     private String hallName;
 

@@ -1,4 +1,4 @@
-package com.example.YerevanCinema.services;
+package com.example.YerevanCinema.services.validations;
 
 import com.example.YerevanCinema.repositories.MovieRepository;
 import org.apache.logging.log4j.Level;

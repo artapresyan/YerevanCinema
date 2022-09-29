@@ -1,4 +1,4 @@
-package com.example.YerevanCinema.services;
+package com.example.YerevanCinema.services.validations;
 
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UsernameExistsException;

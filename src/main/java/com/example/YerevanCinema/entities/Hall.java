@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "halls")
@@ -24,10 +25,10 @@ public class Hall {
     private String hallName;
 
     @Column(name = "capacity")
-    @NonNull
+    @NotNull
     private Integer hallCapacity;
 
-    public Hall(String hallName, @NonNull Integer hallCapacity) {
+    public Hall(String hallName, Integer hallCapacity) {
         this.hallName = hallName;
         this.hallCapacity = hallCapacity;
     }

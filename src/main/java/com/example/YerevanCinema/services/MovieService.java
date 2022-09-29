@@ -45,18 +45,28 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Movie addMovie(String movieName, String movieCategory, String movieDescription, String movieLanguage) {
+    public Movie addMovie(Long adminID, String password, String movieName, String movieCategory,
+                          String movieDescription, String movieLanguage) {
         try {
-            movieValidationService.validateMovieName(movieName);
-            movieValidationService.validateMovieCategory(movieCategory);
-            movieValidationService.validateMovieDescription(movieDescription);
-            movieValidationService.validateMovieLanguage(movieLanguage);
-        } catch (IOException e) {
+            Admin admin = adminService.getAdminByID(adminID);
+            if (passwordEncoder.matches(password, admin.getAdminPassword())) {
+                try {
+                    movieValidationService.validateMovieName(movieName);
+                    movieValidationService.validateMovieCategory(movieCategory);
+                    movieValidationService.validateMovieDescription(movieDescription);
+                    movieValidationService.validateMovieLanguage(movieLanguage);
+                } catch (IOException e) {
+                    return null;
+                }
+                Movie movie = new Movie(movieName, movieCategory, movieDescription, movieLanguage);
+                movieRepository.save(movie);
+                return movie;
+            } else
+                throw new WrongPasswordException("Entered wrong password");
+        } catch (NoSuchUserException | WrongPasswordException e) {
+            logger.log(Level.ERROR, e);
             return null;
         }
-        Movie movie = new Movie(movieName, movieCategory, movieDescription, movieLanguage);
-        movieRepository.save(movie);
-        return movie;
     }
 
     public Movie removeMovie(Long movieID, Long adminID, String password) {

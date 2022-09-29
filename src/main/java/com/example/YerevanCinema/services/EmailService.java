@@ -28,7 +28,7 @@ public class EmailService {
 
         FileSystemResource file
                 = new FileSystemResource(new File(pathToAttachment));
-        helper.addAttachment("QR", file);
+        helper.addAttachment("QR", file.getFile());
         emailSender.send(message);
     }
 }

@@ -32,9 +32,10 @@ public class Movie {
     @Column(name = "language", columnDefinition = "default 'not specified'")
     private String movieLanguage;
 
-    public Movie(String movieName, String movieDescription, String movieLanguage) {
+    public Movie(String movieName,String movieCategory, String movieDescription, String movieLanguage) {
         this.movieName = movieName;
         this.movieDescription = movieDescription;
         this.movieLanguage = movieLanguage;
+        this.movieCategory = movieCategory;
     }
 }

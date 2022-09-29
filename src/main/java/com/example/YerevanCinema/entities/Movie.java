@@ -22,6 +22,10 @@ public class Movie {
     @NotBlank
     private String movieName;
 
+    @Column(name = "category")
+    @NotBlank
+    private String movieCategory;
+
     @Column(name = "description", columnDefinition ="default 'no description'" )
     private String movieDescription;
 

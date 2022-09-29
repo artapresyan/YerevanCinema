@@ -5,6 +5,7 @@ import com.example.YerevanCinema.exceptions.MovieNotFoundException;
 import com.example.YerevanCinema.repositories.MovieRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,5 +25,8 @@ public class MovieService {
             throw new MovieNotFoundException(String.format("No movie found with %s id",movieID));
     }
 
+    public List<Movie> getAllMovies(){
+        return movieRepository.findAll();
+    }
 
 }

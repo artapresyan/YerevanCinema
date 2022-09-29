@@ -26,10 +26,10 @@ public class Movie {
     @NotBlank
     private String movieCategory;
 
-    @Column(name = "description", columnDefinition ="default 'no description'" )
+    @Column(name = "description" )
     private String movieDescription;
 
-    @Column(name = "language", columnDefinition = "default 'not specified'")
+    @Column(name = "language")
     private String movieLanguage;
 
     public Movie(String movieName,String movieCategory, String movieDescription, String movieLanguage) {

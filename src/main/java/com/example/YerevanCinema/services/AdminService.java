@@ -68,8 +68,8 @@ public class AdminService {
                 throw new WrongPasswordException("Entered wrong password");
         } catch (NoSuchUserException | WrongPasswordException e) {
             logger.log(Level.FATAL,e.getMessage());
+            return null;
         }
-        return null;
     }
 
     public Admin updateAdminData(Long adminID, String name, String surname, String username,
@@ -103,8 +103,8 @@ public class AdminService {
                 throw new WrongPasswordException("Entered wrong password");
         } catch (NoSuchUserException | WrongPasswordException e) {
             logger.log(Level.FATAL,e.getMessage());
+            return null;
         }
-        return null;
     }
 
     public Admin getAdminByUsername(String username) throws NoSuchUserException {

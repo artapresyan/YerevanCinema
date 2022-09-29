@@ -71,8 +71,8 @@ public class CustomerService {
                 throw new WrongPasswordException("Entered wrong password");
         } catch (NoSuchUserException | WrongPasswordException e) {
             logger.log(Level.FATAL,e.getMessage());
+            return null;
         }
-        return null;
     }
 
     public Customer updateCustomerData(Long customerID, String name, String surname, Integer age,
@@ -111,8 +111,8 @@ public class CustomerService {
                 throw new WrongPasswordException("Entered wrong password");
         } catch (NoSuchUserException | WrongPasswordException e) {
             logger.log(Level.FATAL,e.getMessage());
+            return null;
         }
-        return null;
     }
 
     public Customer getCustomerByUsername(String username) throws NoSuchUserException {

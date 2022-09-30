@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class SeatValidation {
+public class SeatValidationService {
 
     private final SeatRepository seatRepository;
     private final Logger logger = LogManager.getLogger();
 
-    public SeatValidation(SeatRepository seatRepository) {
+    public SeatValidationService(SeatRepository seatRepository) {
         this.seatRepository = seatRepository;
     }
 

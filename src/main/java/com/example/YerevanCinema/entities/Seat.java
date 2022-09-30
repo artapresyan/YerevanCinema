@@ -9,7 +9,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "seats")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class Seat {
 
@@ -29,6 +30,9 @@ public class Seat {
     @Column(name = "sold")
     @NotNull
     private Boolean isSold;
+
+    @OneToOne(mappedBy = "seat")
+    private Ticket ticket;
 
     @ManyToOne
     @JoinColumn(name = "hall_id", nullable = false)

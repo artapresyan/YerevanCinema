@@ -8,7 +8,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tickets")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class Ticket {
 
@@ -17,6 +18,10 @@ public class Ticket {
     @Column(name = "id")
     private Long ticketID;
 
+    @OneToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
@@ -24,6 +29,7 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "session_id", nullable = false)
     private MovieSession movieSession;
+
 
     public Ticket(Customer customer, MovieSession movieSession) {
         this.customer = customer;

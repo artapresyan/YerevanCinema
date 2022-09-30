@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class HallService {
@@ -49,7 +50,7 @@ public class HallService {
         return hallRepository.findAll();
     }
 
-    public Hall addHall(Long adminID, String password, String hallName, Integer hallCapacity, List<Seat> seats) {
+    public Hall addHall(Long adminID, String password, String hallName, Integer hallCapacity, Set<Seat> seats) {
         try {
             Admin admin = adminService.getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
@@ -83,7 +84,7 @@ public class HallService {
         }
     }
 
-    public Hall updateHall(Long hallID, String hallName, Integer hallCapacity, List<Seat> seats) {
+    public Hall updateHall(Long hallID, String hallName, Integer hallCapacity, Set<Seat> seats) {
         try {
             Hall hall = getHallByID(hallID);
             try {
@@ -96,9 +97,7 @@ public class HallService {
                 hall.setHallCapacity(hallCapacity);
             } catch (IOException ignored) {
             }
-            if (seats != null && seats.size() > 0) {
-                hall.setHallSeats(seats);
-            }
+            hall.setHallSeats(seats);
             hallRepository.save(hall);
             return hall;
         } catch (HallNotFoundException e) {

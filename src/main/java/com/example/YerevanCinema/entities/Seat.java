@@ -34,7 +34,7 @@ public class Seat {
     @OneToOne(mappedBy = "seat")
     private Ticket ticket;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
 

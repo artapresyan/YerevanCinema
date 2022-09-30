@@ -56,8 +56,7 @@ public class SeatService {
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 seatValidationService.validateSeatCoordinates(hall, seatNumber, seatLine);
                 seatValidationService.validateIsSold(isSold);
-                Seat seat = new Seat(seatLine, seatNumber, isSold);
-                seat.setHall(hall);
+                Seat seat = new Seat(seatLine, seatNumber, isSold, hall);
                 seatRepository.save(seat);
                 return seat;
             } else

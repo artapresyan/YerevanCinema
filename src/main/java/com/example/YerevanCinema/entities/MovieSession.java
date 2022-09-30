@@ -25,7 +25,7 @@ public class MovieSession {
     private LocalDateTime movieSessionEnd;
 
     @Column(name = "price")
-    private Integer sessionPrice;
+    private Integer movieSessionPrice;
 
     @ManyToOne
     @JoinColumn(name = "hall_id")
@@ -39,11 +39,11 @@ public class MovieSession {
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
-    public MovieSession(LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd, Integer sessionPrice,
+    public MovieSession(LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd, Integer movieSessionPrice,
                         Hall hall, Movie movie, Admin admin) {
         this.movieSessionStart = movieSessionStart;
         this.movieSessionEnd = movieSessionEnd;
-        this.sessionPrice = sessionPrice;
+        this.movieSessionPrice = movieSessionPrice;
         this.hall = hall;
         this.movie = movie;
         this.admin = admin;

@@ -38,5 +38,6 @@ public class Seat {
         this.seatLine = seatLine;
         this.seatNumber = seatNumber;
         this.isSold = isSold;
+        this.hall = hall;
     }
 }

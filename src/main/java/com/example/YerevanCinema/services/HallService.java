@@ -2,6 +2,7 @@ package com.example.YerevanCinema.services;
 
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Hall;
+import com.example.YerevanCinema.entities.Seat;
 import com.example.YerevanCinema.exceptions.HallNotFoundException;
 import com.example.YerevanCinema.exceptions.NoSuchUserException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,13 +43,14 @@ public class HallService {
             throw new HallNotFoundException(String.format("No hall found with ' %s ' id", hallID));
     }
 
-    public Hall addHall(Long adminID, String password, String hallName, Integer hallCapacity) {
+    public Hall addHall(Long adminID, String password, String hallName, Integer hallCapacity, List<Seat> seats) {
         try {
             Admin admin = adminService.getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 hallValidationService.validateHallName(hallName);
                 hallValidationService.validateHallCapacity(hallCapacity);
                 Hall hall = new Hall(hallName, hallCapacity);
+                hall.setHallSeats(seats);
                 hallRepository.save(hall);
                 return hall;
             } else
@@ -71,7 +74,7 @@ public class HallService {
         }
     }
 
-    public Hall updateHall(Long hallID, String hallName, Integer hallCapacity) {
+    public Hall updateHall(Long hallID, String hallName, Integer hallCapacity, List<Seat> seats) {
         try {
             Hall hall = getHallByID(hallID);
             try {
@@ -83,6 +86,9 @@ public class HallService {
                 hallValidationService.validateHallCapacity(hallCapacity);
                 hall.setHallCapacity(hallCapacity);
             } catch (IOException ignored) {
+            }
+            if (seats != null && seats.size()>0){
+                hall.setHallSeats(seats);
             }
             hallRepository.save(hall);
             return hall;

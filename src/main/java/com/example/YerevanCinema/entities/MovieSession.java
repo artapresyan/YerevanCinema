@@ -7,10 +7,12 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "sessions")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class MovieSession {
 
@@ -30,6 +32,9 @@ public class MovieSession {
     @Column(name = "price")
     @NotNull
     private Integer movieSessionPrice;
+
+    @OneToMany
+    private List<Ticket> movieSessionTickets;
 
     @ManyToOne
     @JoinColumn(name = "hall_id")

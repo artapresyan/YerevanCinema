@@ -6,10 +6,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class Customer {
 
@@ -31,17 +33,20 @@ public class Customer {
     @NotBlank
     private Integer customerAge;
 
-    @Column(name = "username",unique = true)
+    @Column(name = "username", unique = true)
     @NotBlank
     private String customerUsername;
 
-    @Column(name = "email",unique = true)
+    @Column(name = "email", unique = true)
     @NotBlank
     private String customerEmail;
 
     @Column(name = "password")
     @NotBlank
     private String customerPassword;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Ticket> customerTickets;
 
     public Customer(String customerName, String customerSurname,
                     Integer customerAge, String customerUsername, String customerEmail, String customerPassword) {

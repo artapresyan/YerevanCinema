@@ -38,4 +38,14 @@ public class MovieSession {
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admin admin;
+
+    public MovieSession(LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd, Integer sessionPrice,
+                        Hall hall, Movie movie, Admin admin) {
+        this.movieSessionStart = movieSessionStart;
+        this.movieSessionEnd = movieSessionEnd;
+        this.sessionPrice = sessionPrice;
+        this.hall = hall;
+        this.movie = movie;
+        this.admin = admin;
+    }
 }

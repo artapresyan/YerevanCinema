@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -19,18 +20,23 @@ public class Admin {
     private Long adminId;
 
     @Column(name = "name")
+    @NotBlank
     private String adminName;
 
     @Column(name = "surname")
+    @NotBlank
     private String adminSurname;
 
     @Column(name = "email")
+    @NotBlank
     private String adminEmail;
 
     @Column(name = "username")
+    @NotBlank
     private String adminUsername;
 
     @Column(name = "password")
+    @NotBlank
     private String adminPassword;
 
     @OneToMany(mappedBy = "admin")

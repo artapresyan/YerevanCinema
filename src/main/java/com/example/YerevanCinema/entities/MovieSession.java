@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,12 +20,15 @@ public class MovieSession {
     private Long movieSessionID;
 
     @Column(name = "start")
+    @NotNull
     private LocalDateTime movieSessionStart;
 
     @Column(name = "end")
+    @NotNull
     private LocalDateTime movieSessionEnd;
 
     @Column(name = "price")
+    @NotNull
     private Integer movieSessionPrice;
 
     @ManyToOne

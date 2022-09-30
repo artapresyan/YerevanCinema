@@ -33,7 +33,7 @@ public class MovieSession {
     @NotNull
     private Integer movieSessionPrice;
 
-    @OneToMany
+    @OneToMany(mappedBy = "movieSession")
     private List<Ticket> movieSessionTickets;
 
     @ManyToOne

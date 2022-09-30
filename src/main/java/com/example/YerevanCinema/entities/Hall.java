@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "halls")
@@ -29,10 +29,10 @@ public class Hall {
     private Integer hallCapacity;
 
     @OneToMany(mappedBy = "hall")
-    private List<Seat> hallSeats;
+    private Set<Seat> hallSeats;
 
     @OneToMany(mappedBy = "hall")
-    private List<MovieSession> movieSessions;
+    private Set<MovieSession> movieSessions;
 
     public Hall(String hallName, Integer hallCapacity) {
         this.hallName = hallName;

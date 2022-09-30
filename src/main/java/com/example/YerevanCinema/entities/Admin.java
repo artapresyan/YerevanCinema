@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "admins")
@@ -40,7 +40,7 @@ public class Admin {
     private String adminPassword;
 
     @OneToMany(mappedBy = "admin")
-    private List<MovieSession> addedMovieSessions;
+    private Set<MovieSession> addedMovieSessions;
 
     public Admin(String adminName, String adminSurname, String adminEmail, String adminUsername, String adminPassword) {
         this.adminName = adminName;

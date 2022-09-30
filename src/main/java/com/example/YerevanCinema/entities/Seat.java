@@ -34,7 +34,7 @@ public class Seat {
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
 
-    public Seat(Integer seatLine, Integer seatNumber, Boolean isSold) {
+    public Seat(Integer seatLine, Integer seatNumber, Boolean isSold, Hall hall) {
         this.seatLine = seatLine;
         this.seatNumber = seatNumber;
         this.isSold = isSold;

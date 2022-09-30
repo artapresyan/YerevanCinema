@@ -3,7 +3,7 @@ package com.example.YerevanCinema.services;
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Movie;
 import com.example.YerevanCinema.exceptions.MovieNotFoundException;
-import com.example.YerevanCinema.exceptions.NoSuchUserException;
+import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
 import com.example.YerevanCinema.repositories.MovieRepository;
 import com.example.YerevanCinema.services.validations.MovieValidationService;
@@ -64,7 +64,7 @@ public class MovieService {
                 return movie;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException | WrongPasswordException e) {
+        } catch (UserNotFoundException | WrongPasswordException e) {
             logger.log(Level.ERROR, e);
             return null;
         }
@@ -79,7 +79,7 @@ public class MovieService {
                 return movie;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException | WrongPasswordException | MovieNotFoundException e) {
+        } catch (UserNotFoundException | WrongPasswordException | MovieNotFoundException e) {
             logger.log(Level.ERROR, e);
             return null;
         }

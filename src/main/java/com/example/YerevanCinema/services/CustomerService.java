@@ -1,7 +1,7 @@
 package com.example.YerevanCinema.services;
 
 import com.example.YerevanCinema.entities.Customer;
-import com.example.YerevanCinema.exceptions.NoSuchUserException;
+import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UsernameExistsException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
@@ -32,12 +32,12 @@ public class CustomerService {
         this.validationService = validationService;
     }
 
-    public Customer getCustomerByID(Long customerID) throws NoSuchUserException {
+    public Customer getCustomerByID(Long customerID) throws UserNotFoundException {
         Optional<Customer> customer = customerRepository.findById(customerID);
         if (customer.isPresent()) {
             return customer.get();
         } else
-            throw new NoSuchUserException("User cannot be found");
+            throw new UserNotFoundException("User cannot be found");
     }
 
     public List<Customer> getAllCustomers() {
@@ -70,7 +70,7 @@ public class CustomerService {
                 return customer;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException | WrongPasswordException e) {
+        } catch (UserNotFoundException | WrongPasswordException e) {
             logger.log(Level.FATAL,e.getMessage());
             return null;
         }
@@ -110,25 +110,25 @@ public class CustomerService {
                 return customer;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException | WrongPasswordException e) {
+        } catch (UserNotFoundException | WrongPasswordException e) {
             logger.log(Level.FATAL,e.getMessage());
             return null;
         }
     }
 
-    public Customer getCustomerByUsername(String username) throws NoSuchUserException {
+    public Customer getCustomerByUsername(String username) throws UserNotFoundException {
         Customer customer = customerRepository.getByCustomerUsername(username);
         if (customer != null)
             return customer;
-        else throw new NoSuchUserException(String.format("No customer with %s username", username));
+        else throw new UserNotFoundException(String.format("No customer with %s username", username));
     }
 
-    public Customer getCustomerByEmail(String email) throws NoSuchUserException {
+    public Customer getCustomerByEmail(String email) throws UserNotFoundException {
         Customer customer = customerRepository.getByCustomerEmail(email);
         if (customer != null)
             return customer;
         else
-            throw new NoSuchUserException(String.format("No customer registered with %s email", email));
+            throw new UserNotFoundException(String.format("No customer registered with %s email", email));
     }
 
 }

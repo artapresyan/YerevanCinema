@@ -1,7 +1,7 @@
 package com.example.YerevanCinema.services;
 
 import com.example.YerevanCinema.entities.Admin;
-import com.example.YerevanCinema.exceptions.NoSuchUserException;
+import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UsernameExistsException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
@@ -32,12 +32,12 @@ public class AdminService {
         this.userValidationService = userValidationService;
     }
 
-    public Admin getAdminByID(Long adminID) throws NoSuchUserException {
+    public Admin getAdminByID(Long adminID) throws UserNotFoundException {
         Optional<Admin> admin = adminRepository.findById(adminID);
         if (admin.isPresent()) {
             return admin.get();
         } else
-            throw new NoSuchUserException(String.format("No admin with %s id", admin));
+            throw new UserNotFoundException(String.format("No admin with %s id", admin));
     }
 
     public List<Admin> getAllAdmins() {
@@ -67,7 +67,7 @@ public class AdminService {
                 return admin;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException | WrongPasswordException e) {
+        } catch (UserNotFoundException | WrongPasswordException e) {
             logger.log(Level.FATAL,e.getMessage());
             return null;
         }
@@ -102,25 +102,25 @@ public class AdminService {
                 return admin;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException | WrongPasswordException e) {
+        } catch (UserNotFoundException | WrongPasswordException e) {
             logger.log(Level.FATAL,e.getMessage());
             return null;
         }
     }
 
-    public Admin getAdminByUsername(String username) throws NoSuchUserException {
+    public Admin getAdminByUsername(String username) throws UserNotFoundException {
         Admin admin = adminRepository.getByAdminUsername(username);
         if (admin != null)
             return admin;
         else
-            throw new NoSuchUserException(String.format("No admin with %s username", username));
+            throw new UserNotFoundException(String.format("No admin with %s username", username));
     }
 
-    public Admin getAdminByEmail(String email) throws NoSuchUserException {
+    public Admin getAdminByEmail(String email) throws UserNotFoundException {
         Admin admin = adminRepository.getByAdminEmail(email);
         if (admin != null)
             return admin;
-        else throw new NoSuchUserException(String.format("No admin registered with %s email", email));
+        else throw new UserNotFoundException(String.format("No admin registered with %s email", email));
     }
 
 }

@@ -4,7 +4,7 @@ import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Hall;
 import com.example.YerevanCinema.entities.Seat;
 import com.example.YerevanCinema.exceptions.HallNotFoundException;
-import com.example.YerevanCinema.exceptions.NoSuchUserException;
+import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
 import com.example.YerevanCinema.repositories.HallRepository;
 import com.example.YerevanCinema.services.validations.HallValidationService;
@@ -55,7 +55,7 @@ public class HallService {
                 return hall;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException | WrongPasswordException | IOException e) {
+        } catch (UserNotFoundException | WrongPasswordException | IOException e) {
             return null;
         }
     }
@@ -69,7 +69,7 @@ public class HallService {
                 return hall;
             } else
                 throw new WrongPasswordException("Entered wrong password");
-        } catch (NoSuchUserException | WrongPasswordException | HallNotFoundException e) {
+        } catch (UserNotFoundException | WrongPasswordException | HallNotFoundException e) {
             return null;
         }
     }

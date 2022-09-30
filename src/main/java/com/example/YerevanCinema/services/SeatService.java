@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,6 +44,10 @@ public class SeatService {
             logger.log(Level.ERROR, String.format("Something went wrong while trying to get seat by ' %s ' id", seatID));
             throw new SeatNotFoundException("Seat with ' %s ' id not found");
         }
+    }
+
+    public List<Seat> getAllSeats() {
+        return seatRepository.findAll();
     }
 
     public Seat addSeat(Long adminID, String password, Hall hall, Integer seatLine, Integer seatNumber, Boolean isSold) {

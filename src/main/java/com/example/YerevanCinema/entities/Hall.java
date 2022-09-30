@@ -31,6 +31,9 @@ public class Hall {
     @OneToMany(mappedBy = "hall")
     private List<Seat> hallSeats;
 
+    @OneToMany(mappedBy = "hall")
+    private List<MovieSession> movieSessions;
+
     public Hall(String hallName, Integer hallCapacity) {
         this.hallName = hallName;
         this.hallCapacity = hallCapacity;

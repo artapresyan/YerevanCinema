@@ -5,10 +5,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "admins")
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class Admin {
     @Id
@@ -30,6 +32,9 @@ public class Admin {
 
     @Column(name = "password")
     private String adminPassword;
+
+    @OneToMany(mappedBy = "admin")
+    private List<MovieSession> addedMovieSessions;
 
     public Admin(String adminName, String adminSurname, String adminEmail, String adminUsername, String adminPassword) {
         this.adminName = adminName;

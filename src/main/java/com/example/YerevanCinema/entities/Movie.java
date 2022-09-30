@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "movies")
@@ -31,6 +32,9 @@ public class Movie {
 
     @Column(name = "language")
     private String movieLanguage;
+
+    @OneToMany(mappedBy = "movie")
+    private List<MovieSession> movieSessions;
 
     public Movie(String movieName,String movieCategory, String movieDescription, String movieLanguage) {
         this.movieName = movieName;

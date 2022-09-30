@@ -36,8 +36,10 @@ public class AdminService {
         Optional<Admin> admin = adminRepository.findById(adminID);
         if (admin.isPresent()) {
             return admin.get();
-        } else
-            throw new UserNotFoundException(String.format("No admin with %s id", admin));
+        } else {
+            logger.log(Level.ERROR, String.format("Something went wrong while trying to get admin by ' %s ' id", adminID));
+            throw new UserNotFoundException("User not found");
+        }
     }
 
     public List<Admin> getAllAdmins() {
@@ -52,12 +54,13 @@ public class AdminService {
                 userValidationService.validateUsername(adminUsername);
                 userValidationService.validateEmail(adminEmail);
                 userValidationService.validatePassword(adminPassword);
+                Admin admin = new Admin(adminName, adminSurname, adminEmail, adminUsername, adminPassword);
+                adminRepository.save(admin);
+                return admin;
             } catch (IOException | UsernameExistsException | RegisteredEmailException e) {
+                logger.log(Level.ERROR, "Something went wrong while trying to register admin");
                 return null;
             }
-            Admin admin = new Admin(adminName, adminSurname, adminEmail, adminUsername, adminPassword);
-            adminRepository.save(admin);
-            return admin;
     }
     public Admin removeAdmin(Long adminID, String password)  {
         try {
@@ -68,7 +71,8 @@ public class AdminService {
             } else
                 throw new WrongPasswordException("Entered wrong password");
         } catch (UserNotFoundException | WrongPasswordException e) {
-            logger.log(Level.FATAL,e.getMessage());
+            logger.log(Level.ERROR, String.format("Something went wrong while trying to deactivate" +
+                    " admin account with ' %s ' id", adminID));
             return null;
         }
     }
@@ -103,7 +107,7 @@ public class AdminService {
             } else
                 throw new WrongPasswordException("Entered wrong password");
         } catch (UserNotFoundException | WrongPasswordException e) {
-            logger.log(Level.FATAL,e.getMessage());
+            logger.log(Level.ERROR, String.format("Cannot get admin account with %s id to update information", adminID));
             return null;
         }
     }
@@ -112,15 +116,20 @@ public class AdminService {
         Admin admin = adminRepository.getByAdminUsername(username);
         if (admin != null)
             return admin;
-        else
-            throw new UserNotFoundException(String.format("No admin with %s username", username));
+        else {
+            logger.log(Level.ERROR, String.format("Cannot get admin account with %s username", username));
+            throw new UserNotFoundException("User not found");
+        }
     }
 
     public Admin getAdminByEmail(String email) throws UserNotFoundException {
         Admin admin = adminRepository.getByAdminEmail(email);
-        if (admin != null)
+        if (admin != null) {
             return admin;
-        else throw new UserNotFoundException(String.format("No admin registered with %s email", email));
+        } else {
+            logger.log(Level.ERROR, String.format("Cannot get admin account with %s email", email));
+            throw new UserNotFoundException("User not found");
+        }
     }
 
 }

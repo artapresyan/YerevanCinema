@@ -36,8 +36,10 @@ public class CustomerService {
         Optional<Customer> customer = customerRepository.findById(customerID);
         if (customer.isPresent()) {
             return customer.get();
-        } else
-            throw new UserNotFoundException("User cannot be found");
+        } else {
+            logger.log(Level.ERROR, String.format("Something went wrong while trying to get customer by ' %s ' id", customerID));
+            throw new UserNotFoundException("User not found");
+        }
     }
 
     public List<Customer> getAllCustomers() {
@@ -54,6 +56,7 @@ public class CustomerService {
             validationService.validateEmail(customerEmail);
             validationService.validatePassword(customerPassword);
         } catch (IOException | UsernameExistsException | RegisteredEmailException e) {
+            logger.log(Level.ERROR, "Something went wrong while trying to register customer");
             return null;
         }
         Customer customer = new Customer(customerName, customerSurname, customerAge, customerUsername,
@@ -71,7 +74,8 @@ public class CustomerService {
             } else
                 throw new WrongPasswordException("Entered wrong password");
         } catch (UserNotFoundException | WrongPasswordException e) {
-            logger.log(Level.FATAL,e.getMessage());
+            logger.log(Level.ERROR, String.format("Something went wrong while trying to deactivate" +
+                    " customer account with ' %s ' id", customerID));
             return null;
         }
     }
@@ -81,37 +85,37 @@ public class CustomerService {
         try {
             Customer customer = getCustomerByID(customerID);
             if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
-                try{
+                try {
                     validationService.validateName(name);
                     customer.setCustomerName(name);
-                }catch (IOException ignored){
+                } catch (IOException ignored) {
                 }
                 try {
                     validationService.validateSurname(surname);
                     customer.setCustomerSurname(surname);
-                }catch (IOException ignored){
+                } catch (IOException ignored) {
                 }
                 try {
                     validationService.validateAge(age);
                     customer.setCustomerAge(age);
-                }catch (IOException ignored){
+                } catch (IOException ignored) {
                 }
                 try {
                     validationService.validateUsername(username);
                     customer.setCustomerUsername(username);
-                }catch (IOException | UsernameExistsException ignored){
+                } catch (IOException | UsernameExistsException ignored) {
                 }
                 try {
                     validationService.validateEmail(email);
                     customer.setCustomerEmail(email);
-                }catch (IOException | RegisteredEmailException ignored){
+                } catch (IOException | RegisteredEmailException ignored) {
                 }
                 customerRepository.save(customer);
                 return customer;
             } else
                 throw new WrongPasswordException("Entered wrong password");
         } catch (UserNotFoundException | WrongPasswordException e) {
-            logger.log(Level.FATAL,e.getMessage());
+            logger.log(Level.ERROR, String.format("Cannot get customer account with %s id to update information", customerID));
             return null;
         }
     }
@@ -120,15 +124,19 @@ public class CustomerService {
         Customer customer = customerRepository.getByCustomerUsername(username);
         if (customer != null)
             return customer;
-        else throw new UserNotFoundException(String.format("No customer with %s username", username));
+        else {
+            logger.log(Level.ERROR, String.format("Cannot get customer account with %s username", username));
+            throw new UserNotFoundException("User not found");
+        }
     }
 
     public Customer getCustomerByEmail(String email) throws UserNotFoundException {
         Customer customer = customerRepository.getByCustomerEmail(email);
         if (customer != null)
             return customer;
-        else
-            throw new UserNotFoundException(String.format("No customer registered with %s email", email));
+        else{
+            logger.log(Level.ERROR, String.format("Cannot get customer account with %s email", email));
+            throw new UserNotFoundException("User not found");
+        }
     }
-
 }

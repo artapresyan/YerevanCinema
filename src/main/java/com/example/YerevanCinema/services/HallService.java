@@ -39,8 +39,14 @@ public class HallService {
         Optional<Hall> hall = hallRepository.findById(hallID);
         if (hall.isPresent()) {
             return hall.get();
-        } else
-            throw new HallNotFoundException(String.format("No hall found with ' %s ' id", hallID));
+        } else {
+            logger.log(Level.ERROR, String.format("Something went wrong while trying to get hall by ' %s ' id", hallID));
+            throw new HallNotFoundException("Hall not found");
+        }
+    }
+
+    public List<Hall> getAllHalls() {
+        return hallRepository.findAll();
     }
 
     public Hall addHall(Long adminID, String password, String hallName, Integer hallCapacity, List<Seat> seats) {
@@ -56,6 +62,7 @@ public class HallService {
             } else
                 throw new WrongPasswordException("Entered wrong password");
         } catch (UserNotFoundException | WrongPasswordException | IOException e) {
+            logger.log(Level.ERROR, "Something went wrong while trying to add hall");
             return null;
         }
     }
@@ -70,6 +77,8 @@ public class HallService {
             } else
                 throw new WrongPasswordException("Entered wrong password");
         } catch (UserNotFoundException | WrongPasswordException | HallNotFoundException e) {
+            logger.log(Level.ERROR, String.format("Something went wrong while trying to remove" +
+                    " hall with ' %s ' id", hallID));
             return null;
         }
     }
@@ -87,23 +96,23 @@ public class HallService {
                 hall.setHallCapacity(hallCapacity);
             } catch (IOException ignored) {
             }
-            if (seats != null && seats.size()>0){
+            if (seats != null && seats.size() > 0) {
                 hall.setHallSeats(seats);
             }
             hallRepository.save(hall);
             return hall;
         } catch (HallNotFoundException e) {
-            logger.log(Level.ERROR, e);
+            logger.log(Level.ERROR, String.format("Cannot get hall with %s id to update information", hallID));
             return null;
         }
     }
 
-    public Hall getHallByName(String hallName) throws HallNotFoundException{
+    public Hall getHallByName(String hallName) throws HallNotFoundException {
         Hall hall = hallRepository.getByHallName(hallName);
-        if (hall!=null){
+        if (hall != null) {
             return hall;
-        }else {
-            logger.log(Level.ERROR,String.format("No hall found with ' %s ' name",hallName));
+        } else {
+            logger.log(Level.ERROR, String.format("Cannot get hall with %s name", hallName));
             throw new HallNotFoundException("Hall not found");
         }
     }

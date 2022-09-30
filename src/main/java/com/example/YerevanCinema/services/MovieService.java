@@ -38,8 +38,10 @@ public class MovieService {
         Optional<Movie> movie = movieRepository.findById(movieID);
         if (movie.isPresent()) {
             return movie.get();
-        } else
-            throw new MovieNotFoundException(String.format("No movie found with %s id", movieID));
+        } else {
+            logger.log(Level.ERROR, String.format("Something went wrong while trying to get movie by ' %s ' id", movieID));
+            throw new MovieNotFoundException("Movie not found");
+        }
     }
 
     public List<Movie> getAllMovies() {
@@ -65,7 +67,7 @@ public class MovieService {
             } else
                 throw new WrongPasswordException("Entered wrong password");
         } catch (UserNotFoundException | WrongPasswordException e) {
-            logger.log(Level.ERROR, e);
+            logger.log(Level.ERROR, "Something went wrong while trying to add movie");
             return null;
         }
     }
@@ -80,7 +82,8 @@ public class MovieService {
             } else
                 throw new WrongPasswordException("Entered wrong password");
         } catch (UserNotFoundException | WrongPasswordException | MovieNotFoundException e) {
-            logger.log(Level.ERROR, e);
+            logger.log(Level.ERROR, String.format("Something went wrong while trying to remove" +
+                    " movie with ' %s ' id", movieID));
             return null;
         }
     }
@@ -112,10 +115,9 @@ public class MovieService {
             movieRepository.save(movie);
             return movie;
         } catch (MovieNotFoundException e) {
-            logger.log(Level.ERROR, e);
+            logger.log(Level.ERROR, String.format("Cannot get movie with %s id to update information", movieID));
             return null;
         }
-
     }
 
     public List<Movie> getMoviesByCategory(String movieCategory) {
@@ -127,8 +129,8 @@ public class MovieService {
         if (movie != null) {
             return movie;
         } else {
-            logger.log(Level.ERROR, String.format("Unknown movie: %s", movieName));
-            throw new MovieNotFoundException(String.format("No movie found with ' %s ' name", movieName));
+            logger.log(Level.ERROR, String.format("Cannot get movie with %s name", movieName));
+            throw new MovieNotFoundException("Movie not found");
         }
     }
 }

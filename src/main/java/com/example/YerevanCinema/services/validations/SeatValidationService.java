@@ -14,12 +14,7 @@ import java.io.IOException;
 @Service
 public class SeatValidationService {
 
-    private final SeatRepository seatRepository;
     private final Logger logger = LogManager.getLogger();
-
-    public SeatValidationService(SeatRepository seatRepository) {
-        this.seatRepository = seatRepository;
-    }
 
     public void validateSeatCoordinates(Hall hall, Integer number, Integer line) throws IOException, SeatAlreadyExistsException {
         if (number == null || line == null || number < 1 || line < 1) {
@@ -32,6 +27,13 @@ public class SeatValidationService {
         if (seat != null) {
             logger.log(Level.ERROR, "Seat with line %1$s and %2$s number already exists");
             throw new SeatAlreadyExistsException("Seat exists");
+        }
+    }
+
+    public void  validateIsSold(Boolean isSold) throws IOException{
+        if (isSold == null) {
+            logger.log(Level.ERROR,"Please specify seat status");
+            throw new IOException();
         }
     }
 }

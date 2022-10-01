@@ -1,22 +1,22 @@
-package com.example.YerevanCinema.services;
+package com.example.YerevanCinema.services.implementations;
 
 import com.example.YerevanCinema.entities.Customer;
+import com.example.YerevanCinema.services.EmailService;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
 @Service
-public class GmailClientService implements EmailService{
+public class GmailClientServiceImpl implements EmailService {
 
     private final JavaMailSender emailSender;
 
-    public GmailClientService(JavaMailSender emailSender) {
+    public GmailClientServiceImpl(JavaMailSender emailSender) {
         this.emailSender = emailSender;
     }
 

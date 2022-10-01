@@ -9,8 +9,7 @@ import static com.example.YerevanCinema.enums.UserPermission.*;
 
 public enum UserRole {
     CUSTOMER(Set.of(READ)),
-    ADMIN(Set.of(READ, UPDATE)),
-    SUPERADMIN(Set.of(CREATE, READ, UPDATE, DELETE));
+    ADMIN(Set.of(CREATE, READ, UPDATE, DELETE));
 
     private final Set<UserPermission> permissions;
 

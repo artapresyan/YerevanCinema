@@ -147,4 +147,9 @@ public class CustomerServiceImpl implements CustomerService {
             throw new UserNotFoundException("User not found");
         }
     }
+
+    @Override
+    public boolean passwordsAreMatching(Customer customer, String password) {
+        return passwordEncoder.matches(password, customer.getCustomerPassword());
+    }
 }

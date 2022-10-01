@@ -141,4 +141,9 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
+    public boolean passwordsAreMatching(Admin admin, String password) {
+        return passwordEncoder.matches(password,admin.getAdminPassword());
+    }
+
 }

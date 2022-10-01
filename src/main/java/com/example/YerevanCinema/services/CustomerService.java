@@ -22,4 +22,7 @@ public interface CustomerService {
     Customer getCustomerByUsername(String username) throws UserNotFoundException;
 
     Customer getCustomerByEmail(String email) throws UserNotFoundException;
+
+    boolean passwordsAreMatching(Customer customer, String password);
+
 }

@@ -22,4 +22,6 @@ public interface AdminService {
     Admin getAdminByUsername(String username) throws UserNotFoundException;
 
     Admin getAdminByEmail(String email) throws UserNotFoundException;
+
+    boolean passwordsAreMatching(Admin admin, String password);
 }

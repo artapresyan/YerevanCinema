@@ -14,10 +14,11 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/css/*", "/js/*","/about", "/signup","/contact","/sessions").permitAll()
+                .antMatchers("/","/css/*", "/js/*","/about", "/signup","/contact",
+                        "/fonts/**","/vendor/**","/sessions","/login*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll();
+                .loginPage("/login");
     }
 }

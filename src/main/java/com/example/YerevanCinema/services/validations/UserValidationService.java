@@ -47,7 +47,7 @@ public class UserValidationService {
     }
 
     public void validateUsername(String username) throws IOException, UsernameExistsException {
-        if (username == null || !username.matches("^(?=.{3,}[a-z])[a-z0-9]{4,30}$")) {
+        if (username == null || !username.matches("^(?=.{3,}[a-z])[a-z0-9]{8,30}$")) {
             logger.log(Level.FATAL, String.format("Please be aware, username ' %s ' is invalid", username));
             throw new IOException();
         } else if (customerRepository.getByCustomerUsername(username) != null

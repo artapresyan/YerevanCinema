@@ -197,7 +197,7 @@ iframe {
 
 .limiter {
     width: 100%;
-    min-height: 100vh;
+    min-height: 130vh;
     margin: 0 auto;
     background-image: linear-gradient(45deg, #9860AF, #728AE9);
 }

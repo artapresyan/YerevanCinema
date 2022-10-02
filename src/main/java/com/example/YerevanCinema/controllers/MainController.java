@@ -38,4 +38,8 @@ public class MainController {
         return "no_auth_sessions_view";
     }
 
+    @GetMapping("recover")
+    public String getRecoverPage(){
+        return "recover_view";
+    }
 }

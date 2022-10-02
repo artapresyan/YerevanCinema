@@ -3,6 +3,7 @@ package com.example.YerevanCinema.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "customers")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class Customer {
 
@@ -45,8 +47,9 @@ public class Customer {
     @NotBlank
     private String customerPassword;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "customer")
-    private List<Ticket> customerTickets;
+    private List<Ticket> customerTickets = new java.util.ArrayList<>();
 
     public Customer(String customerName, String customerSurname,
                     Integer customerAge, String customerUsername, String customerEmail, String customerPassword) {

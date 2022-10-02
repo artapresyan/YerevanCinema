@@ -3,6 +3,7 @@ package com.example.YerevanCinema.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.util.List;
 @Table(name = "sessions")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class MovieSession {
 

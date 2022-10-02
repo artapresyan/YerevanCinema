@@ -3,6 +3,7 @@ package com.example.YerevanCinema.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +12,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "halls")
-@Getter @Setter
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 public class Hall {
 

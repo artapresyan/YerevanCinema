@@ -3,6 +3,7 @@ package com.example.YerevanCinema.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Table(name = "admins")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class Admin {
     @Id

@@ -3,6 +3,7 @@ package com.example.YerevanCinema.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,7 +11,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "movies")
-@Getter @Setter
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 public class Movie {
 
@@ -27,7 +30,7 @@ public class Movie {
     @NotBlank
     private String movieCategory;
 
-    @Column(name = "description" )
+    @Column(name = "description")
     private String movieDescription;
 
     @Column(name = "language")
@@ -36,7 +39,7 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private Set<MovieSession> movieSessions;
 
-    public Movie(String movieName,String movieCategory, String movieDescription, String movieLanguage) {
+    public Movie(String movieName, String movieCategory, String movieDescription, String movieLanguage) {
         this.movieName = movieName;
         this.movieDescription = movieDescription;
         this.movieLanguage = movieLanguage;

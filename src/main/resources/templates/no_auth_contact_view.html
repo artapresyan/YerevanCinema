@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact</title>
+
+    <link rel="icon" type="image/png" href="/static/images/cinema_black_icon.png"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="/static/css/card.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="/static/css/header.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/static/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+</head>
+<body>
+
+<div class="limiter">
+    <header>
+        <div class="logo">
+            <div class="logo-img">
+                <a href="/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
+            </div>
+            <div class="name">
+                <h2>YerevanCinema</h2>
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="menu">
+                <ul>
+                    <a href="/sessions">
+                        <li>Sessions</li>
+                    </a>
+                    <a href="/about">
+                        <li>About</li>
+                    </a>
+                    <a>
+                        <li>Contact</li>
+                    </a>
+                    <a href="/login">
+                        <li>Log In</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <h1 style="margin-top: 40px;text-align: center;font-size: 55px;text-shadow: -2px -2px 8px;">
+        Contact us
+    </h1>
+    <div class="center-2">
+        <div class="front-face">
+            <div class="contents front">
+                <form action="/contact" method="post">
+                    <div class="wrap-input100 validate-input" style="border-radius: 10px;" data-validate="Invalid name">
+                        <label>Name
+                            <input class="input100" style="border-radius: 10px;background-color: white" type="text"
+                                   name="name">
+                        </label>
+                    </div>
+                    <div class="wrap-input100 validate-input" style="border-radius: 10px;"
+                         data-validate="Invalid email">
+                        <label>Email
+                            <input class="input100" style="border-radius: 10px;background-color: white" type="text"
+                                   name="email">
+                        </label>
+                    </div>
+                    <div class="wrap-input100 validate-input" style="border-radius: 10px;"
+                         data-validate="Invalid message">
+                        <label>Message
+                            <textarea class="input100-message" style="border-radius: 10px;background-color: white"
+                                      type="text" name="message"></textarea>
+                        </label>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn" style="background-color: black" type="submit">
+                                Send Message
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

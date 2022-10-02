@@ -9,7 +9,7 @@ body{
     font-family: 'Montserrat', sans-serif;
     background: linear-gradient(45deg,#d8f2f3 0%,#ebf9f9 100%);
 }
-.center-1,.center-2,.center-3,.center-big,.front-face,
+.center-1,.center-2,.center-3,.center-big,.center-small,.front-face,
 .contents{
     position: absolute;
 }
@@ -46,6 +46,15 @@ body{
     transform: translate(-50%, -50%);
     height: 500px;
     width: 600px;
+    perspective: 1000px;
+}
+.center-small{
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 300px;
+    width: 300px;
+    transform-style: preserve-3d;
     perspective: 1000px;
 }
 .front-face{

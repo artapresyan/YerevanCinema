@@ -70,7 +70,7 @@ public class UserValidationService {
 
     public void validatePassword(String password) throws IOException{
         if (password == null || !password
-                .matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")){
+                .matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%#&()/*?])[A-Za-z\\d@$!%#&()/*?]{8,20}$")){
             logger.log(Level.FATAL, "Please be aware, password must contain at least" +
                     " one special character, one capital letter, one number, and the minimum length is 10 characters");
             throw new IOException();

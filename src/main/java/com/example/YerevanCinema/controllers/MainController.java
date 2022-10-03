@@ -98,8 +98,7 @@ public class MainController {
     }
 
     @PostMapping("contact")
-    public String sendMessage(@RequestParam(value = "name", required = false) String name,
-                              @RequestParam("email") String email, @RequestParam("message") String message) {
+    public String sendMessage(@RequestParam("email") String email, @RequestParam("message") String message) {
         try {
             gmailClientService.getSimpleMessage(email, message);
         } catch (MessagingException e) {
@@ -116,5 +115,33 @@ public class MainController {
     @GetMapping("recover")
     public String getRecoverPage() {
         return "recover_view";
+    }
+
+    @PostMapping("recover/password")
+    public String recoverPassword(@RequestParam("pass_email") String email,@RequestParam("username") String username){
+        try{
+            Customer customer = customerService.getCustomerByUsername(username);
+            if (customer.getCustomerEmail().equals(email)){
+                gmailClientService.sendSimpleMessage(customer,"If you asked for password recovery contact us by email",
+                        "RESET PASSWORD REQUEST");
+            }
+            return "redirect:/";
+        }catch (UserNotFoundException | MessagingException ignored){
+        }
+        return "redirect:/recover";
+    }
+
+    @PostMapping("recover/username")
+    public String recoverUsername(@RequestParam("pass_email") String email,@RequestParam("password") String password){
+        try{
+            Customer customer = customerService.getCustomerByEmail(email);
+            if (customerService.passwordsAreMatching(customer,password)){
+                gmailClientService.sendSimpleMessage(customer,"If you asked for username recovery contact us by email",
+                        "RESET USERNAME REQUEST");
+            }
+            return "redirect:/";
+        }catch (UserNotFoundException | MessagingException ignored){
+        }
+        return "redirect:/recover";
     }
 }

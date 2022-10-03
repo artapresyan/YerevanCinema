@@ -8,10 +8,7 @@ import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
 import com.example.YerevanCinema.services.implementations.GmailClientServiceImpl;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
@@ -24,6 +21,7 @@ public class MainRestController {
     private final AdminServiceImpl adminService;
 
     private final GmailClientServiceImpl gmailClientService;
+
     public MainRestController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService) {
         this.customerService = customerService;
         this.adminService = adminService;
@@ -71,13 +69,40 @@ public class MainRestController {
     }
 
     @PostMapping("contact")
-    public String sendMessage(@RequestParam(value = "name", required = false) String name,
-                              @RequestParam("email") String email, @RequestParam("message") String message) {
+    public String sendMessage(@RequestParam("email") String email, @RequestParam("message") String message) {
         try {
             gmailClientService.getSimpleMessage(email, message);
             return "SENT";
         } catch (MessagingException e) {
             return e.getMessage();
         }
+    }
+
+    @PostMapping("recover/password")
+    public Customer recoverPassword(@RequestParam("pass_email") String email, @RequestParam("username") String username) {
+        try {
+            Customer customer = customerService.getCustomerByUsername(username);
+            if (customer.getCustomerEmail().equals(email)) {
+                gmailClientService.sendSimpleMessage(customer, "If you asked for password recovery contact us by email",
+                        "RESET PASSWORD REQUEST");
+            }
+            return customer;
+        } catch (UserNotFoundException | MessagingException ignored) {
+        }
+        return null;
+    }
+
+    @PostMapping("recover/username")
+    public Customer recoverUsername(@RequestParam("pass_email") String email, @RequestParam("password") String password) {
+        try {
+            Customer customer = customerService.getCustomerByEmail(email);
+            if (customerService.passwordsAreMatching(customer, password)) {
+                gmailClientService.sendSimpleMessage(customer, "If you asked for username recovery contact us by email",
+                        "RESET USERNAME REQUEST");
+            }
+            return customer;
+        } catch (UserNotFoundException | MessagingException ignored) {
+        }
+        return null;
     }
 }

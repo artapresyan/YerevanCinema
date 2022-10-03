@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/static/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/static/css/animate.css">
     <!--===============================================================================================-->
@@ -25,11 +26,33 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/static/css/util.css">
     <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
     <!--===============================================================================================-->
 </head>
 <body>
 
 <div class="limiter">
+    <header>
+        <div class="logo">
+            <div class="logo-img">
+                <a href="/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
+            </div>
+            <div class="name">
+                <h2>YerevanCinema</h2>
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="menu">
+                <ul>
+                    <a href="/sessions"><li>Sessions</li></a>
+                    <a href="/about"><li>About</li></a>
+                    <a href="/contact"><li>Contact</li></a>
+                    <a><li>Log In</li></a>
+                </ul>
+            </div>
+        </div>
+    </header>
     <div class="container-login100">
         <div class="wrap-login100">
             <form action="/login" method="post" class="login100-form validate-form">
@@ -52,34 +75,41 @@
                     <input class="input100" type="password" name="password">
                     <span class="focus-input100" data-placeholder="Password"></span>
                 </div>
-
                 <div class="container-login100-form-btn">
-                    <a style="margin-bottom: 10px" class="txt2" href="/recover">
-                        <font size="+0.3"> Forgot username or password?</font>
-                    </a>
-                    <div class="wrap-login100-form-btn">
+                    <div style="margin-top: 10px" class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>
                         <button class="login100-form-btn" type="submit">
                             Login
                         </button>
                     </div>
                 </div>
-
-                <div class="text-center p-t-115">
-						<span class="txt1">
-							Don’t have an account?
-						</span>
-
-                    <a class="txt2" href="/signup">
-                        Sign Up
-                    </a>
-                </div>
             </form>
+            <div class="text-center p-t-70">
+                <div>
+                    <span class="txt1">Forgot username or password?</span>
+                    <a class="txt2" href="/recover">Recover here</a><br>
+                    <span class="txt1">Don’t have an account?</span>
+                    <a class="txt2" href="/signup">Sign Up</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
+<footer >
+    <div class="box">
+        <div class="icons">
+            <a href="https://facebook.com"><i class="fa fa-facebook-official" style="color: white; font-size: 20px;"></i></a>
+            <a href="https://instagram.com"><i class="fa fa-instagram" style="color: white; font-size: 20px;"></i></a>
+            <a href="https://twitter.com"><i class="fa fa-twitter" style="color: white; font-size: 20px;"></i></a>
+        </div>
+        <div class="text">
+            <p  style="color: white">© YerevanCinema</p>
+            <p style="color: white">Komitas 35, Yerevan</p>
+            <p style="color: white">Tel. +374 10 10 10 10</p>
+        </div>
+    </div>
+</footer>
 <div id="dropDownSelect1"></div>
 
 <!--===============================================================================================-->

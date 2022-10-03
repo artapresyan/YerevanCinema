@@ -1,19 +1,29 @@
 package com.example.YerevanCinema.controllers;
 
+import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Customer;
+import com.example.YerevanCinema.exceptions.UserNotFoundException;
+import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
 import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
 public class MainController {
 
     private final CustomerServiceImpl customerService;
+    private final AdminServiceImpl adminService;
 
-    public MainController(CustomerServiceImpl customerService) {
+    public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService) {
         this.customerService = customerService;
+        this.adminService = adminService;
     }
 
     @GetMapping
@@ -26,6 +36,32 @@ public class MainController {
         return "login_view";
     }
 
+    @PostMapping("login")
+    public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
+                            HttpSession session, ModelMap model) {
+        try {
+            Customer customer = customerService.getCustomerByUsername(username);
+            if (customerService.passwordsAreMatching(customer, password)) {
+                session.setAttribute("user", customer);
+                model.addAttribute("user", customer);
+                return "redirect:/customer/";
+            }
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Admin admin = adminService.getAdminByUsername(username);
+            if (adminService.passwordsAreMatching(admin, password)) {
+                session.setAttribute("user", admin);
+                model.addAttribute("user", admin);
+                return "redirect:/admin/";
+            }
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/login";
+    }
+
     @GetMapping("signup")
     public String getSighUpPage() {
         return "signup_view";
@@ -35,11 +71,11 @@ public class MainController {
     public String signUpCustomer(@RequestParam("name") String name, @RequestParam("surname") String surname,
                                  @RequestParam("age") Integer age, @RequestParam("email") String email,
                                  @RequestParam("username") String username, @RequestParam("password") String password,
-                                 @RequestParam("confirm_password") String confirmPassword, Model model) {
+                                 @RequestParam("confirm_password") String confirmPassword, HttpSession session) {
         if (customerService.confirmPassword(password, confirmPassword)) {
             Customer customer = customerService.registerCustomer(name, surname, age, username, email, password);
             if (customer != null) {
-                model.addAttribute("customer", customer);
+                session.setAttribute("user", customer);
                 return "main_view";
             }
         }

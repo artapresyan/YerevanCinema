@@ -5,6 +5,7 @@ import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
 import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
+import com.example.YerevanCinema.services.implementations.GmailClientServiceImpl;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -21,9 +23,11 @@ public class MainRestController {
     private final CustomerServiceImpl customerService;
     private final AdminServiceImpl adminService;
 
-    public MainRestController(CustomerServiceImpl customerService, AdminServiceImpl adminService) {
+    private final GmailClientServiceImpl gmailClientService;
+    public MainRestController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService) {
         this.customerService = customerService;
         this.adminService = adminService;
+        this.gmailClientService = gmailClientService;
     }
 
 
@@ -64,5 +68,16 @@ public class MainRestController {
         } catch (UserNotFoundException ignored) {
         }
         return null;
+    }
+
+    @PostMapping("contact")
+    public String sendMessage(@RequestParam(value = "name", required = false) String name,
+                              @RequestParam("email") String email, @RequestParam("message") String message) {
+        try {
+            gmailClientService.getSimpleMessage(email, message);
+            return "SENT";
+        } catch (MessagingException e) {
+            return e.getMessage();
+        }
     }
 }

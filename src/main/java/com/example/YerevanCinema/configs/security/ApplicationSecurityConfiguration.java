@@ -15,14 +15,12 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/about", "/signup", "/contact", "/sessions", "/login", "/css/*", "/js/*",
-                        "/images/*", "/fonts/*", "/scss/*","/poppins/*", "/less/*","/rest/api/**").permitAll()
+                .antMatchers("/", "/about", "/signup", "/contact", "/sessions", "/login", "/static/css/*", "/static/js/*",
+                        "/static/images/*", "/static/fonts/*", "/static/scss/*","/static/poppins/*", "/static/less/*","/rest/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .and()
-                .rememberMe()
                 .and()
                 .logout()
                 .logoutUrl("/logout")

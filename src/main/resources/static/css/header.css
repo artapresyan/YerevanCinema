@@ -65,6 +65,7 @@ ul{
 
 ul li{
     font-size: 20px;
+    font-weight: 600;
     font-family: 'Montserrat', sans-serif;
     cursor: pointer;
     margin-top: 25px;

@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -32,7 +33,7 @@ public class Customer {
     private String customerSurname;
 
     @Column(name = "age")
-    @NotBlank
+    @NotNull
     private Integer customerAge;
 
     @Column(name = "username", unique = true)

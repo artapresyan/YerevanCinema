@@ -14,7 +14,7 @@ body{
     position: absolute;
 }
 .center-1{
-    top: 65%;
+    top: 75%;
     left: 20%;
     transform: translate(-50%, -50%);
     height: 300px;
@@ -23,7 +23,7 @@ body{
     perspective: 1000px;
 }
 .center-2{
-    top: 65%;
+    top: 75%;
     left: 50%;
     transform: translate(-50%, -50%);
     height: 300px;
@@ -32,7 +32,7 @@ body{
     perspective: 1000px;
 }
 .center-3{
-    top: 65%;
+    top: 75%;
     left: 80%;
     transform: translate(-50%, -50%);
     height: 300px;

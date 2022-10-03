@@ -26,7 +26,12 @@ public class CustomerController {
         return "about_view";
     }
 
-
+    @GetMapping("contact")
+    public String getContactPage(HttpSession session, Model model){
+        Customer customer = (Customer) session.getAttribute("user");
+        model.addAttribute("user", customer);
+        return "contact_view";
+    }
 
     @GetMapping("sessions")
     public String getSessionsPage() {

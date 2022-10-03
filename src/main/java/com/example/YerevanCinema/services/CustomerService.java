@@ -25,4 +25,5 @@ public interface CustomerService {
 
     boolean passwordsAreMatching(Customer customer, String password);
 
+    boolean confirmPassword(String password, String confirmPassword);
 }

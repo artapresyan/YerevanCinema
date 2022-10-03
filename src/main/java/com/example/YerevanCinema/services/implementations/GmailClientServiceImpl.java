@@ -44,4 +44,15 @@ public class GmailClientServiceImpl implements EmailService {
 
         emailSender.send(message);
     }
+
+    @Override
+    public void getSimpleMessage(String email, String text) throws MessagingException {
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo("cinemayerevan@gmail.com");
+        helper.setSubject("ISSUE from " + email);
+        helper.setText(text);
+
+        emailSender.send(message);
+    }
 }

@@ -2,10 +2,12 @@ package com.example.YerevanCinema.controllers;
 
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Customer;
+import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
 import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
 import com.example.YerevanCinema.services.implementations.GmailClientServiceImpl;
+import com.example.YerevanCinema.services.validations.UserValidationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/")
@@ -22,13 +25,13 @@ public class MainController {
 
     private final CustomerServiceImpl customerService;
     private final AdminServiceImpl adminService;
-
     private final GmailClientServiceImpl gmailClientService;
-
-    public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService) {
+    private final UserValidationService userValidationService;
+    public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService, UserValidationService userValidationService) {
         this.customerService = customerService;
         this.adminService = adminService;
         this.gmailClientService = gmailClientService;
+        this.userValidationService = userValidationService;
     }
 
     @GetMapping
@@ -100,8 +103,9 @@ public class MainController {
     @PostMapping("contact")
     public String sendMessage(@RequestParam("email") String email, @RequestParam("message") String message) {
         try {
+            userValidationService.validateEmail(email);
             gmailClientService.getSimpleMessage(email, message);
-        } catch (MessagingException e) {
+        } catch (MessagingException | RegisteredEmailException | IOException e) {
             return "redirect:/contact";
         }
         return "redirect:/";

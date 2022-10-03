@@ -20,7 +20,9 @@ public class CustomerController {
     }
 
     @GetMapping("about")
-    private String getAboutPage() {
+    private String getAboutPage(HttpSession session, Model model) {
+        Customer customer = (Customer) session.getAttribute("user");
+        model.addAttribute("user", customer);
         return "about_view";
     }
 

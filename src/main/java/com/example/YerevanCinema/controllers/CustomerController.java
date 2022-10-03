@@ -28,7 +28,7 @@ public class CustomerController {
 
     @GetMapping("sessions")
     private String getSessionsPage() {
-        return "about_view";
+        return "sessions_view";
     }
 
     @GetMapping("details")
@@ -38,6 +38,6 @@ public class CustomerController {
 
     @GetMapping("sessions/seat")
     private String getSeatsPage() {
-        return "about_view";
+        return "seat_view";
     }
 }

@@ -36,6 +36,7 @@ public class MovieSession {
     private Integer movieSessionPrice;
 
     @OneToMany(mappedBy = "movieSession")
+    @ToString.Exclude
     private List<Ticket> movieSessionTickets;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})

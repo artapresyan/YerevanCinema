@@ -37,6 +37,7 @@ public class Movie {
     private String movieLanguage;
 
     @OneToMany(mappedBy = "movie")
+    @ToString.Exclude
     private Set<MovieSession> movieSessions;
 
     public Movie(String movieName, String movieCategory, String movieDescription, String movieLanguage) {

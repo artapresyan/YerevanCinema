@@ -32,9 +32,11 @@ public class Hall {
     private Integer hallCapacity;
 
     @OneToMany(mappedBy = "hall")
+    @ToString.Exclude
     private Set<Seat> hallSeats;
 
     @OneToMany(mappedBy = "hall")
+    @ToString.Exclude
     private Set<MovieSession> movieSessions;
 
     public Hall(String hallName, Integer hallCapacity) {

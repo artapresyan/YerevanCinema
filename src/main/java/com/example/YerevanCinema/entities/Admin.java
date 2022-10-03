@@ -42,6 +42,7 @@ public class Admin {
     private String adminPassword;
 
     @OneToMany(mappedBy = "admin")
+    @ToString.Exclude
     private Set<MovieSession> addedMovieSessions;
 
     public Admin(String adminName, String adminSurname, String adminEmail, String adminUsername, String adminPassword) {

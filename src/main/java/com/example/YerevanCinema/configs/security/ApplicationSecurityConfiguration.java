@@ -16,7 +16,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .authorizeRequests()
                 .antMatchers("/", "/about", "/signup", "/contact", "/sessions", "/login",
                         "/static/css/*", "/static/js/*", "/static/fonts/*", "/static/images/*",
-                        "/static/less/*","/static/poppins/*","/static/scss/*").permitAll()
+                        "/static/less/*","/static/poppins/*","/static/scss/*","/rest/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

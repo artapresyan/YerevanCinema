@@ -7,11 +7,10 @@
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="/static/images/cinema_black_icon.png"/>
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/static/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/static/css/animate.css">
     <!--===============================================================================================-->
@@ -25,11 +24,33 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/static/css/util.css">
     <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
     <!--===============================================================================================-->
 </head>
 <body>
-
+<header>
+    <div class="logo">
+        <div class="logo-img">
+            <a href="/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
+        </div>
+        <div class="name">
+            <h2>YerevanCinema</h2>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="menu">
+            <ul>
+                <a href="/sessions"><li>Sessions</li></a>
+                <a href="/about"><li>About</li></a>
+                <a href="/contact"><li>Contact</li></a>
+                <a href="/login"><li>Log In</li></a>
+            </ul>
+        </div>
+    </div>
+</header>
 <div class="limiter">
+
     <div class="container-login100">
         <div class="wrap-login100">
             <form action="/signup" method="post" class="login100-form validate-form">
@@ -82,6 +103,20 @@
     </div>
 </div>
 
+<footer >
+    <div class="box">
+        <div class="icons">
+            <a href="https://facebook.com"><i class="fa fa-facebook-official" style="color: white; font-size: 20px;"></i></a>
+            <a href="https://instagram.com"><i class="fa fa-instagram" style="color: white; font-size: 20px;"></i></a>
+            <a href="https://twitter.com"><i class="fa fa-twitter" style="color: white; font-size: 20px;"></i></a>
+        </div>
+        <div class="text">
+            <p  style="color: white">© YerevanCinema</p>
+            <p style="color: white">Komitas 35, Yerevan</p>
+            <p style="color: white">Tel. +374 10 10 10 10</p>
+        </div>
+    </div>
+</footer>
 
 <div id="dropDownSelect1"></div>
 

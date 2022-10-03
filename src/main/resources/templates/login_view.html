@@ -7,8 +7,6 @@
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="/static/images/cinema_black_icon.png"/>
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="/static/css/material-design-iconic-font.min.css">
@@ -31,28 +29,28 @@
     <!--===============================================================================================-->
 </head>
 <body>
-
+<header>
+    <div class="logo">
+        <div class="logo-img">
+            <a href="/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
+        </div>
+        <div class="name">
+            <h2>YerevanCinema</h2>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="menu">
+            <ul>
+                <a href="/sessions"><li>Sessions</li></a>
+                <a href="/about"><li>About</li></a>
+                <a href="/contact"><li>Contact</li></a>
+                <a><li>Log In</li></a>
+            </ul>
+        </div>
+    </div>
+</header>
 <div class="limiter">
-    <header>
-        <div class="logo">
-            <div class="logo-img">
-                <a href="/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
-            </div>
-            <div class="name">
-                <h2>YerevanCinema</h2>
-            </div>
-        </div>
-        <div class="header-menu">
-            <div class="menu">
-                <ul>
-                    <a href="/sessions"><li>Sessions</li></a>
-                    <a href="/about"><li>About</li></a>
-                    <a href="/contact"><li>Contact</li></a>
-                    <a><li>Log In</li></a>
-                </ul>
-            </div>
-        </div>
-    </header>
+
     <div class="container-login100">
         <div class="wrap-login100">
             <form action="/login" method="post" class="login100-form validate-form">

@@ -9,4 +9,6 @@ public interface EmailService {
     void sendMessageWithAttachment(Customer customer, String pathToAttachment) throws MessagingException;
 
     void sendSimpleMessage(Customer customer,String text, String subject) throws MessagingException;
+
+    void getSimpleMessage(String email, String text) throws MessagingException;
 }

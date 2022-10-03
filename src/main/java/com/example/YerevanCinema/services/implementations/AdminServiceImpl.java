@@ -146,4 +146,9 @@ public class AdminServiceImpl implements AdminService {
         return passwordEncoder.matches(password,admin.getAdminPassword());
     }
 
+    @Override
+    public boolean confirmPassword(String password, String confirmPassword) {
+        return password.equals(confirmPassword);
+    }
+
 }

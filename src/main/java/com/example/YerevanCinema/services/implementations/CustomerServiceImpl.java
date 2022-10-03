@@ -152,4 +152,11 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean passwordsAreMatching(Customer customer, String password) {
         return passwordEncoder.matches(password, customer.getCustomerPassword());
     }
+
+    @Override
+    public boolean confirmPassword(String password, String confirmPassword) {
+        return password.equals(confirmPassword);
+    }
+
+
 }

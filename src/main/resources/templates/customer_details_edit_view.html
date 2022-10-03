@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About</title>
+
+    <link rel="icon" type="image/png" href="/static/images/cinema_black_icon.png"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="/static/css/card.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js">
+
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/profile-nav.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/static/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+</head>
+<body style="background-image: linear-gradient(45deg, #9860AF, #728AE9);">
+<header>
+    <div class="logo">
+        <div class="logo-img">
+            <a href="/customer/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
+        </div>
+        <div class="name">
+            <h2>YerevanCinema</h2>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="menu">
+            <ul>
+                <a href="/customer/sessions">
+                    <li>Sessions</li>
+                </a>
+                <a href="/customer/about">
+                    <li>About</li>
+                </a>
+                <a href="/customer/contact">
+                    <li>Contact</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</header>
+<div style="width: 50%" class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Details</h4>
+                </div>
+                <form action="/customer/details/edit" method="post">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels">Name</label>
+                            <input type="text" class="form-control" value="">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Surname</label>
+                            <input type="text" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div style="margin-top: 10px" class="col-md-6">
+                            <label class="labels">Age</label>
+                            <input type="text" class="form-control" value="">
+                        </div>
+                        <div style="margin-top: 10px" class="col-md-6">
+                            <label class="labels">Username</label>
+                            <input type="text" class="form-control" value="">
+                        </div>
+                        <div style="margin-top: 10px" class="col-md-6">
+                            <label class="labels">Email</label>
+                            <input type="text" class="form-control" value="">
+                        </div>
+                        <div style="margin-top: 10px" class="col-md-6">
+                            <label class="labels">New Password</label>
+                            <input type="text" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" type="submit">
+                            <a style="color: white;text-decoration:none">Save Profile</a>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer style="margin-top: 110px">
+    <div class="box">
+        <div class="icons">
+            <a href="https://facebook.com"><i class="fa fa-facebook-official"
+                                              style="color: white; font-size: 20px;"></i></a>
+            <a href="https://instagram.com"><i class="fa fa-instagram" style="color: white; font-size: 20px;"></i></a>
+            <a href="https://twitter.com"><i class="fa fa-twitter" style="color: white; font-size: 20px;"></i></a>
+        </div>
+        <div class="text">
+            <p style="color: white">© YerevanCinema</p>
+            <p style="color: white">Komitas 35, Yerevan</p>
+            <p style="color: white">Tel. +374 10 10 10 10</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -13,31 +13,33 @@ import javax.servlet.http.HttpSession;
 public class CustomerController {
 
     @GetMapping
-    private String getCustomerHomePage(HttpSession session, Model model) {
+    public String getCustomerHomePage(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");
         model.addAttribute("user", customer);
         return "main_view";
     }
 
     @GetMapping("about")
-    private String getAboutPage(HttpSession session, Model model) {
+    public String getAboutPage(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");
         model.addAttribute("user", customer);
         return "about_view";
     }
 
+
+
     @GetMapping("sessions")
-    private String getSessionsPage() {
+    public String getSessionsPage() {
         return "sessions_view";
     }
 
     @GetMapping("details")
-    private String getDetailsPage() {
+    public String getDetailsPage() {
         return "details_view";
     }
 
     @GetMapping("sessions/seat")
-    private String getSeatsPage() {
+    public String getSeatsPage() {
         return "seat_view";
     }
 }

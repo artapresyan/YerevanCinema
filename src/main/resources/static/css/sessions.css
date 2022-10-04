@@ -41,6 +41,12 @@ table {
     font-size: .8rem;
 }
 
+button{
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
 .first{
     border-bottom-left-radius: 10px;
     border-top-left-radius: 10px

@@ -27,6 +27,7 @@ public class MainController {
     private final AdminServiceImpl adminService;
     private final GmailClientServiceImpl gmailClientService;
     private final UserValidationService userValidationService;
+
     public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService, UserValidationService userValidationService) {
         this.customerService = customerService;
         this.adminService = adminService;
@@ -121,30 +122,28 @@ public class MainController {
         return "recover_view";
     }
 
-    @PostMapping("recover/password")
-    public String recoverPassword(@RequestParam("pass_email") String email,@RequestParam("username") String username){
-        try{
-            Customer customer = customerService.getCustomerByUsername(username);
-            if (customer.getCustomerEmail().equals(email)){
-                gmailClientService.sendSimpleMessage(customer,"If you asked for password recovery contact us by email",
-                        "RESET PASSWORD REQUEST");
-            }
-            return "redirect:/";
-        }catch (UserNotFoundException | MessagingException ignored){
-        }
-        return "redirect:/recover";
-    }
-
-    @PostMapping("recover/username")
-    public String recoverUsername(@RequestParam("pass_email") String email,@RequestParam("password") String password){
-        try{
+    @PostMapping("recover")
+    public String recoverCustomerAccount(@RequestParam(value = "pass_email", required = false) String passEmail,
+                                         @RequestParam(value = "password", required = false) String password,
+                                         @RequestParam(value = "email", required = false) String email,
+                                         @RequestParam(value = "username", required = false) String username) {
+        try {
             Customer customer = customerService.getCustomerByEmail(email);
-            if (customerService.passwordsAreMatching(customer,password)){
-                gmailClientService.sendSimpleMessage(customer,"If you asked for username recovery contact us by email",
+            if (customerService.passwordsAreMatching(customer, password)) {
+                gmailClientService.sendSimpleMessage(customer, "If you asked for username recovery contact us by email",
                         "RESET USERNAME REQUEST");
             }
             return "redirect:/";
-        }catch (UserNotFoundException | MessagingException ignored){
+        } catch (UserNotFoundException | MessagingException ignored) {
+        }
+        try {
+            Customer customer = customerService.getCustomerByUsername(username);
+            if (customer.getCustomerEmail().equals(passEmail)) {
+                gmailClientService.sendSimpleMessage(customer, "If you asked for password recovery contact us by email",
+                        "RESET PASSWORD REQUEST");
+            }
+            return "redirect:/";
+        } catch (UserNotFoundException | MessagingException ignored) {
         }
         return "redirect:/recover";
     }

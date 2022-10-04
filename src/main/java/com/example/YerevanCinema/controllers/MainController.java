@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -121,7 +122,9 @@ public class MainController {
 
     @GetMapping("sessions")
     public String getSessions(Model model) {
-        List<MovieSession> movieSessions = sessionService.getAllMovieSessions().stream().limit(7).collect(Collectors.toList());
+        List<MovieSession> movieSessions = sessionService.getAllMovieSessions().stream()
+                .filter(movieSession -> movieSession.getMovieSessionStart().isBefore(LocalDateTime.now().plusDays(7)))
+                .collect(Collectors.toList());
         model.addAttribute("movie_sessions", movieSessions);
         return "no_auth_sessions_view";
     }

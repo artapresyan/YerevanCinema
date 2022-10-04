@@ -169,9 +169,9 @@ public class CustomerController {
             qrCodeService.generateQRCodeImage(customer);
             gmailClientService.sendMessageWithAttachment(customer, String.format(qrPath, ticket.getTicketID(),
                     customer.getCustomerUsername()));
+            return "redirect:/customer/tickets";
         } catch (Exception e) {
             return "redirect:/customer/sessions";
         }
-        return "redirect:/customer/tickets";
     }
 }

@@ -13,7 +13,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,9 +79,9 @@ public class MainRestController {
     @PostMapping("contact")
     public String sendMessage(@RequestParam("email") String email, @RequestParam("message") String message) {
         try {
-            gmailClientService.getSimpleMessage(email, message);
-            return "SENT";
-        } catch (MessagingException e) {
+            MimeMessage mimeMessage = gmailClientService.getSimpleMessage(email, message);
+            return mimeMessage.getContent().toString();
+        } catch (MessagingException | IOException e) {
             return e.getMessage();
         }
     }

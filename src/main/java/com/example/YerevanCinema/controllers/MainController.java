@@ -2,14 +2,16 @@ package com.example.YerevanCinema.controllers;
 
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Customer;
+import com.example.YerevanCinema.entities.MovieSession;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
 import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
 import com.example.YerevanCinema.services.implementations.GmailClientServiceImpl;
+import com.example.YerevanCinema.services.implementations.MovieSessionServiceImpl;
 import com.example.YerevanCinema.services.validations.UserValidationService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -28,11 +32,14 @@ public class MainController {
     private final GmailClientServiceImpl gmailClientService;
     private final UserValidationService userValidationService;
 
-    public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService, UserValidationService userValidationService) {
+    private final MovieSessionServiceImpl sessionService;
+
+    public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService, UserValidationService userValidationService, MovieSessionServiceImpl sessionService) {
         this.customerService = customerService;
         this.adminService = adminService;
         this.gmailClientService = gmailClientService;
         this.userValidationService = userValidationService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping
@@ -47,7 +54,7 @@ public class MainController {
 
     @PostMapping("login")
     public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
-                            HttpSession session, ModelMap model) {
+                            HttpSession session, Model model) {
         try {
             Customer customer = customerService.getCustomerByUsername(username);
             if (customerService.passwordsAreMatching(customer, password)) {
@@ -113,7 +120,9 @@ public class MainController {
     }
 
     @GetMapping("sessions")
-    public String getSessions() {
+    public String getSessions(Model model) {
+        List<MovieSession> movieSessions = sessionService.getAllMovieSessions().stream().limit(7).collect(Collectors.toList());
+        model.addAttribute("movie_sessions", movieSessions);
         return "no_auth_sessions_view";
     }
 

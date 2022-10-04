@@ -2,16 +2,20 @@ package com.example.YerevanCinema.controllers.rest_controllers;
 
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Customer;
+import com.example.YerevanCinema.entities.MovieSession;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
 import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
 import com.example.YerevanCinema.services.implementations.GmailClientServiceImpl;
+import com.example.YerevanCinema.services.implementations.MovieSessionServiceImpl;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/api/")
@@ -22,10 +26,12 @@ public class MainRestController {
 
     private final GmailClientServiceImpl gmailClientService;
 
-    public MainRestController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService) {
+    private final MovieSessionServiceImpl sessionService;
+    public MainRestController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService, MovieSessionServiceImpl sessionService) {
         this.customerService = customerService;
         this.adminService = adminService;
         this.gmailClientService = gmailClientService;
+        this.sessionService = sessionService;
     }
 
 
@@ -78,31 +84,36 @@ public class MainRestController {
         }
     }
 
-    @PostMapping("recover/password")
-    public Customer recoverPassword(@RequestParam("pass_email") String email, @RequestParam("username") String username) {
-        try {
-            Customer customer = customerService.getCustomerByUsername(username);
-            if (customer.getCustomerEmail().equals(email)) {
-                gmailClientService.sendSimpleMessage(customer, "If you asked for password recovery contact us by email",
-                        "RESET PASSWORD REQUEST");
-            }
-            return customer;
-        } catch (UserNotFoundException | MessagingException ignored) {
-        }
-        return null;
-    }
-
-    @PostMapping("recover/username")
-    public Customer recoverUsername(@RequestParam("pass_email") String email, @RequestParam("password") String password) {
+    @PostMapping("recover")
+    public String recoverCustomerAccount(@RequestParam(value = "pass_email", required = false) String passEmail,
+                                           @RequestParam(value = "password", required = false) String password,
+                                           @RequestParam(value = "email", required = false) String email,
+                                           @RequestParam(value = "username", required = false) String username) {
         try {
             Customer customer = customerService.getCustomerByEmail(email);
             if (customerService.passwordsAreMatching(customer, password)) {
                 gmailClientService.sendSimpleMessage(customer, "If you asked for username recovery contact us by email",
                         "RESET USERNAME REQUEST");
             }
-            return customer;
+            return "SENT";
         } catch (UserNotFoundException | MessagingException ignored) {
         }
-        return null;
+        try {
+            Customer customer = customerService.getCustomerByUsername(username);
+            if (customer.getCustomerEmail().equals(passEmail)) {
+                gmailClientService.sendSimpleMessage(customer, "If you asked for password recovery contact us by email",
+                        "RESET PASSWORD REQUEST");
+            }
+            return "SENT";
+        } catch (UserNotFoundException | MessagingException ignored) {
+        }
+        return "ERROR while trying to send verification mail";
+    }
+
+    @GetMapping("sessions")
+    public List<MovieSession> getSessions(Model model) {
+        List<MovieSession> movieSessions = sessionService.getAllMovieSessions().stream().limit(7).collect(Collectors.toList());
+        model.addAttribute("movie_sessions", movieSessions);
+        return movieSessions;
     }
 }

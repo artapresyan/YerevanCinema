@@ -57,7 +57,7 @@ public class CustomerController {
     public String getContactPage(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");
         model.addAttribute("user", customer);
-        return "contact_view";
+        return "customer_contact_view";
     }
 
     @PostMapping("contact")
@@ -66,7 +66,7 @@ public class CustomerController {
             Customer customer = (Customer) session.getAttribute("user");
             gmailClientService.getSimpleMessage(customer.getCustomerEmail(), message);
         } catch (MessagingException e) {
-            return "contact_view";
+            return "customer_contact_view";
         }
         return "customer_main_view";
     }

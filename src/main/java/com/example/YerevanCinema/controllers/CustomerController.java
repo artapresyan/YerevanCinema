@@ -124,43 +124,43 @@ public class CustomerController {
         return "customer_sessions_view";
     }
 
-    @GetMapping("sessions/movie_name")
-    public String getSessionsByMovieName(@RequestParam("name") String name, Model model) {
+    @GetMapping("sessions/movie")
+    public String getSessionsByMovieName(@RequestParam("movie_name") String name, Model model) {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> movieSession.getMovie().getMovieName().equals(name))
                 .collect(Collectors.toList());
-        model.addAttribute("session_movie", movieSessions);
+        model.addAttribute("movies", movieSessions);
         return "sessions_selected_view";
     }
 
-    @GetMapping("sessions/movie_category")
-    public String getSessionsByMovieCategory(@RequestParam("category") String movieCategory, Model model) {
+    @GetMapping("sessions/category")
+    public String getSessionsByMovieCategory(@RequestParam("movie_category") String movieCategory, Model model) {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(movieCategory))
                 .collect(Collectors.toList());
-        model.addAttribute("session_movie", movieSessions);
+        model.addAttribute("movies", movieSessions);
         return "sessions_selected_view";
     }
 
-    @GetMapping("sessions/movie_start")
-    public String getSessionsByStart(@RequestParam("start") LocalDateTime movieStart, Model model) {
+    @GetMapping("sessions/start")
+    public String getSessionsByStart(@RequestParam("movie_start") LocalDateTime movieStart, Model model) {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> movieSession.getMovieSessionStart().isEqual(movieStart))
                 .collect(Collectors.toList());
-        model.addAttribute("session_movie", movieSessions);
+        model.addAttribute("movies", movieSessions);
         return "sessions_selected_view";
     }
 
-    @GetMapping("sessions/movie_hall")
-    public String getSessionsByHall(@RequestParam("hall") Long hallID, Model model) {
+    @GetMapping("sessions/hall")
+    public String getSessionsByHall(@RequestParam("movie_hall") Long hallID, Model model) {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> movieSession.getHall().getHallID().equals(hallID))
                 .collect(Collectors.toList());
-        model.addAttribute("session_movie", movieSessions);
+        model.addAttribute("movies", movieSessions);
         return "sessions_selected_view";
     }
 
-    @PostMapping("sessions/**")
+    @PostMapping("sessions/*")
     public String purchaseSessionsByMovieName(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("user");
         try {

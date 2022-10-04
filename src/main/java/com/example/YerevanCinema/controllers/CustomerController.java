@@ -43,14 +43,14 @@ public class CustomerController {
     public String getCustomerMainPage(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");
         model.addAttribute("user", customer);
-        return "main_view";
+        return "customer_main_view";
     }
 
     @GetMapping("about")
     public String getAboutPage(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");
         model.addAttribute("user", customer);
-        return "about_view";
+        return "customer_about_view";
     }
 
     @GetMapping("contact")
@@ -68,7 +68,7 @@ public class CustomerController {
         } catch (MessagingException e) {
             return "contact_view";
         }
-        return "main_view";
+        return "customer_main_view";
     }
 
     @GetMapping("details")
@@ -121,7 +121,7 @@ public class CustomerController {
                 .collect(Collectors.toList());
         model.addAttribute("user", customer);
         model.addAttribute("sessions", sessions);
-        return "sessions_view";
+        return "customer_sessions_view";
     }
 
     @GetMapping("sessions/movie_name")

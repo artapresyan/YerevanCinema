@@ -84,10 +84,10 @@ public class MainController {
             Customer customer = customerService.registerCustomer(name, surname, age, username, email, password);
             if (customer != null) {
                 session.setAttribute("user", customer);
-                return "main_view";
+                return "redirect:/customer/";
             }
         }
-        return "login_view";
+        return "signup_view";
     }
 
     @GetMapping("about")

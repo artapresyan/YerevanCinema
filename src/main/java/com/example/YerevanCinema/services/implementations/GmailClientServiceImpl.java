@@ -21,7 +21,7 @@ public class GmailClientServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendMessageWithAttachment(Customer customer, String pathToAttachment) throws MessagingException {
+    public MimeMessage sendMessageWithAttachment(Customer customer, String pathToAttachment) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(customer.getCustomerEmail());
@@ -32,27 +32,28 @@ public class GmailClientServiceImpl implements EmailService {
                 = new FileSystemResource(new File(pathToAttachment));
         helper.addAttachment("QR", file.getFile());
         emailSender.send(message);
+        return message;
     }
 
     @Override
-    public void sendSimpleMessage(Customer customer, String text, String subject) throws MessagingException {
+    public MimeMessage sendSimpleMessage(Customer customer, String text, String subject) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(customer.getCustomerEmail());
         helper.setSubject(subject);
         helper.setText(text);
-
         emailSender.send(message);
+        return message;
     }
 
     @Override
-    public void getSimpleMessage(String email, String text) throws MessagingException {
+    public MimeMessage getSimpleMessage(String email, String text) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo("cinemayerevan@gmail.com");
         helper.setSubject("ISSUE from " + email);
         helper.setText(text);
-
         emailSender.send(message);
+        return message;
     }
 }

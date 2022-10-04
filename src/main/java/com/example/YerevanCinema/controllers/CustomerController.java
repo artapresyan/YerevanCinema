@@ -8,10 +8,7 @@ import com.example.YerevanCinema.services.implementations.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
@@ -88,7 +85,7 @@ public class CustomerController {
         return "customer_details_edit_view";
     }
 
-    @PostMapping("details/edit")
+    @PutMapping("details/edit")
     public String updateAccountDetails(@RequestParam(value = "name", required = false) String newName,
                                        @RequestParam(value = "surname", required = false) String newSurname,
                                        @RequestParam(value = "age", required = false) Integer newAge,
@@ -136,21 +133,6 @@ public class CustomerController {
         return "sessions_selected_view";
     }
 
-    @PostMapping("sessions/**")
-    public String purchaseSessionsByMovieName(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
-        Customer customer = (Customer) session.getAttribute("user");
-        try {
-            MovieSession movieSession = movieSessionService.getMovieSessionByID(movieSessionID);
-            Ticket ticket = ticketService.addTicket(customer, movieSession);
-            qrCodeService.generateQRCodeImage(customer);
-            gmailClientService.sendMessageWithAttachment(customer, String.format(qrPath, ticket.getTicketID(),
-                    customer.getCustomerUsername()));
-        } catch (Exception e) {
-            return "redirect:/customer/sessions";
-        }
-        return "redirect:/customer/tickets";
-    }
-
     @GetMapping("sessions/movie_category")
     public String getSessionsByMovieCategory(@RequestParam("category") String movieCategory, Model model) {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
@@ -176,5 +158,20 @@ public class CustomerController {
                 .collect(Collectors.toList());
         model.addAttribute("session_movie", movieSessions);
         return "sessions_selected_view";
+    }
+
+    @PostMapping("sessions/**")
+    public String purchaseSessionsByMovieName(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
+        Customer customer = (Customer) session.getAttribute("user");
+        try {
+            MovieSession movieSession = movieSessionService.getMovieSessionByID(movieSessionID);
+            Ticket ticket = ticketService.addTicket(customer, movieSession);
+            qrCodeService.generateQRCodeImage(customer);
+            gmailClientService.sendMessageWithAttachment(customer, String.format(qrPath, ticket.getTicketID(),
+                    customer.getCustomerUsername()));
+        } catch (Exception e) {
+            return "redirect:/customer/sessions";
+        }
+        return "redirect:/customer/tickets";
     }
 }

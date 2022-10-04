@@ -136,7 +136,7 @@ public class CustomerController {
         return "sessions_selected_view";
     }
 
-    @PostMapping("sessions/^^")
+    @PostMapping("sessions/**")
     public String purchaseSessionsByMovieName(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("user");
         try {

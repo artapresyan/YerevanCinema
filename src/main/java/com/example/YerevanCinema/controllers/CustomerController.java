@@ -161,7 +161,7 @@ public class CustomerController {
     }
 
     @PostMapping("sessions/*")
-    public String purchaseSessionsByMovieName(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
+    public String purchaseSession(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("user");
         try {
             MovieSession movieSession = movieSessionService.getMovieSessionByID(movieSessionID);

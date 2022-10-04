@@ -26,7 +26,7 @@
 <header>
     <div class="logo">
         <div class="logo-img">
-            <a href="/customer/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
+            <a href="/admin/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
         </div>
         <div class="name">
             <h2>YerevanCinema</h2>
@@ -35,16 +35,28 @@
     <div class="header-menu">
         <div class="menu">
             <ul>
-                <a href="/customer/sessions">
-                    <li>Sessions</li>
-                </a>
-                <a href="/customer/about">
-                    <li>About</li>
-                </a>
-                <a href="/customer/contact">
-                    <li>Contact</li>
-                </a>
+                <a href="/admin/sessions"><li>Sessions</li></a>
+                <a href="/admin/about"><li>About</li></a>
+                <a href="/admin/contact"><li>Contact</li></a>
+                <li>
+                    <div class="navbar">
+                        <div class="dropdown">
+                            <button class="dropbtn">Name Surname
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/admin/details">Account Details</a>
+                                <a href="/admin/tickets">Tickets</a>
+                                <a href="/admin/movies">Movies</a>
+                                <a href="/admin/halls">Halls</a>
+                                <a href="/admin/customers">Customers</a>
+                                <a href="/admin/logout">Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
+
         </div>
     </div>
 </header>

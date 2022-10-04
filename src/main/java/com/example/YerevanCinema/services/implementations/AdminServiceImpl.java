@@ -85,7 +85,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin updateAdminData(Long adminID, String name, String surname, String username,
-                                 String email, String password) {
+                                 String email, String password, String newPassword) {
         try {
             Admin admin = getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
@@ -108,6 +108,11 @@ public class AdminServiceImpl implements AdminService {
                     userValidationService.validateEmail(email);
                     admin.setAdminEmail(email);
                 } catch (IOException | RegisteredEmailException ignored) {
+                }
+                try {
+                    userValidationService.validatePassword(newPassword);
+                    admin.setAdminPassword(passwordEncoder.encode(newPassword));
+                }catch (IOException ignored){
                 }
                 adminRepository.save(admin);
                 return admin;

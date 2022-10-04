@@ -87,7 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer updateCustomerData(Long customerID, String name, String surname, Integer age,
-                                       String username, String email, String password) {
+                                       String username, String email, String password, String newPassword) {
         try {
             Customer customer = getCustomerByID(customerID);
             if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
@@ -115,6 +115,11 @@ public class CustomerServiceImpl implements CustomerService {
                     validationService.validateEmail(email);
                     customer.setCustomerEmail(email);
                 } catch (IOException | RegisteredEmailException ignored) {
+                }
+                try {
+                    validationService.validatePassword(newPassword);
+                    customer.setCustomerPassword(passwordEncoder.encode(newPassword));
+                }catch (IOException ignored){
                 }
                 customerRepository.save(customer);
                 return customer;

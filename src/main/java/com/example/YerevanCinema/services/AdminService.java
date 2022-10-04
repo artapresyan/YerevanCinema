@@ -17,7 +17,7 @@ public interface AdminService {
     Admin removeAdmin(Long adminID, String password);
 
     Admin updateAdminData(Long adminID, String name, String surname, String username,
-                          String email, String password);
+                          String email, String password, String newPassword);
 
     Admin getAdminByUsername(String username) throws UserNotFoundException;
 

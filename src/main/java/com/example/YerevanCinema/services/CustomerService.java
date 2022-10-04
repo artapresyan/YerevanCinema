@@ -17,7 +17,7 @@ public interface CustomerService {
     Customer removeCustomer(Long customerID, String password);
 
     Customer updateCustomerData(Long customerID, String name, String surname, Integer age,
-                                String username, String email, String password);
+                                String username, String email, String password, String newPassword);
 
     Customer getCustomerByUsername(String username) throws UserNotFoundException;
 

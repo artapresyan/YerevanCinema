@@ -130,7 +130,7 @@ public class CustomerController {
                 .filter(movieSession -> movieSession.getMovie().getMovieName().equals(name))
                 .collect(Collectors.toList());
         model.addAttribute("movies", movieSessions);
-        return "sessions_selected_view";
+        return "customer_sessions_selected_view";
     }
 
     @GetMapping("sessions/category")
@@ -139,7 +139,7 @@ public class CustomerController {
                 .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(movieCategory))
                 .collect(Collectors.toList());
         model.addAttribute("movies", movieSessions);
-        return "sessions_selected_view";
+        return "customer_sessions_selected_view";
     }
 
     @GetMapping("sessions/start")
@@ -148,7 +148,7 @@ public class CustomerController {
                 .filter(movieSession -> movieSession.getMovieSessionStart().isEqual(movieStart))
                 .collect(Collectors.toList());
         model.addAttribute("movies", movieSessions);
-        return "sessions_selected_view";
+        return "customer_sessions_selected_view";
     }
 
     @GetMapping("sessions/hall")
@@ -157,7 +157,7 @@ public class CustomerController {
                 .filter(movieSession -> movieSession.getHall().getHallID().equals(hallID))
                 .collect(Collectors.toList());
         model.addAttribute("movies", movieSessions);
-        return "sessions_selected_view";
+        return "customer_sessions_selected_view";
     }
 
     @PostMapping("sessions/*")

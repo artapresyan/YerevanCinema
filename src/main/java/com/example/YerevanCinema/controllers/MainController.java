@@ -61,7 +61,7 @@ public class MainController {
             if (customerService.passwordsAreMatching(customer, password)) {
                 session.setAttribute("user", customer);
                 model.addAttribute("user", customer);
-                return "redirect:/customer/";
+                return "customer_main_view";
             }
         } catch (UserNotFoundException e) {
             throw new RuntimeException(e);
@@ -71,12 +71,12 @@ public class MainController {
             if (adminService.passwordsAreMatching(admin, password)) {
                 session.setAttribute("user", admin);
                 model.addAttribute("user", admin);
-                return "redirect:/admin/";
+                return "admin_main_view";
             }
         } catch (UserNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return "redirect:/login";
+        return "login_view";
     }
 
     @GetMapping("signup")
@@ -93,7 +93,7 @@ public class MainController {
             Customer customer = customerService.registerCustomer(name, surname, age, username, email, password);
             if (customer != null) {
                 session.setAttribute("user", customer);
-                return "redirect:/customer/";
+                return "login_view";
             }
         }
         return "signup_view";
@@ -115,9 +115,9 @@ public class MainController {
             userValidationService.validateEmail(email);
             gmailClientService.getSimpleMessage(email, message);
         } catch (MessagingException | RegisteredEmailException | IOException e) {
-            return "redirect:/contact";
+            return "no_auth_contact_view";
         }
-        return "redirect:/";
+        return "no_auth_main_view";
     }
 
     @GetMapping("sessions")
@@ -145,7 +145,7 @@ public class MainController {
                 gmailClientService.sendSimpleMessage(customer, "If you asked for username recovery contact us by email",
                         "RESET USERNAME REQUEST");
             }
-            return "redirect:/";
+            return "login_view";
         } catch (UserNotFoundException | MessagingException ignored) {
         }
         try {
@@ -154,9 +154,9 @@ public class MainController {
                 gmailClientService.sendSimpleMessage(customer, "If you asked for password recovery contact us by email",
                         "RESET PASSWORD REQUEST");
             }
-            return "redirect:/";
+            return "login_view";
         } catch (UserNotFoundException | MessagingException ignored) {
         }
-        return "redirect:/recover";
+        return "recover_view";
     }
 }

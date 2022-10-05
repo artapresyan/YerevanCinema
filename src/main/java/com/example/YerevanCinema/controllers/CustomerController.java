@@ -168,7 +168,7 @@ public class CustomerController {
     }
 
     @PostMapping("sessions/purchase")//pathvariable
-    public String purchaseSession(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
+    public String sendTicketToCustomer(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("user");
         try {
             MovieSession movieSession = movieSessionService.getMovieSessionByID(movieSessionID);
@@ -181,4 +181,5 @@ public class CustomerController {
             return "customer_sessions_view";
         }
     }
+
 }

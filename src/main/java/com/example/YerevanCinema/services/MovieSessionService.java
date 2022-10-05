@@ -18,7 +18,7 @@ public interface MovieSessionService {
     MovieSession addMovieSession(LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd, Integer movieSessionPrice,
                                  Hall hall, Movie movie, Admin admin, String password);
 
-    MovieSession removeMovieSession(String password, Long movieSessionID);
+    MovieSession removeMovieSession(Admin admin, String password, Long movieSessionID);
 
     MovieSession updateMovieSession(Long movieSessionID, LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd,
                                     Integer movieSessionPrice, Hall hall, Movie movie, Admin admin);

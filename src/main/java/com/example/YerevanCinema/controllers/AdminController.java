@@ -179,7 +179,7 @@ public class AdminController {
     public String removeSession(@RequestParam("movieSessionID") Long movieSessionID,
                                 @RequestParam("password") String password, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
-        movieService.removeMovie(movieSessionID, admin.getAdminId(), password);
+        movieSessionService.removeMovieSession(admin, password, movieSessionID);
         return "redirect:/admin/sessions/all";
     }
 

@@ -74,10 +74,10 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public MovieSession removeMovieSession(String password, Long movieSessionID) {
+    public MovieSession removeMovieSession(Admin admin, String password, Long movieSessionID) {
         try {
             MovieSession movieSession = getMovieSessionByID(movieSessionID);
-            if (passwordEncoder.matches(password, movieSession.getAdmin().getAdminPassword())) {
+            if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 movieSessionRepository.deleteById(movieSessionID);
                 return movieSession;
             } else

@@ -60,7 +60,7 @@ public class CustomerController {
         return "customer_contact_view";
     }
 
-    @PostMapping("contact")
+    @PostMapping("contact_post")
     public String sendMessage(HttpSession session, @RequestParam("message") String message) {
         try {
             Customer customer = (Customer) session.getAttribute("user");
@@ -167,7 +167,7 @@ public class CustomerController {
         return "customer_sessions_selected_view";
     }
 
-    @PostMapping("sessions/purchase")
+    @PostMapping("sessions/purchase")//pathvariable
     public String purchaseSession(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("user");
         try {

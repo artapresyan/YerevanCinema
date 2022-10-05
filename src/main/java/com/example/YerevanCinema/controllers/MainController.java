@@ -53,7 +53,7 @@ public class MainController {
         return "login_view";
     }
 
-    @PostMapping("login")
+    @PostMapping("login_load")
     public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
                             HttpSession session, Model model) {
         try {
@@ -63,8 +63,7 @@ public class MainController {
                 model.addAttribute("user", customer);
                 return "customer_main_view";
             }
-        } catch (UserNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (UserNotFoundException ignored) {
         }
         try {
             Admin admin = adminService.getAdminByUsername(username);
@@ -73,8 +72,7 @@ public class MainController {
                 model.addAttribute("user", admin);
                 return "admin_main_view";
             }
-        } catch (UserNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (UserNotFoundException ignored) {
         }
         return "login_view";
     }
@@ -109,7 +107,7 @@ public class MainController {
         return "no_auth_contact_view";
     }
 
-    @PostMapping("contact")
+    @PostMapping("contact_post")
     public String sendMessage(@RequestParam("email") String email, @RequestParam("message") String message) {
         try {
             userValidationService.validateEmail(email);
@@ -134,20 +132,24 @@ public class MainController {
         return "recover_view";
     }
 
-    @PostMapping("recover")
-    public String recoverCustomerAccount(@RequestParam(value = "pass_email", required = false) String passEmail,
-                                         @RequestParam(value = "password", required = false) String password,
-                                         @RequestParam(value = "email", required = false) String email,
-                                         @RequestParam(value = "username", required = false) String username) {
+    @PostMapping("recover_username")
+    public String recoverCustomerUsername(@RequestParam("password") String password,
+                                          @RequestParam("email") String email) {
         try {
             Customer customer = customerService.getCustomerByEmail(email);
             if (customerService.passwordsAreMatching(customer, password)) {
                 gmailClientService.sendSimpleMessage(customer, "If you asked for username recovery contact us by email",
                         "RESET USERNAME REQUEST");
+                return "login_view";
             }
-            return "login_view";
         } catch (UserNotFoundException | MessagingException ignored) {
         }
+        return "recover_view";
+    }
+
+    @PostMapping("recover_password")
+    public String recoverCustomerPassword(@RequestParam("pass_email") String passEmail,
+                                          @RequestParam("username") String username) {
         try {
             Customer customer = customerService.getCustomerByUsername(username);
             if (customer.getCustomerEmail().equals(passEmail)) {
@@ -155,7 +157,8 @@ public class MainController {
                         "RESET PASSWORD REQUEST");
             }
             return "login_view";
-        } catch (UserNotFoundException | MessagingException ignored) {
+        } catch (UserNotFoundException |
+                 MessagingException ignored) {
         }
         return "recover_view";
     }

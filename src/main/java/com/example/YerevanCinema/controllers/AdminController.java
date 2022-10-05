@@ -60,7 +60,7 @@ public class AdminController {
         return "admin_contact_view";
     }
 
-    @PostMapping("contact")
+    @PostMapping("contact_post")
     public String sendMessage(HttpSession session, @RequestParam("message") String message) {
         try {
             Admin admin = (Admin) session.getAttribute("user");
@@ -85,7 +85,7 @@ public class AdminController {
         return "admin_details_edit_view";
     }
 
-    @PutMapping("details/edit")
+    @PutMapping("details/edit_put")
     public String updateAccountDetails(@RequestParam(value = "name", required = false) String newName,
                                        @RequestParam(value = "surname", required = false) String newSurname,
                                        @RequestParam(value = "username", required = false) String newUsername,

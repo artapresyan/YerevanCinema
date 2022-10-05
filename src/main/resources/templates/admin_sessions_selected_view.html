@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movie Sessions</title>
+
+    <link rel="icon" type="image/png" href="/static/images/cinema_black_icon.png"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="/static/css/card.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+    <link rel="stylesheet" href="/static/css/profile-nav.css">
+    <link rel="stylesheet" href="/static/css/sessions.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/static/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+
+</head>
+<body>
+
+<div class="limiter">
+    <header>
+        <div class="logo">
+            <div class="logo-img">
+                <a href="/admin/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
+            </div>
+            <div class="name">
+                <h2>YerevanCinema</h2>
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="menu">
+                <ul>
+                    <a href="/admin/sessions"><li>Sessions</li></a>
+                    <a href="/admin/about"><li>About</li></a>
+                    <a href="/admin/contact"><li>Contact</li></a>
+                    <li>
+                        <div class="navbar">
+                            <div class="dropdown">
+                                <button class="dropbtn">Name Surname
+                                    <i class="fa fa-caret-down"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="/admin/details">Account Details</a>
+                                    <a href="/admin/tickets">Tickets</a>
+                                    <a href="/admin/movies">Movies</a>
+                                    <a href="/admin/halls">Halls</a>
+                                    <a href="/admin/customers">Customers</a>
+                                    <a href="/admin/logout">Log out</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div>
+        <img style="margin-left: 2%;margin-top: 1%;border-radius: 10px" width="1520" height="290"
+             src="/static/images/music_ad.jpg" alt="no_image">
+    </div>
+
+    <form action="/customer/sessions/purchase" method="post">
+        <table style="margin-left: 2%;margin-top: 1%; margin-right: 2%; border-radius: 10px">
+            <tr>
+                <th scope="col" class="first" style="width: 170px">Movie</th>
+                <th scope="col" class="middle" style="width: 150px">Category</th>
+                <th scope="col" class="middle" style="width: 250px">Start</th>
+                <th scope="col" class="middle" style="width: 250px">End</th>
+                <th scope="col" class="middle" style="width: 150px">Hall</th>
+                <th scope="col" class="middle" style="width: 150px">Price</th>
+                <th scope="col" class="middle" style="width: 300px">Description</th>
+            </tr>
+            <tr>
+                <th scope="row" class="first" style="width: 170px">
+                    <button type="button" name="movie_name" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Movie_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="movie_category" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Category_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button type="button" name="movie_start" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Start_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="movieHall" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Hall_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 350px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
+                    </button>
+                </th>
+            </tr>
+            <tr>
+                <th scope="row" class="first" style="width: 170px">
+                    <button type="button" name="movie_name">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Movie_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="movie_category">
+                        <a style="font-size:.8rem;color: black;text-decoration: none"
+                           href="/admin/sessions/category">
+                            Category_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button type="button" name="movie_start">
+                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/start">
+                            Start_2
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">End_2</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="movieHall">
+                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/hall">
+                            Hall_2
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_2</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 400px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
+                    </button>
+                </th>
+            </tr>
+            <tr>
+                <th scope="row" class="first" style="width: 170px">
+                    <button type="button" name="movie_name">
+                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/movie">
+                            Movie_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="movie_category">
+                        <a style="font-size:.8rem;color: black;text-decoration: none"
+                           href="/admin/sessions/category">
+                            Category_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button type="button" name="movie_start">
+                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/start">
+                            Start_3
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">End_3</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="movieHall">
+                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/hall">
+                            Hall_3
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_3</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 400px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
+                    </button>
+                </th>
+            </tr>
+            <tr>
+                <th scope="row" class="first" style="width: 170px">
+                    <button type="button" name="movie_name">
+                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/movie">
+                            Movie_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="movie_category">
+                        <a style="font-size:.8rem;color: black;text-decoration: none"
+                           href="/admin/sessions/category">
+                            Category_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button type="button" name="movie_start">
+                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/start">
+                            Start_4
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">End_4</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="movieHall">
+                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/hall">
+                            Hall_4
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_4</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 400px">
+                    <button style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
+                    </button>
+                </th>
+            </tr>
+        </table>
+    </form>
+</div>
+<footer>
+    <div class="box">
+        <div class="icons">
+            <a href="https://facebook.com" target="_blank">
+                <i class="fa fa-facebook-official" style="color: white; font-size: 20px;"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <i class="fa fa-instagram" style="color: white; font-size: 20px;"></i>
+            </a>
+            <a href="https://twitter.com" target="_blank">
+                <i class="fa fa-twitter" style="color: white; font-size: 20px;"></i>
+            </a>
+        </div>
+        <div class="text">
+            <p style="color: white">© YerevanCinema</p>
+            <p style="color: white">Komitas 99, Yerevan</p>
+            <p style="color: white">Tel. +374 10 10 10 10</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

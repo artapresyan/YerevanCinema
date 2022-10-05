@@ -82,7 +82,7 @@ public class CustomerController {
     public String removeAccount(HttpSession session, String password) {
         Customer customer = (Customer) session.getAttribute("user");
         customerService.selfRemoveCustomer(customer.getCustomerID(), password);
-        return "redirect:/";
+        return "no_auth_main_view";
     }
 
     @GetMapping("details/edit")
@@ -107,9 +107,9 @@ public class CustomerController {
             customer = customerService.getCustomerByID(customer.getCustomerID());
             session.setAttribute("user", customer);
             model.addAttribute("user", customer);
-            return "customer_details_edit_view";
+            return "customer_details_view";
         } catch (UserNotFoundException e) {
-            return "redirect:/customer/details/edit";
+            return "customer_details_edit_view";
         }
     }
 
@@ -117,7 +117,7 @@ public class CustomerController {
     public String getPurchasedTickets(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");
         model.addAttribute("tickets", customer.getCustomerTickets());
-        return "tickets_view";
+        return "customer_tickets_view";
     }
 
     @GetMapping("sessions")
@@ -176,9 +176,9 @@ public class CustomerController {
             qrCodeService.generateQRCodeImage(customer);
             gmailClientService.sendMessageWithAttachment(customer, String.format(qrPath, ticket.getTicketID(),
                     customer.getCustomerUsername()));
-            return "redirect:/customer/tickets";
+            return "customer_tickets_view";
         } catch (Exception e) {
-            return "redirect:/customer/sessions";
+            return "customer_sessions_view";
         }
     }
 }

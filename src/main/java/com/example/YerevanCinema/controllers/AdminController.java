@@ -1,9 +1,8 @@
 package com.example.YerevanCinema.controllers;
 
-import com.example.YerevanCinema.entities.Admin;
-import com.example.YerevanCinema.entities.Customer;
-import com.example.YerevanCinema.entities.MovieSession;
-import com.example.YerevanCinema.entities.Ticket;
+import com.example.YerevanCinema.entities.*;
+import com.example.YerevanCinema.exceptions.HallNotFoundException;
+import com.example.YerevanCinema.exceptions.MovieNotFoundException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
 import org.springframework.stereotype.Controller;
@@ -24,14 +23,20 @@ public class AdminController {
     private final AdminServiceImpl adminService;
     private final TicketServiceImpl ticketService;
     private final MovieSessionServiceImpl movieSessionService;
-    private final QRCodeServiceImpl qrCodeService;
+    private final MovieServiceImpl movieService;
+    private final HallServiceImpl hallService;
+    private final CustomerServiceImpl customerService;
+
     public AdminController(GmailClientServiceImpl gmailClientService, AdminServiceImpl adminService,
-                           TicketServiceImpl ticketService, MovieSessionServiceImpl movieSessionService, QRCodeServiceImpl qrCodeService) {
+                           TicketServiceImpl ticketService, MovieSessionServiceImpl movieSessionService,
+                           MovieServiceImpl movieService, HallServiceImpl hallService, CustomerServiceImpl customerService) {
         this.gmailClientService = gmailClientService;
         this.adminService = adminService;
         this.ticketService = ticketService;
         this.movieSessionService = movieSessionService;
-        this.qrCodeService = qrCodeService;
+        this.movieService = movieService;
+        this.hallService = hallService;
+        this.customerService = customerService;
     }
 
     @GetMapping
@@ -116,6 +121,68 @@ public class AdminController {
         return "admin_sessions_view";
     }
 
+    @GetMapping("sessions/all")
+    public String getAllSessions(Model model) {
+        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions();
+        model.addAttribute("movie_sessions_all", movieSessions);
+        return "admin_sessions_all_view";
+    }
+
+    @PutMapping("sessions/all")
+    public String changeSessionDetails(@RequestParam("movieSessionID") Long movieSessionID,
+                                       @RequestParam(value = "movieSessionStart", required = false) LocalDateTime movieSessionStart,
+                                       @RequestParam(value = "movieSessionEnd", required = false) LocalDateTime movieSessionEnd,
+                                       @RequestParam(value = "movieSessionPrice", required = false) Integer movieSessionPrice,
+                                       @RequestParam(value = "movieSessionHall", required = false) Long movieSessionHallID,
+                                       @RequestParam(value = "movieSessionMovie", required = false) Long movieSessionMovieID,
+                                       HttpSession session) {
+        Admin admin = (Admin) session.getAttribute("user");
+        Hall hall = null;
+        Movie movie = null;
+        try {
+            hall = hallService.getHallByID(movieSessionHallID);
+        } catch (HallNotFoundException ignored) {
+        }
+        try {
+            movie = movieService.getMovieByID(movieSessionMovieID);
+        } catch (MovieNotFoundException ignored) {
+        }
+        movieSessionService.updateMovieSession(movieSessionID, movieSessionStart, movieSessionEnd, movieSessionPrice,
+                hall, movie, admin);
+        return "redirect:/admin/sessions/all";
+    }
+
+    @PostMapping("sessions/all")
+    public String addSession(@RequestParam("movieSessionStart") LocalDateTime movieSessionStart,
+                             @RequestParam("movieSessionEnd") LocalDateTime movieSessionEnd,
+                             @RequestParam("movieSessionPrice") Integer movieSessionPrice,
+                             @RequestParam("movieSessionHall") Long movieSessionHallID,
+                             @RequestParam("movieSessionMovie") Long movieSessionMovieID,
+                             @RequestParam("password") String password, HttpSession session) {
+        Admin admin = (Admin) session.getAttribute("user");
+        Hall hall = null;
+        Movie movie = null;
+        try {
+            hall = hallService.getHallByID(movieSessionHallID);
+        } catch (HallNotFoundException ignored) {
+        }
+        try {
+            movie = movieService.getMovieByID(movieSessionMovieID);
+        } catch (MovieNotFoundException ignored) {
+        }
+        movieSessionService.addMovieSession(movieSessionStart, movieSessionEnd, movieSessionPrice, hall, movie, admin,
+                password);
+        return "redirect:/admin/sessions/all";
+    }
+
+    @DeleteMapping("sessions/all")
+    public String removeSession(@RequestParam("movieSessionID") Long movieSessionID,
+                                @RequestParam("password") String password, HttpSession session) {
+        Admin admin = (Admin) session.getAttribute("user");
+        movieService.removeMovie(movieSessionID, admin.getAdminId(), password);
+        return "redirect:/admin/sessions/all";
+    }
+
     @GetMapping("sessions/movie")
     public String getSessionsByMovieName(@RequestParam("movie_name") String name, Model model) {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
@@ -152,5 +219,59 @@ public class AdminController {
         return "admin_sessions_selected_view";
     }
 
+    @GetMapping("customers/all")
+    public String getAllCustomers(Model model) {
+        List<Customer> customers = customerService.getAllCustomers();
+        model.addAttribute("customers", customers);
+        return "admin_customers_all_view";
+    }
 
+    @DeleteMapping("customers/all")
+    public String removeCustomer(@RequestParam("customerID") Long customerID,
+                                 @RequestParam("password") String password, HttpSession session) {
+        Admin admin = (Admin) session.getAttribute("user");
+        customerService.adminRemoveCustomer(customerID, admin, password);
+        return "redirect:/admin/customers/all";
+    }
+
+    @GetMapping("movies/all")
+    public String getAllMovies(Model model) {
+        List<Movie> movies = movieService.getAllMovies();
+        model.addAttribute("allMovies", movies);
+        return "admin_movies_all_view";
+    }
+
+    @PutMapping("movies/all")
+    public String updateMovieDetails(@RequestParam("movieID") Long movieID,
+                                     @RequestParam(value = "movieName", required = false) String movieName,
+                                     @RequestParam(value = "movieCategory", required = false) String movieCategory,
+                                     @RequestParam(value = "movieDescription", required = false) String movieDescription,
+                                     @RequestParam(value = "movieLanguage", required = false) String movieLanguage) {
+        Movie movie;
+        try {
+            movie = movieService.getMovieByID(movieID);
+        } catch (MovieNotFoundException e) {
+            return "redirect:/admin/movies/all";
+        }
+        movieService.updateMovie(movie.getMovieID(), movieName, movieCategory, movieDescription, movieLanguage);
+        return "redirect:/admin/movies/all";
+    }
+
+    @PostMapping("movies/all")
+    public String addMovie(HttpSession session, @RequestParam("password") String password,
+                           @RequestParam("movieName") String movieName, @RequestParam("movieCategory") String movieCategory,
+                           @RequestParam(value = "movieDescription", required = false) String movieDescription,
+                           @RequestParam(value = "movieLanguage", required = false) String movieLanguage) {
+        Admin admin = (Admin) session.getAttribute("user");
+        movieService.addMovie(admin.getAdminId(), password, movieName, movieCategory, movieDescription, movieLanguage);
+        return "redirect:/admin/movies/all";
+    }
+
+    @DeleteMapping("movies/all")
+    public String removeMovie(@RequestParam("movieID") Long movieID, @RequestParam("password") String password,
+                              HttpSession session) {
+        Admin admin = (Admin) session.getAttribute("user");
+        movieService.removeMovie(movieID, admin.getAdminId(), password);
+        return "redirect:/admin/movies/all";
+    }
 }

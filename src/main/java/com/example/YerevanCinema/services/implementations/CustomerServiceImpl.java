@@ -1,5 +1,6 @@
 package com.example.YerevanCinema.services.implementations;
 
+import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
@@ -70,10 +71,26 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer removeCustomer(Long customerID, String password) {
+    public Customer selfRemoveCustomer(Long customerID, String password) {
         try {
             Customer customer = getCustomerByID(customerID);
             if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
+                customerRepository.deleteById(customerID);
+                return customer;
+            } else
+                throw new WrongPasswordException("Entered wrong password");
+        } catch (UserNotFoundException | WrongPasswordException e) {
+            logger.log(Level.ERROR, String.format("Something went wrong while trying to deactivate" +
+                    " customer account with ' %s ' id", customerID));
+            return null;
+        }
+    }
+
+    @Override
+    public Customer adminRemoveCustomer(Long customerID, Admin admin, String password) {
+        try {
+            Customer customer = getCustomerByID(customerID);
+            if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 customerRepository.deleteById(customerID);
                 return customer;
             } else

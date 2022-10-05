@@ -78,6 +78,13 @@ public class CustomerController {
         return "customer_details_view";
     }
 
+    @DeleteMapping("details")
+    public String removeAccount(HttpSession session, String password) {
+        Customer customer = (Customer) session.getAttribute("user");
+        customerService.selfRemoveCustomer(customer.getCustomerID(), password);
+        return "redirect:/";
+    }
+
     @GetMapping("details/edit")
     public String getAccountDetailsEditPage(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");

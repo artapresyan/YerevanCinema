@@ -102,7 +102,7 @@ public class CustomerController {
             model.addAttribute("user", customer);
             return "customer_details_edit_view";
         } catch (UserNotFoundException e) {
-            return "redirect:/details/edit";
+            return "redirect:/customer/details/edit";
         }
     }
 

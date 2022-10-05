@@ -99,9 +99,9 @@ public class AdminController {
             admin = adminService.getAdminByID(admin.getAdminId());
             session.setAttribute("user", admin);
             model.addAttribute("user", admin);
-            return "admin_details_edit_view";
+            return "admin_details_view";
         } catch (UserNotFoundException e) {
-            return "redirect:/admin/details/edit";
+            return "admin_details_edit_view";
         }
     }
 
@@ -149,7 +149,7 @@ public class AdminController {
         }
         movieSessionService.updateMovieSession(movieSessionID, movieSessionStart, movieSessionEnd, movieSessionPrice,
                 hall, movie, admin);
-        return "redirect:/admin/sessions/all";
+        return "admin_sessions_all_view";
     }
 
     @PostMapping("sessions/all")
@@ -172,7 +172,7 @@ public class AdminController {
         }
         movieSessionService.addMovieSession(movieSessionStart, movieSessionEnd, movieSessionPrice, hall, movie, admin,
                 password);
-        return "redirect:/admin/sessions/all";
+        return "admin_sessions_all_view";
     }
 
     @DeleteMapping("sessions/all")
@@ -180,7 +180,7 @@ public class AdminController {
                                 @RequestParam("password") String password, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
         movieSessionService.removeMovieSession(admin, password, movieSessionID);
-        return "redirect:/admin/sessions/all";
+        return "admin_sessions_all_view";
     }
 
     @GetMapping("sessions/movie")
@@ -231,7 +231,7 @@ public class AdminController {
                                  @RequestParam("password") String password, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
         customerService.adminRemoveCustomer(customerID, admin, password);
-        return "redirect:/admin/customers/all";
+        return "admin_customers_all_view";
     }
 
     @GetMapping("movies/all")
@@ -251,10 +251,10 @@ public class AdminController {
         try {
             movie = movieService.getMovieByID(movieID);
         } catch (MovieNotFoundException e) {
-            return "redirect:/admin/movies/all";
+            return "admin_movies_all_view";
         }
         movieService.updateMovie(movie.getMovieID(), movieName, movieCategory, movieDescription, movieLanguage);
-        return "redirect:/admin/movies/all";
+        return "admin_movies_all_view";
     }
 
     @PostMapping("movies/all")
@@ -264,7 +264,7 @@ public class AdminController {
                            @RequestParam(value = "movieLanguage", required = false) String movieLanguage) {
         Admin admin = (Admin) session.getAttribute("user");
         movieService.addMovie(admin.getAdminId(), password, movieName, movieCategory, movieDescription, movieLanguage);
-        return "redirect:/admin/movies/all";
+        return "admin_movies_all_view";
     }
 
     @DeleteMapping("movies/all")
@@ -272,6 +272,6 @@ public class AdminController {
                               HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
         movieService.removeMovie(movieID, admin.getAdminId(), password);
-        return "redirect:/admin/movies/all";
+        return "admin_movies_all_view";
     }
 }

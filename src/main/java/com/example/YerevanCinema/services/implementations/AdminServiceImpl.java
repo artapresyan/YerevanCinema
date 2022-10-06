@@ -7,7 +7,7 @@ import com.example.YerevanCinema.exceptions.UsernameExistsException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
 import com.example.YerevanCinema.repositories.AdminRepository;
 import com.example.YerevanCinema.services.AdminService;
-import com.example.YerevanCinema.services.validations.UserValidationService;
+import com.example.YerevanCinema.services.validations.AdminValidationService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,14 +23,11 @@ public class AdminServiceImpl implements AdminService {
 
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserValidationService userValidationService;
     private final Logger logger = LogManager.getLogger();
 
-    public AdminServiceImpl(AdminRepository adminRepository, PasswordEncoder passwordEncoder,
-                            UserValidationService userValidationService) {
+    public AdminServiceImpl(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
-        this.userValidationService = userValidationService;
     }
 
     @Override
@@ -51,7 +48,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin registerAdmin(String adminName, String adminSurname, String adminEmail, String adminUsername,
-                               String adminPassword) {
+                               String adminPassword, AdminValidationService userValidationService) {
         try {
             userValidationService.validateName(adminName);
             userValidationService.validateSurname(adminSurname);
@@ -84,8 +81,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin updateAdminData(Long adminID, String name, String surname, String username,
-                                 String email, String password, String newPassword) {
+    public Admin updateAdminData(Long adminID, String name, String surname, String username, String email,
+                                 String password, String newPassword, AdminValidationService userValidationService) {
         try {
             Admin admin = getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {

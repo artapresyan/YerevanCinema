@@ -145,6 +145,7 @@ public class AdminServiceImplUnitTest {
             String username = expectedAdmin.getAdminUsername();
 
             when(adminRepository.getByAdminUsername(username)).thenReturn(expectedAdmin);
+
             try {
                 Admin actualAdmin = adminService.getAdminByUsername(username);
                 assertSame(expectedAdmin, actualAdmin);
@@ -161,7 +162,25 @@ public class AdminServiceImplUnitTest {
 
     @Test
     public void getAdminByEmailTest(){
+        fillAdminsList();
 
+        List<Admin> actualAdmins = ADMINS.stream().map(expectedAdmin -> {
+            String email = expectedAdmin.getAdminEmail();
+
+            when(adminRepository.getByAdminUsername(email)).thenReturn(expectedAdmin);
+
+            try {
+                Admin actualAdmin = adminService.getAdminByUsername(email);
+                assertSame(expectedAdmin, actualAdmin);
+                return actualAdmin;
+            } catch (UserNotFoundException e) {
+                return null;
+            }
+        }).collect(Collectors.toList());
+
+        assertEquals(ADMINS.size(), actualAdmins.size());
+
+        ADMINS.clear();
     }
     public void fillAdminsList() {
         String name = "Artur";

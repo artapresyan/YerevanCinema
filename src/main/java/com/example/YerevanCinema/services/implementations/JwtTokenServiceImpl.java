@@ -5,11 +5,13 @@ import com.example.YerevanCinema.services.JwtTokenService;
 import org.springframework.security.core.GrantedAuthority;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class JwtTokenServiceImpl implements JwtTokenService {
 
     private static final String SECRET_KEY = "mySecuredKey";

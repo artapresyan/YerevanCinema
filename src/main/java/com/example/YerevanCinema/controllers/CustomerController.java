@@ -8,6 +8,7 @@ import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
 import com.example.YerevanCinema.services.validations.CustomerValidationService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,17 +29,19 @@ public class CustomerController {
     private final CustomerServiceImpl customerService;
     private final GmailClientServiceImpl gmailClientService;
     private final TicketServiceImpl ticketService;
-
+    private final PasswordEncoder passwordEncoder;
     private final CustomerValidationService customerValidationService;
     private final QRCodeServiceImpl qrCodeService;
 
     public CustomerController(MovieSessionServiceImpl movieSessionService, CustomerServiceImpl customerService,
                               GmailClientServiceImpl gmailClientService, TicketServiceImpl ticketService,
-                              CustomerValidationService customerValidationService, QRCodeServiceImpl qrCodeService) {
+                              PasswordEncoder passwordEncoder, CustomerValidationService customerValidationService,
+                              QRCodeServiceImpl qrCodeService) {
         this.movieSessionService = movieSessionService;
         this.customerService = customerService;
         this.gmailClientService = gmailClientService;
         this.ticketService = ticketService;
+        this.passwordEncoder = passwordEncoder;
         this.customerValidationService = customerValidationService;
         this.qrCodeService = qrCodeService;
     }
@@ -85,7 +88,7 @@ public class CustomerController {
     @DeleteMapping("details")
     public String removeAccount(HttpSession session, String password) {
         Customer customer = (Customer) session.getAttribute("user");
-        customerService.selfRemoveCustomer(customer.getCustomerID(), password);
+        customerService.selfRemoveCustomer(customer.getCustomerID(), password, passwordEncoder);
         return "no_auth_main_view";
     }
 
@@ -106,7 +109,7 @@ public class CustomerController {
                                        HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");
         customerService.updateCustomerData(customer.getCustomerID(), newName, newSurname, newAge, newUsername,
-                newEmail, customer.getCustomerPassword(), newPassword, customerValidationService);
+                newEmail, customer.getCustomerPassword(), newPassword, customerValidationService, passwordEncoder);
         try {
             customer = customerService.getCustomerByID(customer.getCustomerID());
             session.setAttribute("user", customer);

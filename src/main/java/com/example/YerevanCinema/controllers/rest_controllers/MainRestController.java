@@ -51,7 +51,7 @@ public class MainRestController {
                                          @RequestParam("confirm_password") String confirmPassword) {
         if (customerService.confirmPassword(password, confirmPassword)) {
             Customer customer = customerService.registerCustomer(name, surname, age, username, email, password,
-                    customerValidationService);
+                    customerValidationService, passwordEncoder);
             return customer == null ? ResponseEntity.status(400).body("Not Registered") : ResponseEntity.ok(customer);
         }
         return null;
@@ -62,7 +62,7 @@ public class MainRestController {
                                     HttpSession session) {
         try {
             Customer customer = customerService.getCustomerByUsername(username);
-            if (customerService.passwordsAreMatching(customer, password)) {
+            if (customerService.passwordsAreMatching(customer, password, passwordEncoder)) {
 
                 session.setAttribute("user", customer);
                 return ResponseEntity.ok(customer);
@@ -97,7 +97,7 @@ public class MainRestController {
                                          @RequestParam(value = "username", required = false) String username) {
         try {
             Customer customer = customerService.getCustomerByEmail(email);
-            if (customerService.passwordsAreMatching(customer, password)) {
+            if (customerService.passwordsAreMatching(customer, password, passwordEncoder)) {
                 gmailClientService.sendSimpleMessage(customer, "If you asked for username recovery contact us by email",
                         "RESET USERNAME REQUEST");
             }

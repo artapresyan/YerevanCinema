@@ -23,12 +23,10 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final PasswordEncoder passwordEncoder;
     private final Logger logger = LogManager.getLogger();
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -50,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer registerCustomer(String customerName, String customerSurname, Integer customerAge,
                                      String customerUsername, String customerEmail, String customerPassword,
-                                     CustomerValidationService validationService) {
+                                     CustomerValidationService validationService, PasswordEncoder passwordEncoder) {
         try {
             validationService.validateName(customerName);
             validationService.validateSurname(customerSurname);
@@ -69,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer selfRemoveCustomer(Long customerID, String password) {
+    public Customer selfRemoveCustomer(Long customerID, String password, PasswordEncoder passwordEncoder) {
         try {
             Customer customer = getCustomerByID(customerID);
             if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
@@ -85,7 +83,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer adminRemoveCustomer(Long customerID, Admin admin, String password) {
+    public Customer adminRemoveCustomer(Long customerID, Admin admin, String password, PasswordEncoder passwordEncoder) {
         try {
             Customer customer = getCustomerByID(customerID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
@@ -103,7 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer updateCustomerData(Long customerID, String name, String surname, Integer age,
                                        String username, String email, String password, String newPassword,
-                                       CustomerValidationService validationService) {
+                                       CustomerValidationService validationService, PasswordEncoder passwordEncoder) {
         try {
             Customer customer = getCustomerByID(customerID);
             if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
@@ -170,7 +168,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean passwordsAreMatching(Customer customer, String password) {
+    public boolean passwordsAreMatching(Customer customer, String password, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(password, customer.getCustomerPassword());
     }
 

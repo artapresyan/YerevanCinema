@@ -68,7 +68,7 @@ public class MainController {
                             HttpServletRequest request, HttpServletResponse response, Model model) {
         try {
             Customer customer = customerService.getCustomerByUsername(username);
-            if (customerService.passwordsAreMatching(customer, password)) {
+            if (customerService.passwordsAreMatching(customer, password, passwordEncoder)) {
                 String generatedToken = jwtTokenService.getCustomerJwtToken(customer.getCustomerUsername());
                 request.getSession().setAttribute("user", customer);
 
@@ -103,7 +103,7 @@ public class MainController {
                                  @RequestParam("confirm_password") String confirmPassword, HttpSession session) {
         if (customerService.confirmPassword(password, confirmPassword)) {
             Customer customer = customerService.registerCustomer(name, surname, age, username, email, password,
-                    customerValidationService);
+                    customerValidationService, passwordEncoder);
             if (customer != null) {
                 session.setAttribute("user", customer);
                 return "login_view";
@@ -152,7 +152,7 @@ public class MainController {
                                           @RequestParam("email") String email) {
         try {
             Customer customer = customerService.getCustomerByEmail(email);
-            if (customerService.passwordsAreMatching(customer, password)) {
+            if (customerService.passwordsAreMatching(customer, password, passwordEncoder)) {
                 gmailClientService.sendSimpleMessage(customer, "If you asked for username recovery contact us by email",
                         "RESET USERNAME REQUEST");
                 return "login_view";

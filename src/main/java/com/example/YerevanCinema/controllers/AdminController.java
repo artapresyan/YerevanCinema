@@ -104,7 +104,7 @@ public class AdminController {
                                        HttpSession session, Model model) {
         Admin admin = (Admin) session.getAttribute("user");
         adminService.updateAdminData(admin.getAdminId(), newName, newSurname, newUsername,
-                newEmail, admin.getAdminPassword(), newPassword, userValidationService,passwordEncoder);
+                newEmail, admin.getAdminPassword(), newPassword, userValidationService, passwordEncoder);
         try {
             admin = adminService.getAdminByID(admin.getAdminId());
             session.setAttribute("user", admin);
@@ -243,7 +243,7 @@ public class AdminController {
     public String removeCustomer(@RequestParam("customer_id") Long customerID,
                                  @RequestParam("password") String password, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
-        customerService.adminRemoveCustomer(customerID, admin, password);
+        customerService.adminRemoveCustomer(customerID, admin, password, passwordEncoder);
         return "admin_customers_all_view";
     }
 

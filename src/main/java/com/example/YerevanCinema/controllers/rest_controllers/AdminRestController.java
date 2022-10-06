@@ -93,7 +93,7 @@ public class AdminRestController {
                                       HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
         adminService.updateAdminData(admin.getAdminId(), newName, newSurname, newUsername,
-                newEmail, admin.getAdminPassword(), newPassword, userValidationService,passwordEncoder);
+                newEmail, admin.getAdminPassword(), newPassword, userValidationService, passwordEncoder);
         try {
             admin = adminService.getAdminByID(admin.getAdminId());
             session.setAttribute("user", admin);
@@ -209,7 +209,7 @@ public class AdminRestController {
     public Customer removeCustomer(@RequestParam("customerID") Long customerID,
                                    @RequestParam("password") String password, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
-        return customerService.adminRemoveCustomer(customerID, admin, password);
+        return customerService.adminRemoveCustomer(customerID, admin, password, passwordEncoder);
     }
 
     @GetMapping("movies/all")

@@ -7,6 +7,7 @@ import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
 import com.example.YerevanCinema.services.validations.CustomerValidationService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -29,16 +30,19 @@ public class CustomerRestController {
     private final TicketServiceImpl ticketService;
     private final QRCodeServiceImpl qrCodeService;
     private final CustomerValidationService customerValidationService;
+    private final PasswordEncoder passwordEncoder;
 
     public CustomerRestController(MovieSessionServiceImpl movieSessionService, CustomerServiceImpl customerService,
                                   GmailClientServiceImpl gmailClientService, TicketServiceImpl ticketService,
-                                  QRCodeServiceImpl qrCodeService, CustomerValidationService customerValidationService) {
+                                  QRCodeServiceImpl qrCodeService, CustomerValidationService customerValidationService,
+                                  PasswordEncoder passwordEncoder) {
         this.movieSessionService = movieSessionService;
         this.customerService = customerService;
         this.gmailClientService = gmailClientService;
         this.ticketService = ticketService;
         this.qrCodeService = qrCodeService;
         this.customerValidationService = customerValidationService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -87,7 +91,7 @@ public class CustomerRestController {
                                          HttpSession session) {
         Customer customer = (Customer) session.getAttribute("user");
         customerService.updateCustomerData(customer.getCustomerID(), newName, newSurname, newAge, newUsername,
-                newEmail, customer.getCustomerPassword(), newPassword, customerValidationService);
+                newEmail, customer.getCustomerPassword(), newPassword, customerValidationService, passwordEncoder);
         try {
             customer = customerService.getCustomerByID(customer.getCustomerID());
             session.setAttribute("user", customer);

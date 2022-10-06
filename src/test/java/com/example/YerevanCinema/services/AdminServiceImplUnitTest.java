@@ -63,6 +63,12 @@ public class AdminServiceImplUnitTest {
         assertEquals(ADMINS.size(), actualAdmins.size());
     }
 
-
+    @Test
+    public void getAllAdminsTest() {
+        when(adminRepository.findAll()).thenReturn(ADMINS);
+        List<Admin> actualAdmins = adminService.getAllAdmins();
+        assertEquals(ADMINS.size(),actualAdmins.size());
+        assertTrue(actualAdmins.containsAll(ADMINS));
+    }
 
 }

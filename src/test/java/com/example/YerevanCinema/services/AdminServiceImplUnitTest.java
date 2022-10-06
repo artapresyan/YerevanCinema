@@ -4,11 +4,13 @@ import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.repositories.AdminRepository;
 import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
+import com.example.YerevanCinema.services.validations.AdminValidationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -46,6 +48,9 @@ public class AdminServiceImplUnitTest {
     @InjectMocks
     private AdminServiceImpl adminService;
 
+    @InjectMocks
+    private AdminValidationService userValidationService;
+
     @Test
     public void getAdminByIDTest() {
         List<Admin> actualAdmins = ADMINS.stream().map(expectedAdmin -> {
@@ -66,9 +71,30 @@ public class AdminServiceImplUnitTest {
     @Test
     public void getAllAdminsTest() {
         when(adminRepository.findAll()).thenReturn(ADMINS);
+
         List<Admin> actualAdmins = adminService.getAllAdmins();
-        assertEquals(ADMINS.size(),actualAdmins.size());
+
+        assertEquals(ADMINS.size(), actualAdmins.size());
         assertTrue(actualAdmins.containsAll(ADMINS));
+    }
+
+    @Test
+    public void registerAdminTest() {
+        String name = "Artur";
+        String surname = "Apresyan";
+        String email = "my.email@gmail.com";
+        String username = "artapresyan";
+        String password = "Unknown789!";
+
+        Admin expectedAdmin = new Admin(name, surname, email, username, password);
+
+        when(adminRepository.save(Mockito.any(Admin.class))).thenReturn(expectedAdmin);
+
+        Admin actualAdmin = adminService.registerAdmin(name, surname, email, username, password, userValidationService);
+
+        assertEquals(expectedAdmin.getAdminUsername(), actualAdmin.getAdminUsername());
+        assertEquals(expectedAdmin.getAdminPassword(), actualAdmin.getAdminPassword());
+        assertEquals(expectedAdmin.getAdminEmail(), actualAdmin.getAdminEmail());
     }
 
 }

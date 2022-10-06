@@ -87,10 +87,11 @@ public class AdminServiceImplUnitTest {
 
         when(adminRepository.save(Mockito.any(Admin.class))).thenReturn(expectedAdmin);
 
-        Admin actualAdmin = adminService.registerAdmin(name, surname, email, username, password, userValidationService);
+        Admin actualAdmin = adminService.registerAdmin(name, surname, email, username, password, userValidationService
+                , passwordEncoder);
 
         assertEquals(expectedAdmin.getAdminUsername(), actualAdmin.getAdminUsername());
-        assertEquals(expectedAdmin.getAdminPassword(), actualAdmin.getAdminPassword());
+        assertTrue(passwordEncoder.matches(expectedAdmin.getAdminPassword(), actualAdmin.getAdminPassword()));
         assertEquals(expectedAdmin.getAdminEmail(), actualAdmin.getAdminEmail());
     }
 
@@ -130,7 +131,7 @@ public class AdminServiceImplUnitTest {
         when(adminRepository.findById(admin.getAdminId())).thenReturn(Optional.of(admin));
 
         Admin actualAdmin = adminService.updateAdminData(admin.getAdminId(), expectedAdmin.getAdminName(),
-                admin.getAdminSurname(), admin.getAdminUsername(), admin.getAdminEmail(),decodedPassword,
+                admin.getAdminSurname(), admin.getAdminUsername(), admin.getAdminEmail(), decodedPassword,
                 expectedAdmin.getAdminPassword(), userValidationService, passwordEncoder);
 
         assertEquals(expectedAdmin.getAdminName(), actualAdmin.getAdminName());
@@ -138,7 +139,7 @@ public class AdminServiceImplUnitTest {
     }
 
     @Test
-    public void getAdminByUsernameTest(){
+    public void getAdminByUsernameTest() {
         fillAdminsList();
 
         List<Admin> actualAdmins = ADMINS.stream().map(expectedAdmin -> {
@@ -161,7 +162,7 @@ public class AdminServiceImplUnitTest {
     }
 
     @Test
-    public void getAdminByEmailTest(){
+    public void getAdminByEmailTest() {
         fillAdminsList();
 
         List<Admin> actualAdmins = ADMINS.stream().map(expectedAdmin -> {
@@ -182,6 +183,7 @@ public class AdminServiceImplUnitTest {
 
         ADMINS.clear();
     }
+
     public void fillAdminsList() {
         String name = "Artur";
         String surname = "Apresyan";

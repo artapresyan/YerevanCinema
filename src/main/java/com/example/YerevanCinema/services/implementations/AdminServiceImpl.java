@@ -46,14 +46,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin registerAdmin(String adminName, String adminSurname, String adminEmail, String adminUsername,
-                               String adminPassword, AdminValidationService userValidationService) {
+                               String adminPassword, AdminValidationService userValidationService,
+                               PasswordEncoder passwordEncoder) {
         try {
             userValidationService.validateName(adminName);
             userValidationService.validateSurname(adminSurname);
             userValidationService.validateUsername(adminUsername);
             userValidationService.validateEmail(adminEmail);
             userValidationService.validatePassword(adminPassword);
-            Admin admin = new Admin(adminName, adminSurname, adminEmail, adminUsername, adminPassword);
+            Admin admin = new Admin(adminName, adminSurname, adminEmail, adminUsername, passwordEncoder.encode(adminPassword));
             adminRepository.save(admin);
             return admin;
         } catch (IOException | UsernameExistsException | RegisteredEmailException e) {

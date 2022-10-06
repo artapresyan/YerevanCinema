@@ -14,7 +14,7 @@ public interface AdminService {
     List<Admin> getAllAdmins();
 
     Admin registerAdmin(String adminName, String adminSurname, String adminEmail, String adminUsername,
-                        String adminPassword, AdminValidationService userValidationService);
+                        String adminPassword, AdminValidationService userValidationService, PasswordEncoder passwordEncoder);
 
     Admin removeAdmin(Long adminID, String password, PasswordEncoder passwordEncoder);
 

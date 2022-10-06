@@ -21,44 +21,44 @@
 
 </head>
 <body>
-
-<div class="limiter">
-    <header>
-        <div class="logo">
-            <div class="logo-img">
-                <a href="/admin/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
-            </div>
-            <div class="name">
-                <h2>YerevanCinema</h2>
-            </div>
+<header>
+    <div class="logo">
+        <div class="logo-img">
+            <a href="/admin/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
         </div>
-        <div class="header-menu">
-            <div class="menu">
-                <ul>
-                    <a href="/admin/sessions"><li>Sessions</li></a>
-                    <a href="/admin/about"><li>About</li></a>
-                    <a href="/admin/contact"><li>Contact</li></a>
-                    <li>
-                        <div class="navbar">
-                            <div class="dropdown">
-                                <button class="dropbtn">Name Surname
-                                    <i class="fa fa-caret-down"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="/admin/details">Account Details</a>
-                                    <a href="/admin/tickets">Tickets</a>
-                                    <a href="/admin/movies">Movies</a>
-                                    <a href="/admin/halls">Halls</a>
-                                    <a href="/admin/customers">Customers</a>
-                                    <a href="/admin/logout">Log out</a>
-                                </div>
+        <div class="name">
+            <h2>YerevanCinema</h2>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="menu">
+            <ul>
+                <a href="/admin/sessions"><li>Sessions</li></a>
+                <a href="/admin/about"><li>About</li></a>
+                <a href="/admin/contact"><li>Contact</li></a>
+                <li>
+                    <div class="navbar">
+                        <div class="dropdown">
+                            <button class="dropbtn">Name Surname
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/admin/details">Account Details</a>
+                                <a href="/admin/tickets">Tickets</a>
+                                <a href="/admin/movies">Movies</a>
+                                <a href="/admin/halls">Halls</a>
+                                <a href="/admin/customers">Customers</a>
+                                <a href="/admin/logout">Log out</a>
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </header>
+    </div>
+</header>
+<div class="limiter">
+
     <div>
         <img style="margin-left: 2%;margin-top: 1%;border-radius: 10px" width="1520" height="290"
              src="/static/images/music_ad.jpg" alt="no_image">
@@ -74,274 +74,58 @@
                 <th scope="col" class="middle" style="width: 300px">Description</th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="session_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none" name="session_end">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="session_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none" name="session_price">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
+                <th scope="col" class="first" style="width: 170px">Movie</th>
+                <th scope="col" class="middle" style="width: 150px">Category</th>
+                <th scope="col" class="middle" style="width: 250px">Start</th>
+                <th scope="col" class="middle" style="width: 250px">End</th>
+                <th scope="col" class="middle" style="width: 150px">Hall</th>
+                <th scope="col" class="middle" style="width: 150px">Price</th>
+                <th scope="col" class="middle" style="width: 300px">Description</th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="session_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none" name="session_end">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="session_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none" name="session_price">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
+                <th scope="col" class="first" style="width: 170px">Movie</th>
+                <th scope="col" class="middle" style="width: 150px">Category</th>
+                <th scope="col" class="middle" style="width: 250px">Start</th>
+                <th scope="col" class="middle" style="width: 250px">End</th>
+                <th scope="col" class="middle" style="width: 150px">Hall</th>
+                <th scope="col" class="middle" style="width: 150px">Price</th>
+                <th scope="col" class="middle" style="width: 300px">Description</th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="session_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none" name="session_end">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="session_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none" name="session_price">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
+                <th scope="col" class="first" style="width: 170px">Movie</th>
+                <th scope="col" class="middle" style="width: 150px">Category</th>
+                <th scope="col" class="middle" style="width: 250px">Start</th>
+                <th scope="col" class="middle" style="width: 250px">End</th>
+                <th scope="col" class="middle" style="width: 150px">Hall</th>
+                <th scope="col" class="middle" style="width: 150px">Price</th>
+                <th scope="col" class="middle" style="width: 300px">Description</th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="session_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none" name="session_end">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="session_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none" name="session_price">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
+                <th scope="col" class="first" style="width: 170px">Movie</th>
+                <th scope="col" class="middle" style="width: 150px">Category</th>
+                <th scope="col" class="middle" style="width: 250px">Start</th>
+                <th scope="col" class="middle" style="width: 250px">End</th>
+                <th scope="col" class="middle" style="width: 150px">Hall</th>
+                <th scope="col" class="middle" style="width: 150px">Price</th>
+                <th scope="col" class="middle" style="width: 300px">Description</th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="session_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none" name="session_end">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="session_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none" name="session_price">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
+                <th scope="col" class="first" style="width: 170px">Movie</th>
+                <th scope="col" class="middle" style="width: 150px">Category</th>
+                <th scope="col" class="middle" style="width: 250px">Start</th>
+                <th scope="col" class="middle" style="width: 250px">End</th>
+                <th scope="col" class="middle" style="width: 150px">Hall</th>
+                <th scope="col" class="middle" style="width: 150px">Price</th>
+                <th scope="col" class="middle" style="width: 300px">Description</th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="session_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none" name="session_end">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="session_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none" name="session_price">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
+                <th scope="col" class="first" style="width: 170px">Movie</th>
+                <th scope="col" class="middle" style="width: 150px">Category</th>
+                <th scope="col" class="middle" style="width: 250px">Start</th>
+                <th scope="col" class="middle" style="width: 250px">End</th>
+                <th scope="col" class="middle" style="width: 150px">Hall</th>
+                <th scope="col" class="middle" style="width: 150px">Price</th>
+                <th scope="col" class="middle" style="width: 300px">Description</th>
             </tr>
         </table>
 </div>

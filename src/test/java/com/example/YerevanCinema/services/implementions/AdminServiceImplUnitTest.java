@@ -1,4 +1,4 @@
-package com.example.YerevanCinema.services;
+package com.example.YerevanCinema.services.implementions;
 
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;

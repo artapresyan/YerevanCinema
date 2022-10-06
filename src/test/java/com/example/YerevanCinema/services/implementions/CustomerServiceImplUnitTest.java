@@ -1,4 +1,4 @@
-package com.example.YerevanCinema.services;
+package com.example.YerevanCinema.services.implementions;
 
 import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
@@ -122,8 +122,8 @@ public class CustomerServiceImplUnitTest {
     @Test
     public void updateCustomerDataTest() {
         String decodedPassword = "Unknown789!";
-        Customer customer = new Customer("Artur", "Apresyan", 56, "my.email@gmail.com",
-                "artapresyan", passwordEncoder.encode(decodedPassword));
+        Customer customer = new Customer("Artur", "Apresyan", 56, "artapresyan",
+                "my.email@gmail.com", passwordEncoder.encode(decodedPassword));
         customer.setCustomerID(25L);
         Customer expectedCustomer = new Customer("Hakobik", customer.getCustomerSurname(), customer.getCustomerAge(),
                 customer.getCustomerEmail(), customer.getCustomerUsername(), "Exegnadzor123)");
@@ -143,7 +143,7 @@ public class CustomerServiceImplUnitTest {
 
 
     @Test
-    public void getAdminByUsernameTest(){
+    public void getAdminByUsernameTest() {
         fillCustomersList();
 
         List<Customer> actualCustomers = CUSTOMERS.stream().map(expectedCustomer -> {
@@ -166,7 +166,7 @@ public class CustomerServiceImplUnitTest {
     }
 
     @Test
-    public void getAdminByEmailTest(){
+    public void getAdminByEmailTest() {
         fillCustomersList();
 
         List<Customer> actualCustomers = CUSTOMERS.stream().map(expectedCustomer -> {
@@ -187,6 +187,7 @@ public class CustomerServiceImplUnitTest {
 
         CUSTOMERS.clear();
     }
+
     public void fillCustomersList() {
         String name = "Artur";
         String surname = "Apresyan";

@@ -6,6 +6,7 @@ import com.example.YerevanCinema.exceptions.MovieNotFoundException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
 import com.example.YerevanCinema.services.validations.AdminValidationService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,11 +29,14 @@ public class AdminController {
     private final HallServiceImpl hallService;
     private final CustomerServiceImpl customerService;
 
+    private final PasswordEncoder passwordEncoder;
+
     private final AdminValidationService userValidationService;
 
     public AdminController(GmailClientServiceImpl gmailClientService, AdminServiceImpl adminService,
                            TicketServiceImpl ticketService, MovieSessionServiceImpl movieSessionService,
-                           MovieServiceImpl movieService, HallServiceImpl hallService, CustomerServiceImpl customerService,
+                           MovieServiceImpl movieService, HallServiceImpl hallService,
+                           CustomerServiceImpl customerService, PasswordEncoder passwordEncoder,
                            AdminValidationService userValidationService) {
         this.gmailClientService = gmailClientService;
         this.adminService = adminService;
@@ -41,6 +45,7 @@ public class AdminController {
         this.movieService = movieService;
         this.hallService = hallService;
         this.customerService = customerService;
+        this.passwordEncoder = passwordEncoder;
         this.userValidationService = userValidationService;
     }
 
@@ -99,7 +104,7 @@ public class AdminController {
                                        HttpSession session, Model model) {
         Admin admin = (Admin) session.getAttribute("user");
         adminService.updateAdminData(admin.getAdminId(), newName, newSurname, newUsername,
-                newEmail, admin.getAdminPassword(), newPassword, userValidationService);
+                newEmail, admin.getAdminPassword(), newPassword, userValidationService,passwordEncoder);
         try {
             admin = adminService.getAdminByID(admin.getAdminId());
             session.setAttribute("user", admin);

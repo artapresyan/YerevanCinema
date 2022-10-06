@@ -168,10 +168,10 @@ public class AdminServiceImplUnitTest {
         List<Admin> actualAdmins = ADMINS.stream().map(expectedAdmin -> {
             String email = expectedAdmin.getAdminEmail();
 
-            when(adminRepository.getByAdminUsername(email)).thenReturn(expectedAdmin);
+            when(adminRepository.getByAdminEmail(email)).thenReturn(expectedAdmin);
 
             try {
-                Admin actualAdmin = adminService.getAdminByUsername(email);
+                Admin actualAdmin = adminService.getAdminByEmail(email);
                 assertSame(expectedAdmin, actualAdmin);
                 return actualAdmin;
             } catch (UserNotFoundException e) {

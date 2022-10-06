@@ -4,10 +4,8 @@ import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.entities.MovieSession;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
-import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
-import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
-import com.example.YerevanCinema.services.implementations.GmailClientServiceImpl;
-import com.example.YerevanCinema.services.implementations.MovieSessionServiceImpl;
+import com.example.YerevanCinema.services.implementations.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -26,32 +24,39 @@ public class MainRestController {
     private final AdminServiceImpl adminService;
     private final GmailClientServiceImpl gmailClientService;
     private final MovieSessionServiceImpl sessionService;
-    public MainRestController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService, MovieSessionServiceImpl sessionService) {
+    private final JwtTokenServiceImpl jwtTokenService;
+
+    public MainRestController(CustomerServiceImpl customerService, AdminServiceImpl adminService,
+                              GmailClientServiceImpl gmailClientService, MovieSessionServiceImpl sessionService,
+                              JwtTokenServiceImpl jwtTokenService) {
         this.customerService = customerService;
         this.adminService = adminService;
         this.gmailClientService = gmailClientService;
         this.sessionService = sessionService;
+        this.jwtTokenService = jwtTokenService;
     }
 
     @PostMapping("signup")
-    public Customer signUpCustomer(@RequestParam("name") String name, @RequestParam("surname") String surname,
-                                   @RequestParam("age") Integer age, @RequestParam("email") String email,
-                                   @RequestParam("username") String username, @RequestParam("password") String password,
-                                   @RequestParam("confirm_password") String confirmPassword) {
+    public ResponseEntity signUpCustomer(@RequestParam("name") String name, @RequestParam("surname") String surname,
+                                         @RequestParam("age") Integer age, @RequestParam("email") String email,
+                                         @RequestParam("username") String username, @RequestParam("password") String password,
+                                         @RequestParam("confirm_password") String confirmPassword) {
         if (customerService.confirmPassword(password, confirmPassword)) {
-            return customerService.registerCustomer(name, surname, age, username, email, password);
+            Customer customer = customerService.registerCustomer(name, surname, age, username, email, password);
+            return customer == null ? ResponseEntity.status(400).body("Not Registered") : ResponseEntity.ok(customer);
         }
         return null;
     }
 
     @PostMapping("login")
-    public Object loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
-                            HttpSession session) {
+    public ResponseEntity loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
+                                    HttpSession session) {
         try {
             Customer customer = customerService.getCustomerByUsername(username);
             if (customerService.passwordsAreMatching(customer, password)) {
+
                 session.setAttribute("user", customer);
-                return customer;
+                return ResponseEntity.ok(customer);
             }
         } catch (UserNotFoundException ignored) {
         }
@@ -59,11 +64,11 @@ public class MainRestController {
             Admin admin = adminService.getAdminByUsername(username);
             if (adminService.passwordsAreMatching(admin, password)) {
                 session.setAttribute("user", admin);
-                return admin;
+                return ResponseEntity.ok(admin);
             }
         } catch (UserNotFoundException ignored) {
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("contact")

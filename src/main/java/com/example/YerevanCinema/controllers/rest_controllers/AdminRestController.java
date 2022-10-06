@@ -5,6 +5,7 @@ import com.example.YerevanCinema.exceptions.HallNotFoundException;
 import com.example.YerevanCinema.exceptions.MovieNotFoundException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
+import com.example.YerevanCinema.services.validations.AdminValidationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +29,12 @@ public class AdminRestController {
     private final HallServiceImpl hallService;
     private final CustomerServiceImpl customerService;
 
+    private final AdminValidationService userValidationService;
+
     public AdminRestController(GmailClientServiceImpl gmailClientService, AdminServiceImpl adminService,
                                TicketServiceImpl ticketService, MovieSessionServiceImpl movieSessionService,
-                               MovieServiceImpl movieService, HallServiceImpl hallService, CustomerServiceImpl customerService) {
+                               MovieServiceImpl movieService, HallServiceImpl hallService,
+                               CustomerServiceImpl customerService, AdminValidationService userValidationService) {
         this.gmailClientService = gmailClientService;
         this.adminService = adminService;
         this.ticketService = ticketService;
@@ -38,6 +42,7 @@ public class AdminRestController {
         this.movieService = movieService;
         this.hallService = hallService;
         this.customerService = customerService;
+        this.userValidationService = userValidationService;
     }
 
     @GetMapping
@@ -85,7 +90,7 @@ public class AdminRestController {
                                       HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
         adminService.updateAdminData(admin.getAdminId(), newName, newSurname, newUsername,
-                newEmail, admin.getAdminPassword(), newPassword);
+                newEmail, admin.getAdminPassword(), newPassword, userValidationService);
         try {
             admin = adminService.getAdminByID(admin.getAdminId());
             session.setAttribute("user", admin);
@@ -199,7 +204,7 @@ public class AdminRestController {
 
     @DeleteMapping("customers/all")
     public Customer removeCustomer(@RequestParam("customerID") Long customerID,
-                                 @RequestParam("password") String password, HttpSession session) {
+                                   @RequestParam("password") String password, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
         return customerService.adminRemoveCustomer(customerID, admin, password);
     }
@@ -211,10 +216,10 @@ public class AdminRestController {
 
     @PutMapping("movies/all")
     public Movie updateMovieDetails(@RequestParam("movieID") Long movieID,
-                                     @RequestParam(value = "movieName", required = false) String movieName,
-                                     @RequestParam(value = "movieCategory", required = false) String movieCategory,
-                                     @RequestParam(value = "movieDescription", required = false) String movieDescription,
-                                     @RequestParam(value = "movieLanguage", required = false) String movieLanguage) {
+                                    @RequestParam(value = "movieName", required = false) String movieName,
+                                    @RequestParam(value = "movieCategory", required = false) String movieCategory,
+                                    @RequestParam(value = "movieDescription", required = false) String movieDescription,
+                                    @RequestParam(value = "movieLanguage", required = false) String movieLanguage) {
         Movie movie;
         try {
             movie = movieService.getMovieByID(movieID);
@@ -226,17 +231,17 @@ public class AdminRestController {
 
     @PostMapping("movies/all")
     public Movie addMovie(HttpSession session, @RequestParam("password") String password,
-                           @RequestParam("movieName") String movieName, @RequestParam("movieCategory") String movieCategory,
-                           @RequestParam(value = "movieDescription", required = false) String movieDescription,
-                           @RequestParam(value = "movieLanguage", required = false) String movieLanguage) {
+                          @RequestParam("movieName") String movieName, @RequestParam("movieCategory") String movieCategory,
+                          @RequestParam(value = "movieDescription", required = false) String movieDescription,
+                          @RequestParam(value = "movieLanguage", required = false) String movieLanguage) {
         Admin admin = (Admin) session.getAttribute("user");
-        return  movieService.addMovie(admin.getAdminId(), password, movieName, movieCategory, movieDescription, movieLanguage);
+        return movieService.addMovie(admin.getAdminId(), password, movieName, movieCategory, movieDescription, movieLanguage);
     }
 
     @DeleteMapping("movies/all")
     public Movie removeMovie(@RequestParam("movieID") Long movieID, @RequestParam("password") String password,
-                              HttpSession session) {
+                             HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
-        return  movieService.removeMovie(movieID, admin.getAdminId(), password);
+        return movieService.removeMovie(movieID, admin.getAdminId(), password);
     }
 }

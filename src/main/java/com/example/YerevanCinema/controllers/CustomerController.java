@@ -3,6 +3,7 @@ package com.example.YerevanCinema.controllers;
 import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.entities.MovieSession;
 import com.example.YerevanCinema.entities.Ticket;
+import com.example.YerevanCinema.exceptions.TicketNotFoundException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -92,13 +93,13 @@ public class CustomerController {
         return "customer_details_edit_view";
     }
 
-    @PutMapping("details/edit")
-    public String updateAccountDetails(@RequestParam(value = "name", required = false) String newName,
-                                       @RequestParam(value = "surname", required = false) String newSurname,
-                                       @RequestParam(value = "age", required = false) Integer newAge,
-                                       @RequestParam(value = "username", required = false) String newUsername,
-                                       @RequestParam(value = "email", required = false) String newEmail,
-                                       @RequestParam(value = "password", required = false) String newPassword,
+    @PutMapping("details/edit_change")
+    public String updateAccountDetails(@RequestParam(value = "customer_name", required = false) String newName,
+                                       @RequestParam(value = "customer_surname", required = false) String newSurname,
+                                       @RequestParam(value = "customer_age", required = false) Integer newAge,
+                                       @RequestParam(value = "customer_username", required = false) String newUsername,
+                                       @RequestParam(value = "customer_email", required = false) String newEmail,
+                                       @RequestParam(value = "new_password", required = false) String newPassword,
                                        HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");
         customerService.updateCustomerData(customer.getCustomerID(), newName, newSurname, newAge, newUsername,
@@ -167,8 +168,8 @@ public class CustomerController {
         return "customer_sessions_selected_view";
     }
 
-    @PostMapping("sessions/purchase")//pathvariable
-    public String sendTicketToCustomer(@RequestParam("movieSessionID") Long movieSessionID, HttpSession session) {
+    @PostMapping("sessions/purchase")
+    public String sendTicketToCustomer(@RequestParam("selected_session_id") Long movieSessionID, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("user");
         try {
             MovieSession movieSession = movieSessionService.getMovieSessionByID(movieSessionID);
@@ -182,4 +183,20 @@ public class CustomerController {
         }
     }
 
+    @PostMapping("sessions/resend")
+    public String resendTicketToCustomer(@RequestParam("ticket_id") Long ticketID, HttpSession session) {
+        Customer customer = (Customer) session.getAttribute("user");
+        try {
+            Ticket ticket = ticketService.getTicketByID(ticketID);
+            if (customer.getCustomerID().equals(ticket.getCustomer().getCustomerID())) {
+                qrCodeService.generateQRCodeImage(customer);
+                gmailClientService.sendMessageWithAttachment(customer, String.format(qrPath, ticket.getTicketID(),
+                        customer.getCustomerUsername()));
+                return "customer_tickets_view";
+            }else
+                throw new TicketNotFoundException("No Such Ticket");
+        } catch (Exception e) {
+            return "customer_sessions_view";
+        }
+    }
 }

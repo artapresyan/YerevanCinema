@@ -7,6 +7,7 @@ import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
 import com.example.YerevanCinema.services.validations.AdminValidationService;
+import com.example.YerevanCinema.services.validations.CustomerValidationService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,18 +36,20 @@ public class MainController {
     private final JwtTokenServiceImpl jwtTokenService;
     private final MovieSessionServiceImpl sessionService;
 
+    private final CustomerValidationService customerValidationService;
     private final PasswordEncoder passwordEncoder;
 
     public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService,
                           GmailClientServiceImpl gmailClientService, AdminValidationService userValidationService,
                           JwtTokenServiceImpl jwtTokenService, MovieSessionServiceImpl sessionService,
-                          PasswordEncoder passwordEncoder) {
+                          CustomerValidationService customerValidationService, PasswordEncoder passwordEncoder) {
         this.customerService = customerService;
         this.adminService = adminService;
         this.gmailClientService = gmailClientService;
         this.userValidationService = userValidationService;
         this.jwtTokenService = jwtTokenService;
         this.sessionService = sessionService;
+        this.customerValidationService = customerValidationService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -99,7 +102,8 @@ public class MainController {
                                  @RequestParam("username") String username, @RequestParam("password") String password,
                                  @RequestParam("confirm_password") String confirmPassword, HttpSession session) {
         if (customerService.confirmPassword(password, confirmPassword)) {
-            Customer customer = customerService.registerCustomer(name, surname, age, username, email, password);
+            Customer customer = customerService.registerCustomer(name, surname, age, username, email, password,
+                    customerValidationService);
             if (customer != null) {
                 session.setAttribute("user", customer);
                 return "login_view";

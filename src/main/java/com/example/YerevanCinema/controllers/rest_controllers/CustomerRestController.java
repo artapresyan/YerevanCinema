@@ -5,6 +5,7 @@ import com.example.YerevanCinema.entities.MovieSession;
 import com.example.YerevanCinema.entities.Ticket;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
+import com.example.YerevanCinema.services.validations.CustomerValidationService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +28,17 @@ public class CustomerRestController {
     private final GmailClientServiceImpl gmailClientService;
     private final TicketServiceImpl ticketService;
     private final QRCodeServiceImpl qrCodeService;
+    private final CustomerValidationService customerValidationService;
 
     public CustomerRestController(MovieSessionServiceImpl movieSessionService, CustomerServiceImpl customerService,
                                   GmailClientServiceImpl gmailClientService, TicketServiceImpl ticketService,
-                                  QRCodeServiceImpl qrCodeService) {
+                                  QRCodeServiceImpl qrCodeService, CustomerValidationService customerValidationService) {
         this.movieSessionService = movieSessionService;
         this.customerService = customerService;
         this.gmailClientService = gmailClientService;
         this.ticketService = ticketService;
         this.qrCodeService = qrCodeService;
+        this.customerValidationService = customerValidationService;
     }
 
     @GetMapping
@@ -76,15 +79,15 @@ public class CustomerRestController {
 
     @PutMapping("details/edit")
     public Customer updateAccountDetails(@RequestParam(value = "name", required = false) String newName,
-                                       @RequestParam(value = "surname", required = false) String newSurname,
-                                       @RequestParam(value = "age", required = false) Integer newAge,
-                                       @RequestParam(value = "username", required = false) String newUsername,
-                                       @RequestParam(value = "email", required = false) String newEmail,
-                                       @RequestParam(value = "password", required = false) String newPassword,
-                                       HttpSession session) {
+                                         @RequestParam(value = "surname", required = false) String newSurname,
+                                         @RequestParam(value = "age", required = false) Integer newAge,
+                                         @RequestParam(value = "username", required = false) String newUsername,
+                                         @RequestParam(value = "email", required = false) String newEmail,
+                                         @RequestParam(value = "password", required = false) String newPassword,
+                                         HttpSession session) {
         Customer customer = (Customer) session.getAttribute("user");
         customerService.updateCustomerData(customer.getCustomerID(), newName, newSurname, newAge, newUsername,
-                newEmail, customer.getCustomerPassword(), newPassword);
+                newEmail, customer.getCustomerPassword(), newPassword, customerValidationService);
         try {
             customer = customerService.getCustomerByID(customer.getCustomerID());
             session.setAttribute("user", customer);

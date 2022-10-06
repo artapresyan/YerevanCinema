@@ -6,6 +6,7 @@ import com.example.YerevanCinema.entities.Ticket;
 import com.example.YerevanCinema.exceptions.TicketNotFoundException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
+import com.example.YerevanCinema.services.validations.CustomerValidationService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,15 +29,17 @@ public class CustomerController {
     private final GmailClientServiceImpl gmailClientService;
     private final TicketServiceImpl ticketService;
 
+    private final CustomerValidationService customerValidationService;
     private final QRCodeServiceImpl qrCodeService;
 
     public CustomerController(MovieSessionServiceImpl movieSessionService, CustomerServiceImpl customerService,
                               GmailClientServiceImpl gmailClientService, TicketServiceImpl ticketService,
-                              QRCodeServiceImpl qrCodeService) {
+                              CustomerValidationService customerValidationService, QRCodeServiceImpl qrCodeService) {
         this.movieSessionService = movieSessionService;
         this.customerService = customerService;
         this.gmailClientService = gmailClientService;
         this.ticketService = ticketService;
+        this.customerValidationService = customerValidationService;
         this.qrCodeService = qrCodeService;
     }
 
@@ -103,7 +106,7 @@ public class CustomerController {
                                        HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("user");
         customerService.updateCustomerData(customer.getCustomerID(), newName, newSurname, newAge, newUsername,
-                newEmail, customer.getCustomerPassword(), newPassword);
+                newEmail, customer.getCustomerPassword(), newPassword, customerValidationService);
         try {
             customer = customerService.getCustomerByID(customer.getCustomerID());
             session.setAttribute("user", customer);
@@ -193,7 +196,7 @@ public class CustomerController {
                 gmailClientService.sendMessageWithAttachment(customer, String.format(qrPath, ticket.getTicketID(),
                         customer.getCustomerUsername()));
                 return "customer_tickets_view";
-            }else
+            } else
                 throw new TicketNotFoundException("No Such Ticket");
         } catch (Exception e) {
             return "customer_sessions_view";

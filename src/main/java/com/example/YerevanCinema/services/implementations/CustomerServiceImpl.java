@@ -2,13 +2,13 @@ package com.example.YerevanCinema.services.implementations;
 
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Customer;
-import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
+import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.exceptions.UsernameExistsException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
 import com.example.YerevanCinema.repositories.CustomerRepository;
 import com.example.YerevanCinema.services.CustomerService;
-import com.example.YerevanCinema.services.validations.AdminValidationService;
+import com.example.YerevanCinema.services.validations.CustomerValidationService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,14 +24,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AdminValidationService validationService;
     private final Logger logger = LogManager.getLogger();
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, PasswordEncoder passwordEncoder,
-                               AdminValidationService validationService) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
-        this.validationService = validationService;
     }
 
     @Override
@@ -52,7 +49,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer registerCustomer(String customerName, String customerSurname, Integer customerAge,
-                                     String customerUsername, String customerEmail, String customerPassword) {
+                                     String customerUsername, String customerEmail, String customerPassword,
+                                     CustomerValidationService validationService) {
         try {
             validationService.validateName(customerName);
             validationService.validateSurname(customerSurname);
@@ -104,7 +102,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer updateCustomerData(Long customerID, String name, String surname, Integer age,
-                                       String username, String email, String password, String newPassword) {
+                                       String username, String email, String password, String newPassword,
+                                       CustomerValidationService validationService) {
         try {
             Customer customer = getCustomerByID(customerID);
             if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
@@ -136,7 +135,7 @@ public class CustomerServiceImpl implements CustomerService {
                 try {
                     validationService.validatePassword(newPassword);
                     customer.setCustomerPassword(passwordEncoder.encode(newPassword));
-                }catch (IOException ignored){
+                } catch (IOException ignored) {
                 }
                 customerRepository.save(customer);
                 return customer;

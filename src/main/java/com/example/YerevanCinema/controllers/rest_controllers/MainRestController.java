@@ -5,6 +5,7 @@ import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.entities.MovieSession;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
+import com.example.YerevanCinema.services.validations.CustomerValidationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -26,16 +27,20 @@ public class MainRestController {
     private final GmailClientServiceImpl gmailClientService;
     private final MovieSessionServiceImpl sessionService;
     private final JwtTokenServiceImpl jwtTokenService;
+
+    private final CustomerValidationService customerValidationService;
     private final PasswordEncoder passwordEncoder;
 
     public MainRestController(CustomerServiceImpl customerService, AdminServiceImpl adminService,
                               GmailClientServiceImpl gmailClientService, MovieSessionServiceImpl sessionService,
-                              JwtTokenServiceImpl jwtTokenService, PasswordEncoder passwordEncoder) {
+                              JwtTokenServiceImpl jwtTokenService, CustomerValidationService customerValidationService,
+                              PasswordEncoder passwordEncoder) {
         this.customerService = customerService;
         this.adminService = adminService;
         this.gmailClientService = gmailClientService;
         this.sessionService = sessionService;
         this.jwtTokenService = jwtTokenService;
+        this.customerValidationService = customerValidationService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -45,7 +50,8 @@ public class MainRestController {
                                          @RequestParam("username") String username, @RequestParam("password") String password,
                                          @RequestParam("confirm_password") String confirmPassword) {
         if (customerService.confirmPassword(password, confirmPassword)) {
-            Customer customer = customerService.registerCustomer(name, surname, age, username, email, password);
+            Customer customer = customerService.registerCustomer(name, surname, age, username, email, password,
+                    customerValidationService);
             return customer == null ? ResponseEntity.status(400).body("Not Registered") : ResponseEntity.ok(customer);
         }
         return null;

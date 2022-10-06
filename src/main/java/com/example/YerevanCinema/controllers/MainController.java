@@ -5,11 +5,9 @@ import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.entities.MovieSession;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
-import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
-import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
-import com.example.YerevanCinema.services.implementations.GmailClientServiceImpl;
-import com.example.YerevanCinema.services.implementations.MovieSessionServiceImpl;
-import com.example.YerevanCinema.services.validations.UserValidationService;
+import com.example.YerevanCinema.services.implementations.*;
+import com.example.YerevanCinema.services.validations.AdminValidationService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -31,16 +31,23 @@ public class MainController {
     private final CustomerServiceImpl customerService;
     private final AdminServiceImpl adminService;
     private final GmailClientServiceImpl gmailClientService;
-    private final UserValidationService userValidationService;
-
+    private final AdminValidationService userValidationService;
+    private final JwtTokenServiceImpl jwtTokenService;
     private final MovieSessionServiceImpl sessionService;
 
-    public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService, GmailClientServiceImpl gmailClientService, UserValidationService userValidationService, MovieSessionServiceImpl sessionService) {
+    private final PasswordEncoder passwordEncoder;
+
+    public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService,
+                          GmailClientServiceImpl gmailClientService, AdminValidationService userValidationService,
+                          JwtTokenServiceImpl jwtTokenService, MovieSessionServiceImpl sessionService,
+                          PasswordEncoder passwordEncoder) {
         this.customerService = customerService;
         this.adminService = adminService;
         this.gmailClientService = gmailClientService;
         this.userValidationService = userValidationService;
+        this.jwtTokenService = jwtTokenService;
         this.sessionService = sessionService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -55,11 +62,13 @@ public class MainController {
 
     @PostMapping("login_load")
     public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
-                            HttpSession session, Model model) {
+                            HttpServletRequest request, HttpServletResponse response, Model model) {
         try {
             Customer customer = customerService.getCustomerByUsername(username);
             if (customerService.passwordsAreMatching(customer, password)) {
-                session.setAttribute("user", customer);
+                String generatedToken = jwtTokenService.getCustomerJwtToken(customer.getCustomerUsername());
+                request.getSession().setAttribute("user", customer);
+
                 model.addAttribute("user", customer);
                 return "customer_main_view";
             }
@@ -67,8 +76,10 @@ public class MainController {
         }
         try {
             Admin admin = adminService.getAdminByUsername(username);
-            if (adminService.passwordsAreMatching(admin, password)) {
-                session.setAttribute("user", admin);
+            if (adminService.passwordsAreMatching(admin, password, passwordEncoder)) {
+                String generatedToken = jwtTokenService.getAdminJwtToken(admin.getAdminUsername());
+                request.getSession().setAttribute("user", admin);
+                response.addHeader("Authorization", generatedToken);
                 model.addAttribute("user", admin);
                 return "admin_main_view";
             }

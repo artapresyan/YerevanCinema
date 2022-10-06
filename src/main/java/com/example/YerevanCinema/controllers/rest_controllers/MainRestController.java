@@ -6,6 +6,7 @@ import com.example.YerevanCinema.entities.MovieSession;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -25,15 +26,17 @@ public class MainRestController {
     private final GmailClientServiceImpl gmailClientService;
     private final MovieSessionServiceImpl sessionService;
     private final JwtTokenServiceImpl jwtTokenService;
+    private final PasswordEncoder passwordEncoder;
 
     public MainRestController(CustomerServiceImpl customerService, AdminServiceImpl adminService,
                               GmailClientServiceImpl gmailClientService, MovieSessionServiceImpl sessionService,
-                              JwtTokenServiceImpl jwtTokenService) {
+                              JwtTokenServiceImpl jwtTokenService, PasswordEncoder passwordEncoder) {
         this.customerService = customerService;
         this.adminService = adminService;
         this.gmailClientService = gmailClientService;
         this.sessionService = sessionService;
         this.jwtTokenService = jwtTokenService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("signup")
@@ -62,7 +65,7 @@ public class MainRestController {
         }
         try {
             Admin admin = adminService.getAdminByUsername(username);
-            if (adminService.passwordsAreMatching(admin, password)) {
+            if (adminService.passwordsAreMatching(admin, password, passwordEncoder)) {
                 session.setAttribute("user", admin);
                 return ResponseEntity.ok(admin);
             }

@@ -22,12 +22,10 @@ import java.util.Optional;
 public class AdminServiceImpl implements AdminService {
 
     private final AdminRepository adminRepository;
-    private final PasswordEncoder passwordEncoder;
     private final Logger logger = LogManager.getLogger();
 
-    public AdminServiceImpl(AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
+    public AdminServiceImpl(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -65,7 +63,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin removeAdmin(Long adminID, String password) {
+    public Admin removeAdmin(Long adminID, String password, PasswordEncoder passwordEncoder) {
         try {
             Admin admin = getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
@@ -82,7 +80,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin updateAdminData(Long adminID, String name, String surname, String username, String email,
-                                 String password, String newPassword, AdminValidationService userValidationService) {
+                                 String password, String newPassword, AdminValidationService userValidationService,
+                                 PasswordEncoder passwordEncoder) {
         try {
             Admin admin = getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
@@ -144,7 +143,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean passwordsAreMatching(Admin admin, String password) {
+    public boolean passwordsAreMatching(Admin admin, String password, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(password,admin.getAdminPassword());
     }
 

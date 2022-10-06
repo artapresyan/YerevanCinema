@@ -21,51 +21,50 @@
 
 </head>
 <body>
-
-<div class="limiter">
-    <header>
-        <div class="logo">
-            <div class="logo-img">
-                <a href="/admin/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
-            </div>
-            <div class="name">
-                <h2>YerevanCinema</h2>
-            </div>
+<header>
+    <div class="logo">
+        <div class="logo-img">
+            <a href="/admin/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
         </div>
-        <div class="header-menu">
-            <div class="menu">
-                <ul>
-                    <a href="/admin/sessions">
-                        <li>Sessions</li>
-                    </a>
-                    <a href="/admin/about">
-                        <li>About</li>
-                    </a>
-                    <a href="/admin/contact">
-                        <li>Contact</li>
-                    </a>
-                    <li>
-                        <div class="navbar">
-                            <div class="dropdown">
-                                <button class="dropbtn">Name Surname
-                                    <i class="fa fa-caret-down"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="/admin/details">Account Details</a>
-                                    <a href="/admin/sessions/all">All Sessions</a>
-                                    <a href="/admin/tickets">Tickets</a>
-                                    <a href="/admin/movies">Movies</a>
-                                    <a href="/admin/halls">Halls</a>
-                                    <a href="/admin/customers">Customers</a>
-                                    <a href="/admin/logout">Log out</a>
-                                </div>
+        <div class="name">
+            <h2>YerevanCinema</h2>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="menu">
+            <ul>
+                <a href="/admin/sessions">
+                    <li>Sessions</li>
+                </a>
+                <a href="/admin/about">
+                    <li>About</li>
+                </a>
+                <a href="/admin/contact">
+                    <li>Contact</li>
+                </a>
+                <li>
+                    <div class="navbar">
+                        <div class="dropdown">
+                            <button class="dropbtn">Name Surname
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/admin/details">Account Details</a>
+                                <a href="/admin/sessions/all">All Sessions</a>
+                                <a href="/admin/tickets">Tickets</a>
+                                <a href="/admin/movies">Movies</a>
+                                <a href="/admin/halls">Halls</a>
+                                <a href="/admin/customers">Customers</a>
+                                <a href="/admin/logout">Log out</a>
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </header>
+    </div>
+</header>
+<div class="limiter">
     <form action="/admin/customers/all_remove" method="post">
         <table style="margin-left: 2%;margin-top: 1%; margin-right: 2%; border-radius: 10px">
             <tr>
@@ -79,38 +78,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -126,38 +125,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">2</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -173,38 +172,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">3</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -220,38 +219,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">4</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -267,38 +266,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">5</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -314,38 +313,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">6</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -361,38 +360,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">7</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -408,38 +407,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">8</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -455,38 +454,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">9</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -502,38 +501,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">10</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -549,38 +548,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">11</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -596,38 +595,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">12</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -643,38 +642,38 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">13</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="customer_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Name
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="customer_surname" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Surname
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button name="customer_age" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Age</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="customer_username" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Username
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button name="customer_email" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Email</a>
                     </button>
                 </th>
@@ -688,7 +687,6 @@
                     </button>
                 </th>
             </tr>
-
         </table>
     </form>
 </div>

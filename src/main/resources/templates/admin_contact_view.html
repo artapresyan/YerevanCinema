@@ -19,46 +19,52 @@
     <link rel="stylesheet" type="text/css" href="/static/css/main.css">
 
 </head>
-<body>
 
-<div class="limiter">
-    <header>
-        <div class="logo">
-            <div class="logo-img">
-                <a href="/customer/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
-            </div>
-            <div class="name">
-                <h2>YerevanCinema</h2>
-            </div>
+<body>
+<header>
+    <div class="logo">
+        <div class="logo-img">
+            <a href="/admin/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
         </div>
-        <div class="header-menu">
-            <div class="menu">
-                <ul>
-                    <a href="/admin/sessions"><li>Sessions</li></a>
-                    <a href="/admin/about"><li>About</li></a>
-                    <a><li>Contact</li></a>
-                    <li>
-                        <div class="navbar">
-                            <div class="dropdown">
-                                <button class="dropbtn">Name Surname
-                                    <i class="fa fa-caret-down"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="/admin/details">Account Details</a>
-                                    <a href="/admin/tickets">Tickets</a>
-                                    <a href="/admin/movies">Movies</a>
-                                    <a href="/admin/halls">Halls</a>
-                                    <a href="/admin/customers">Customers</a>
-                                    <a href="/admin/logout">Log out</a>
-                                </div>
+        <div class="name">
+            <h2>YerevanCinema</h2>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="menu">
+            <ul>
+                <a href="/admin/sessions">
+                    <li>Sessions</li>
+                </a>
+                <a href="/admin/about">
+                    <li>About</li>
+                </a>
+                <a>
+                    <li>Contact</li>
+                </a>
+                <li>
+                    <div class="navbar">
+                        <div class="dropdown">
+                            <button class="dropbtn">Name Surname
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/admin/details">Account Details</a>
+                                <a href="/admin/tickets">Tickets</a>
+                                <a href="/admin/movies">Movies</a>
+                                <a href="/admin/halls">Halls</a>
+                                <a href="/admin/customers">Customers</a>
+                                <a href="/admin/logout">Log out</a>
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </header>
-    <h1 style="margin-top: 40px;text-align: center;font-size: 55px;text-shadow: -2px -2px 8px;">
+    </div>
+</header>
+<div class="limiter">
+    <h1 style="padding-top:40px;text-align: center;font-size: 55px;text-shadow: -2px -2px 8px;">
         Contact us
     </h1>
     <div class="center-2">
@@ -67,10 +73,11 @@
                 <form action="/admin/contact_post" method="post">
                     <div class="wrap-input100 validate-input" style="border-radius: 10px;"
                          data-validate="Invalid message">
-                        <label>Message
-                            <textarea class="input100-message" style="height: 200px;border-radius: 10px;background-color: white"
-                                      type="text" required name="message"></textarea>
-                        </label>
+                        <label>Message</label>
+                        <textarea class="input100-message"
+                                  style="height: 200px;border-radius: 10px;background-color: white"
+                                  type="text" required name="message"></textarea>
+
                     </div>
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
@@ -84,9 +91,8 @@
             </div>
         </div>
     </div>
-
 </div>
-<footer >
+<footer>
     <div class="box">
         <div class="icons">
             <a href="https://facebook.com" target="_blank">
@@ -100,11 +106,12 @@
             </a>
         </div>
         <div class="text">
-            <p  style="color: white">© YerevanCinema</p>
+            <p style="color: white">© YerevanCinema</p>
             <p style="color: white">Komitas 35, Yerevan</p>
             <p style="color: white">Tel. +374 10 10 10 10</p>
         </div>
     </div>
 </footer>
 </body>
+
 </html>

@@ -86,11 +86,11 @@ public class AdminController {
     }
 
     @PutMapping("details/edit_put")
-    public String updateAccountDetails(@RequestParam(value = "name", required = false) String newName,
-                                       @RequestParam(value = "surname", required = false) String newSurname,
-                                       @RequestParam(value = "username", required = false) String newUsername,
-                                       @RequestParam(value = "email", required = false) String newEmail,
-                                       @RequestParam(value = "password", required = false) String newPassword,
+    public String updateAccountDetails(@RequestParam(value = "admin_name", required = false) String newName,
+                                       @RequestParam(value = "admin_surname", required = false) String newSurname,
+                                       @RequestParam(value = "admin_username", required = false) String newUsername,
+                                       @RequestParam(value = "admin_email", required = false) String newEmail,
+                                       @RequestParam(value = "admin_new_password", required = false) String newPassword,
                                        HttpSession session, Model model) {
         Admin admin = (Admin) session.getAttribute("user");
         adminService.updateAdminData(admin.getAdminId(), newName, newSurname, newUsername,
@@ -105,7 +105,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("tickets")
+    @GetMapping("tickets/all")
     public String getAllPurchasedTickets(Model model) {
         List<Ticket> tickets = ticketService.getAllTickets();
         model.addAttribute("tickets", tickets);
@@ -152,34 +152,37 @@ public class AdminController {
         return "admin_sessions_all_view";
     }
 
-    @PostMapping("sessions/all")
-    public String addSession(@RequestParam("movieSessionStart") LocalDateTime movieSessionStart,
-                             @RequestParam("movieSessionEnd") LocalDateTime movieSessionEnd,
-                             @RequestParam("movieSessionPrice") Integer movieSessionPrice,
-                             @RequestParam("movieSessionHall") Long movieSessionHallID,
-                             @RequestParam("movieSessionMovie") Long movieSessionMovieID,
+    @PostMapping("sessions/all_add")
+    public String addSession(@RequestParam("movie_name") String movieName,
+                             @RequestParam("session_start") LocalDateTime sessionStart,
+                             @RequestParam("session_end") LocalDateTime sessionEnd,
+                             @RequestParam("session_hall") String sessionHallName,
+                             @RequestParam("session_price") Integer sessionPrice,
                              @RequestParam("password") String password, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
         Hall hall = null;
         Movie movie = null;
         try {
-            hall = hallService.getHallByID(movieSessionHallID);
+            hall = hallService.getHallByName(sessionHallName);
         } catch (HallNotFoundException ignored) {
         }
         try {
-            movie = movieService.getMovieByID(movieSessionMovieID);
+            movie = movieService.getMovieByName(movieName);
         } catch (MovieNotFoundException ignored) {
         }
-        movieSessionService.addMovieSession(movieSessionStart, movieSessionEnd, movieSessionPrice, hall, movie, admin,
-                password);
+        movieSessionService.addMovieSession(sessionStart, sessionEnd, sessionPrice, hall, movie, admin, password);
         return "admin_sessions_all_view";
     }
 
-    @DeleteMapping("sessions/all")
-    public String removeSession(@RequestParam("movieSessionID") Long movieSessionID,
+    @DeleteMapping("sessions/all_remove")
+    public String removeSession(@RequestParam("movie_name") String movieName,
                                 @RequestParam("password") String password, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
-        movieSessionService.removeMovieSession(admin, password, movieSessionID);
+        try {
+            Movie movie = movieService.getMovieByName(movieName);
+            movieSessionService.removeMovieSession(admin, password, movie.getMovieID());
+        } catch (MovieNotFoundException ignored) {
+        }
         return "admin_sessions_all_view";
     }
 
@@ -226,8 +229,8 @@ public class AdminController {
         return "admin_customers_all_view";
     }
 
-    @DeleteMapping("customers/all")
-    public String removeCustomer(@RequestParam("customerID") Long customerID,
+    @DeleteMapping("customers/all_remove")
+    public String removeCustomer(@RequestParam("customer_id") Long customerID,
                                  @RequestParam("password") String password, HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
         customerService.adminRemoveCustomer(customerID, admin, password);
@@ -241,7 +244,7 @@ public class AdminController {
         return "admin_movies_all_view";
     }
 
-    @PutMapping("movies/all")
+    @PutMapping("movies/all_update")
     public String updateMovieDetails(@RequestParam("movieID") Long movieID,
                                      @RequestParam(value = "movieName", required = false) String movieName,
                                      @RequestParam(value = "movieCategory", required = false) String movieCategory,
@@ -257,18 +260,18 @@ public class AdminController {
         return "admin_movies_all_view";
     }
 
-    @PostMapping("movies/all")
+    @PostMapping("movies/all_add")
     public String addMovie(HttpSession session, @RequestParam("password") String password,
-                           @RequestParam("movieName") String movieName, @RequestParam("movieCategory") String movieCategory,
-                           @RequestParam(value = "movieDescription", required = false) String movieDescription,
-                           @RequestParam(value = "movieLanguage", required = false) String movieLanguage) {
+                           @RequestParam("movie_name") String movieName, @RequestParam("movie_category") String movieCategory,
+                           @RequestParam(value = "movie_description", required = false) String movieDescription,
+                           @RequestParam(value = "movie_language", required = false) String movieLanguage) {
         Admin admin = (Admin) session.getAttribute("user");
         movieService.addMovie(admin.getAdminId(), password, movieName, movieCategory, movieDescription, movieLanguage);
         return "admin_movies_all_view";
     }
 
-    @DeleteMapping("movies/all")
-    public String removeMovie(@RequestParam("movieID") Long movieID, @RequestParam("password") String password,
+    @DeleteMapping("movies/all_remove")
+    public String removeMovie(@RequestParam("movie_id") Long movieID, @RequestParam("password") String password,
                               HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
         movieService.removeMovie(movieID, admin.getAdminId(), password);

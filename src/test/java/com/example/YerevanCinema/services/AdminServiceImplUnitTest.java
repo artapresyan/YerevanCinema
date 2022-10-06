@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -30,18 +29,22 @@ public class AdminServiceImplUnitTest {
     @Before
     public void fillAdminsList() {
         String name = "Artur";
-        for (int i = 1, suffix = 'a'; i < 21; i++, suffix++) {
-            Admin admin = new Admin();
+        String surname = "Apresyan";
+        String email = "my.email@gmail.com";
+        String username = "artapresyan";
+        String password = "unknown";
+        for (int i = 1, suffix = 'a', prefix = 'z'; i < 21; i++, suffix++, prefix--) {
+            Admin admin = new Admin(name + suffix, prefix + surname + suffix, prefix + email,
+                    suffix + username + prefix, suffix + password + prefix);
             admin.setAdminId((long) i);
-            admin.setAdminName(name + suffix);
-            AdminServiceImplUnitTest.ADMINS.add(admin);
+            ADMINS.add(admin);
         }
     }
 
     @Mock
     private AdminRepository adminRepository;
     @InjectMocks
-    private AdminServiceImpl adminServiceImpl;
+    private AdminServiceImpl adminService;
 
     @Test
     public void getAdminByIDTest() {
@@ -49,7 +52,7 @@ public class AdminServiceImplUnitTest {
             Long id = expectedAdmin.getAdminId();
             when(adminRepository.findById(id)).thenReturn(Optional.of(expectedAdmin));
             try {
-               Admin actualAdmin = adminServiceImpl.getAdminByID(id);
+                Admin actualAdmin = adminService.getAdminByID(id);
                 assertSame(expectedAdmin, actualAdmin);
                 return actualAdmin;
             } catch (UserNotFoundException e) {
@@ -57,7 +60,7 @@ public class AdminServiceImplUnitTest {
             }
         }).collect(Collectors.toList());
 
-        assertEquals(ADMINS.size(),actualAdmins.size());
+        assertEquals(ADMINS.size(), actualAdmins.size());
     }
 
 

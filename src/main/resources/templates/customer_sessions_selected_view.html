@@ -21,47 +21,46 @@
 
 </head>
 <body>
-
-<div class="limiter">
-    <header>
-        <div class="logo">
-            <div class="logo-img">
-                <a href="/customer/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
-            </div>
-            <div class="name">
-                <h2>YerevanCinema</h2>
-            </div>
+<header>
+    <div class="logo">
+        <div class="logo-img">
+            <a href="/customer/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
         </div>
-        <div class="header-menu">
-            <div class="menu">
-                <ul>
-                    <a href="/customer/sessions">
-                        <li>Sessions</li>
-                    </a>
-                    <a href="/customer/about">
-                        <li>About</li>
-                    </a>
-                    <a href="/customer/contact">
-                        <li>Contact</li>
-                    </a>
-                    <li>
-                        <div class="navbar">
-                            <div class="dropdown">
-                                <button class="dropbtn">Name Surname
-                                    <i class="fa fa-caret-down"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="/customer/details">Account Details</a>
-                                    <a href="/customer/tickets">My Tickets</a>
-                                    <a href="/customer/logout">Log out</a>
-                                </div>
+        <div class="name">
+            <h2>YerevanCinema</h2>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="menu">
+            <ul>
+                <a href="/customer/sessions">
+                    <li>Sessions</li>
+                </a>
+                <a href="/customer/about">
+                    <li>About</li>
+                </a>
+                <a href="/customer/contact">
+                    <li>Contact</li>
+                </a>
+                <li>
+                    <div class="navbar">
+                        <div class="dropdown">
+                            <button class="dropbtn">Name Surname
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/customer/details">Account Details</a>
+                                <a href="/customer/tickets">My Tickets</a>
+                                <a href="/customer/logout">Log out</a>
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </header>
+    </div>
+</header>
+<div class="limiter">
     <div>
         <img style="margin-left: 2%;margin-top: 1%;border-radius: 10px" width="1520" height="290"
              src="/static/images/music_ad.jpg" alt="no_image">
@@ -70,7 +69,8 @@
     <form action="/customer/sessions/purchase" method="post">
         <table style="margin-left: 2%;margin-top: 1%; margin-right: 2%; border-radius: 10px">
             <tr>
-                <th scope="col" class="first" style="width: 170px">Movie</th>
+                <th scope="col" class="first" style="width: 20px">ID</th>
+                <th scope="col" class="middle" style="width: 170px">Movie</th>
                 <th scope="col" class="middle" style="width: 150px">Category</th>
                 <th scope="col" class="middle" style="width: 250px">Start</th>
                 <th scope="col" class="middle" style="width: 250px">End</th>
@@ -81,45 +81,52 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
+                    <button type="button" name="selected_session_id" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 170px">
+                    <button type="button" name="selected_movie_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Movie_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
+                    <button type="button" name="selected_movie_category" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Category_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
+                    <button type="button" name="selected_session_start" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Start_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
+                    <button style="cursor: none" name="selected_session_end">
                         <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
+                    <button type="button" name="selected_session_hall" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Hall_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
+                    <button style="cursor: none" name="selected_session_price">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 350px">
-                    <button style="cursor: none">
+                    <button style="cursor: none" name="selected_movie_description">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
                     </button>
                 </th>
@@ -152,50 +159,56 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name">
+                    <button type="button" name="selected_session_id" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            2
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 170px">
+                    <button type="button" name="selected_movie_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Movie_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category">
-                        <a style="font-size:.8rem;color: black;text-decoration: none"
-                           href="/customer/sessions/category">
+                    <button type="button" name="selected_movie_category" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
                             Category_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/start">
-                            Start_2
+                    <button type="button" name="selected_session_start" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Start_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_2</a>
+                    <button style="cursor: none" name="selected_session_end">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/hall">
-                            Hall_2
+                    <button type="button" name="selected_session_hall" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Hall_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_2</a>
+                    <button style="cursor: none" name="selected_session_price">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
                     </button>
                 </th>
-                <th scope="row" class="middle" style="width: 400px">
-                    <button style="cursor: none">
+                <th scope="row" class="middle" style="width: 350px">
+                    <button style="cursor: none" name="selected_movie_description">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
                     </button>
                 </th>
-                <th scope="row" class="last" style="width: 100px">
+                <th scope="row" class="last" style="width: 120px">
                     <select name="ticketCount">
                         <option label="1" value="1"></option>
                         <option label="2" value="2"></option>
@@ -224,50 +237,56 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/movie">
+                    <button type="button" name="selected_session_id" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            3
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 170px">
+                    <button type="button" name="selected_movie_name" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
                             Movie_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category">
-                        <a style="font-size:.8rem;color: black;text-decoration: none"
-                           href="/customer/sessions/category">
+                    <button type="button" name="selected_movie_category" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
                             Category_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/start">
-                            Start_3
+                    <button type="button" name="selected_session_start" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Start_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_3</a>
+                    <button style="cursor: none" name="selected_session_end">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/hall">
-                            Hall_3
+                    <button type="button" name="selected_session_hall" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Hall_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_3</a>
+                    <button style="cursor: none" name="selected_session_price">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
                     </button>
                 </th>
-                <th scope="row" class="middle" style="width: 400px">
-                    <button style="cursor: none">
+                <th scope="row" class="middle" style="width: 350px">
+                    <button style="cursor: none" name="selected_movie_description">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
                     </button>
                 </th>
-                <th scope="row" class="last" style="width: 100px">
+                <th scope="row" class="last" style="width: 120px">
                     <select name="ticketCount">
                         <option label="1" value="1"></option>
                         <option label="2" value="2"></option>
@@ -296,50 +315,134 @@
             </tr>
             <tr>
                 <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/movie">
+                    <button type="button" name="selected_session_id" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            4
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 170px">
+                    <button type="button" name="selected_movie_name" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
                             Movie_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category">
-                        <a style="font-size:.8rem;color: black;text-decoration: none"
-                           href="/customer/sessions/category">
+                    <button type="button" name="selected_movie_category" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
                             Category_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/start">
-                            Start_4
+                    <button type="button" name="selected_session_start" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Start_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_4</a>
+                    <button style="cursor: none" name="selected_session_end">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/hall">
-                            Hall_4
+                    <button type="button" name="selected_session_hall" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Hall_1
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_4</a>
+                    <button style="cursor: none" name="selected_session_price">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
                     </button>
                 </th>
-                <th scope="row" class="middle" style="width: 400px">
-                    <button style="cursor: none">
+                <th scope="row" class="middle" style="width: 350px">
+                    <button style="cursor: none" name="selected_movie_description">
                         <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
                     </button>
                 </th>
-                <th scope="row" class="last" style="width: 100px">
+                <th scope="row" class="last" style="width: 120px">
+                    <select name="ticketCount">
+                        <option label="1" value="1"></option>
+                        <option label="2" value="2"></option>
+                        <option label="3" value="3"></option>
+                        <option label="4" value="4"></option>
+                        <option label="5" value="5"></option>
+                        <option label="6" value="6"></option>
+                        <option label="7" value="7"></option>
+                        <option label="8" value="8"></option>
+                        <option label="9" value="9"></option>
+                        <option label="11" value="11"></option>
+                        <option label="12" value="12"></option>
+                        <option label="13" value="13"></option>
+                        <option label="14" value="14"></option>
+                        <option label="15" value="15"></option>
+                        <option label="16" value="16"></option>
+                        <option label="17" value="17"></option>
+                        <option label="18" value="18"></option>
+                        <option label="19" value="19"></option>
+                        <option label="20" value="20"></option>
+                    </select>
+                    <button type="submit">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">ticket(s)</a>
+                    </button>
+                </th>
+            </tr>
+            <tr>
+                <th scope="row" class="first" style="width: 170px">
+                    <button type="button" name="selected_session_id" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            5
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 170px">
+                    <button type="button" name="selected_movie_name" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Movie_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="selected_movie_category" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Category_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button type="button" name="selected_session_start" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Start_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 250px">
+                    <button style="cursor: none" name="selected_session_end">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button type="button" name="selected_session_hall" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            Hall_1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 150px">
+                    <button style="cursor: none" name="selected_session_price">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 350px">
+                    <button style="cursor: none" name="selected_movie_description">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
+                    </button>
+                </th>
+                <th scope="row" class="last" style="width: 120px">
                     <select name="ticketCount">
                         <option label="1" value="1"></option>
                         <option label="2" value="2"></option>

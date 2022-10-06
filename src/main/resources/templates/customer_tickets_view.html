@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Movie Sessions</title>
+    <title>Tickets</title>
 
     <link rel="icon" type="image/png" href="/static/images/cinema_black_icon.png"/>
     <!--===============================================================================================-->
@@ -21,56 +21,56 @@
 
 </head>
 <body>
-
-<div class="limiter">
-    <header>
-        <div class="logo">
-            <div class="logo-img">
-                <a href="/customer/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
-            </div>
-            <div class="name">
-                <h2>YerevanCinema</h2>
-            </div>
+<header>
+    <div class="logo">
+        <div class="logo-img">
+            <a href="/customer/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
         </div>
-        <div class="header-menu">
-            <div class="menu">
-                <ul>
-                    <a href="/customer/sessions">
-                        <li>Sessions</li>
-                    </a>
-                    <a href="/customer/about">
-                        <li>About</li>
-                    </a>
-                    <a href="/customer/contact">
-                        <li>Contact</li>
-                    </a>
-                    <li>
-                        <div class="navbar">
-                            <div class="dropdown">
-                                <button class="dropbtn">Name Surname
-                                    <i class="fa fa-caret-down"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="/customer/details">Account Details</a>
-                                    <a href="/customer/tickets">My Tickets</a>
-                                    <a href="/customer/logout">Log out</a>
-                                </div>
+        <div class="name">
+            <h2>YerevanCinema</h2>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="menu">
+            <ul>
+                <a href="/customer/sessions">
+                    <li>Sessions</li>
+                </a>
+                <a href="/customer/about">
+                    <li>About</li>
+                </a>
+                <a href="/customer/contact">
+                    <li>Contact</li>
+                </a>
+                <li>
+                    <div class="navbar">
+                        <div class="dropdown">
+                            <button class="dropbtn">Name Surname
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+                            <div class="dropdown-content">
+                                <a href="/customer/details">Account Details</a>
+                                <a href="/customer/tickets">My Tickets</a>
+                                <a href="/customer/logout">Log out</a>
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </header>
+    </div>
+</header>
+<div class="limiter">
     <div>
         <img style="margin-left: 2%;margin-top: 1%;border-radius: 10px" width="1520" height="290"
              src="/static/images/music_ad.jpg" alt="no_image">
     </div>
 
-    <form action="/customer/sessions/purchase" method="post">
+    <form action="/customer/sessions/resend" method="post">
         <table style="margin-left: 2%;margin-top: 1%; margin-right: 2%; border-radius: 10px">
             <tr>
-                <th scope="col" class="first" style="width: 170px">Movie</th>
+                <th scope="col" class="first" style="width: 20px">Ticket ID</th>
+                <th scope="col" class="middle" style="width: 170px">Movie</th>
                 <th scope="col" class="middle" style="width: 150px">Category</th>
                 <th scope="col" class="middle" style="width: 250px">Start</th>
                 <th scope="col" class="middle" style="width: 250px">End</th>
@@ -80,7 +80,14 @@
                 <th scope="col" class="last" style="width: 100px">Send Ticket to Email</th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
+                <th scope="row" class="first" style="width: 20px">
+                    <button type="button" name="ticket_id" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 170px">
                     <button type="button" name="movie_name" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Movie_1
@@ -130,7 +137,14 @@
                 </th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
+                <th scope="row" class="first" style="width: 20px">
+                    <button type="button" name="ticket_id" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 170px">
                     <button type="button" name="movie_name">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
                             Movie_1
@@ -181,7 +195,14 @@
                 </th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
+                <th scope="row" class="first" style="width: 20px">
+                    <button type="button" name="ticket_id" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 170px">
                     <button type="button" name="movie_name">
                         <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/movie">
                             Movie_1
@@ -232,7 +253,14 @@
                 </th>
             </tr>
             <tr>
-                <th scope="row" class="first" style="width: 170px">
+                <th scope="row" class="first" style="width: 20px">
+                    <button type="button" name="ticket_id" style="cursor: none">
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            1
+                        </a>
+                    </button>
+                </th>
+                <th scope="row" class="middle" style="width: 170px">
                     <button type="button" name="movie_name">
                         <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/movie">
                             Movie_1

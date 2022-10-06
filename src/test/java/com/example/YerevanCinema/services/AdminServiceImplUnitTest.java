@@ -93,7 +93,7 @@ public class AdminServiceImplUnitTest {
     }
 
     @Test
-    public void removeAdmin() {
+    public void removeAdminTest() {
         fillAdminsList();
 
         List<Admin> actualAdmins = ADMINS.stream().map(admin -> {
@@ -112,6 +112,27 @@ public class AdminServiceImplUnitTest {
         assertEquals(ADMINS.size(), actualAdmins.size());
 
         ADMINS.clear();
+    }
+
+    @Test
+    public void updateAdminDataTest() {
+        String decodedPassword = "Unknown789!";
+        Admin admin = new Admin("Artur", "Apresyan", "my.email@gmail.com",
+                "artapresyan", passwordEncoder.encode(decodedPassword));
+        admin.setAdminId(25L);
+        Admin expectedAdmin = new Admin("Hakobik", admin.getAdminSurname(), admin.getAdminEmail(),
+                admin.getAdminUsername(), "Exegnadzor123)");
+        expectedAdmin.setAdminId(admin.getAdminId());
+
+        when(adminRepository.save(Mockito.any(Admin.class))).thenReturn(expectedAdmin);
+        when(adminRepository.findById(admin.getAdminId())).thenReturn(Optional.of(admin));
+
+        Admin actualAdmin = adminService.updateAdminData(admin.getAdminId(), expectedAdmin.getAdminName(),
+                admin.getAdminSurname(), admin.getAdminUsername(), admin.getAdminEmail(),decodedPassword,
+                expectedAdmin.getAdminPassword(), userValidationService, passwordEncoder);
+
+        assertEquals(expectedAdmin.getAdminName(), actualAdmin.getAdminName());
+        assertTrue(passwordEncoder.matches(expectedAdmin.getAdminPassword(), actualAdmin.getAdminPassword()));
     }
 
     public void fillAdminsList() {

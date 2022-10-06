@@ -8,7 +8,7 @@ import com.example.YerevanCinema.exceptions.UsernameExistsException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
 import com.example.YerevanCinema.repositories.CustomerRepository;
 import com.example.YerevanCinema.services.CustomerService;
-import com.example.YerevanCinema.services.validations.UserValidationService;
+import com.example.YerevanCinema.services.validations.AdminValidationService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,11 +24,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
-    private final UserValidationService validationService;
+    private final AdminValidationService validationService;
     private final Logger logger = LogManager.getLogger();
 
     public CustomerServiceImpl(CustomerRepository customerRepository, PasswordEncoder passwordEncoder,
-                               UserValidationService validationService) {
+                               AdminValidationService validationService) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
         this.validationService = validationService;

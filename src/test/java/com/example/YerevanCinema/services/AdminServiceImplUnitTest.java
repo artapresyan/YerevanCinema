@@ -5,7 +5,6 @@ import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.repositories.AdminRepository;
 import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
 import com.example.YerevanCinema.services.validations.AdminValidationService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,31 +28,20 @@ public class AdminServiceImplUnitTest {
 
     private static final List<Admin> ADMINS = new ArrayList<>();
 
-    @Before
-    public void fillAdminsList() {
-        String name = "Artur";
-        String surname = "Apresyan";
-        String email = "my.email@gmail.com";
-        String username = "artapresyan";
-        String password = "unknown";
-        for (int i = 1, suffix = 'a', prefix = 'z'; i < 21; i++, suffix++, prefix--) {
-            Admin admin = new Admin(name + suffix, prefix + surname + suffix, prefix + email,
-                    suffix + username + prefix, suffix + password + prefix);
-            admin.setAdminId((long) i);
-            ADMINS.add(admin);
-        }
-    }
-
     @Mock
     private AdminRepository adminRepository;
     @InjectMocks
     private AdminServiceImpl adminService;
-
     @InjectMocks
     private AdminValidationService userValidationService;
 
+    @InjectMocks
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Test
     public void getAdminByIDTest() {
+        fillAdminsList();
+
         List<Admin> actualAdmins = ADMINS.stream().map(expectedAdmin -> {
             Long id = expectedAdmin.getAdminId();
             when(adminRepository.findById(id)).thenReturn(Optional.of(expectedAdmin));
@@ -66,16 +55,22 @@ public class AdminServiceImplUnitTest {
         }).collect(Collectors.toList());
 
         assertEquals(ADMINS.size(), actualAdmins.size());
+
+        ADMINS.clear();
     }
 
     @Test
     public void getAllAdminsTest() {
+        fillAdminsList();
+
         when(adminRepository.findAll()).thenReturn(ADMINS);
 
         List<Admin> actualAdmins = adminService.getAllAdmins();
 
         assertEquals(ADMINS.size(), actualAdmins.size());
         assertTrue(actualAdmins.containsAll(ADMINS));
+
+        ADMINS.clear();
     }
 
     @Test
@@ -97,4 +92,39 @@ public class AdminServiceImplUnitTest {
         assertEquals(expectedAdmin.getAdminEmail(), actualAdmin.getAdminEmail());
     }
 
+    @Test
+    public void removeAdmin() {
+        fillAdminsList();
+
+        List<Admin> actualAdmins = ADMINS.stream().map(admin -> {
+            String password = admin.getAdminPassword();
+            admin.setAdminPassword(passwordEncoder.encode(password));
+            when(adminRepository.findById(admin.getAdminId())).thenReturn(Optional.of(admin));
+
+            Admin actualAdmin = adminService.removeAdmin(admin.getAdminId(), password, passwordEncoder);
+
+            Mockito.verify(adminRepository).deleteById(admin.getAdminId());
+            assertEquals(admin, actualAdmin);
+
+            return actualAdmin;
+        }).collect(Collectors.toList());
+
+        assertEquals(ADMINS.size(), actualAdmins.size());
+
+        ADMINS.clear();
+    }
+
+    public void fillAdminsList() {
+        String name = "Artur";
+        String surname = "Apresyan";
+        String email = "my.email@gmail.com";
+        String username = "artapresyan";
+        String password = "unknown";
+        for (int i = 1, suffix = 'a', prefix = 'z'; i < 21; i++, suffix++, prefix--) {
+            Admin admin = new Admin(name + suffix, prefix + surname + suffix, prefix + email,
+                    suffix + username + prefix, suffix + password + prefix);
+            admin.setAdminId((long) i);
+            ADMINS.add(admin);
+        }
+    }
 }

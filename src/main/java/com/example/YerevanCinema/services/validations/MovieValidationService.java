@@ -37,7 +37,7 @@ public class MovieValidationService {
 
     public void validateMovieDescription(String movieDescription) throws IOException {
         if (movieDescription != null && movieDescription.length() != 0
-                && !movieDescription.matches("(?=.{40,}[a-zA-Z])[.]+")) {
+                && !movieDescription.matches("(?=.{40,}[a-zA-Z]).+")) {
             logger.log(Level.FATAL, "Please be aware, description must contain minimum 40 alphabetic characters");
             throw new IOException();
         }

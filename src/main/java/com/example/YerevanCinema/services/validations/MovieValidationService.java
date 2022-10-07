@@ -29,7 +29,7 @@ public class MovieValidationService {
     }
 
     public void validateMovieCategory(String movieCategory) throws IOException {
-        if (movieCategory == null || movieCategory.length() == 0 || !movieCategory.matches("\\b+")) {
+        if (movieCategory == null || movieCategory.length() == 0 || !movieCategory.matches("[a-zA-Z]+")) {
             logger.log(Level.FATAL, String.format("Please be aware, ' %s ' is invalid movie category", movieCategory));
             throw new IOException();
         }
@@ -44,7 +44,7 @@ public class MovieValidationService {
     }
 
     public void validateMovieLanguage(String movieLanguage) throws IOException{
-        if (movieLanguage != null && movieLanguage.length() != 0 && !movieLanguage.matches("\\b+")) {
+        if (movieLanguage != null && movieLanguage.length() != 0 && !movieLanguage.matches("[a-zA-Z]+")) {
             logger.log(Level.FATAL, String.format("Please be aware, ' %s ' is invalid language", movieLanguage));
             throw new IOException();
         }

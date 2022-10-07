@@ -25,7 +25,10 @@ public class MovieSessionValidationService {
             throw new IOException();
         }
         MovieSession movieSession = hall.getMovieSessions().stream().filter(registeredSession ->
-                        (double) (movieSessionStart.getHour() - registeredSession.getMovieSessionStart().getHour()) < 1.5)
+                        registeredSession.getMovieSessionStart().getYear() == movieSessionStart.getYear() &&
+                                registeredSession.getMovieSessionStart().getMonth() == movieSessionStart.getMonth() &&
+                                registeredSession.getMovieSessionStart().getDayOfMonth() == movieSessionStart.getDayOfMonth() &&
+                                (double) (movieSessionStart.getHour() - registeredSession.getMovieSessionStart().getHour()) < 1.5)
                 .findAny().orElse(null);
         if (movieSession != null) {
             logger.log(Level.ERROR, String.format("There is already registered session at ' %1$s '. Hall is occupied by %2$s session",
@@ -43,7 +46,7 @@ public class MovieSessionValidationService {
         }
     }
 
-    public void validateMovieSessionPrice(Integer price) throws IOException{
+    public void validateMovieSessionPrice(Integer price) throws IOException {
         if (price == null || price < 2000) {
             logger.log(Level.WARN, String.format("Minimal price for session ticket is ' %1$s '. ' %2$s ' is invalid",
                     2000, price));

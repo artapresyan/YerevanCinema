@@ -103,6 +103,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
             }
             try {
                 movieSessionValidationService.validateMovieSessionPrice(movieSessionPrice);
+                movieSession.setMovieSessionPrice(movieSessionPrice);
             } catch (IOException ignored) {
             }
             movieSession.setHall(hall);

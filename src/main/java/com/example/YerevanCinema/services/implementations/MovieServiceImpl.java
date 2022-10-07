@@ -22,17 +22,10 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
-    private final MovieValidationService movieValidationService;
-    private final AdminServiceImpl adminServiceImpl;
-    private final PasswordEncoder passwordEncoder;
     private final Logger logger = LogManager.getLogger();
 
-    public MovieServiceImpl(MovieRepository movieRepository, MovieValidationService movieValidationService,
-                            AdminServiceImpl adminServiceImpl, PasswordEncoder passwordEncoder) {
+    public MovieServiceImpl(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
-        this.movieValidationService = movieValidationService;
-        this.adminServiceImpl = adminServiceImpl;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -53,9 +46,10 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie addMovie(Long adminID, String password, String movieName, String movieCategory,
-                          String movieDescription, String movieLanguage) {
+                          String movieDescription, String movieLanguage, AdminServiceImpl adminService,
+                          PasswordEncoder passwordEncoder, MovieValidationService movieValidationService) {
         try {
-            Admin admin = adminServiceImpl.getAdminByID(adminID);
+            Admin admin = adminService.getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 try {
                     movieValidationService.validateMovieName(movieName);
@@ -77,9 +71,10 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie removeMovie(Long movieID, Long adminID, String password) {
+    public Movie removeMovie(Long movieID, Long adminID, String password, AdminServiceImpl adminService,
+                             PasswordEncoder passwordEncoder) {
         try {
-            Admin admin = adminServiceImpl.getAdminByID(adminID);
+            Admin admin = adminService.getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 Movie movie = getMovieByID(movieID);
                 movieRepository.deleteById(movieID);
@@ -95,7 +90,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie updateMovie(Long movieID, String movieName, String movieCategory,
-                             String movieDescription, String movieLanguage) {
+                             String movieDescription, String movieLanguage, MovieValidationService movieValidationService) {
         try {
             Movie movie = getMovieByID(movieID);
             try {

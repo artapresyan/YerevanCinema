@@ -6,6 +6,7 @@ import com.example.YerevanCinema.exceptions.MovieNotFoundException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
 import com.example.YerevanCinema.services.validations.AdminValidationService;
+import com.example.YerevanCinema.services.validations.MovieValidationService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +31,14 @@ public class AdminRestController {
     private final HallServiceImpl hallService;
     private final CustomerServiceImpl customerService;
     private final PasswordEncoder passwordEncoder;
+    private final MovieValidationService movieValidationService;
     private final AdminValidationService userValidationService;
 
     public AdminRestController(GmailClientServiceImpl gmailClientService, AdminServiceImpl adminService,
                                TicketServiceImpl ticketService, MovieSessionServiceImpl movieSessionService,
                                MovieServiceImpl movieService, HallServiceImpl hallService,
                                CustomerServiceImpl customerService, PasswordEncoder passwordEncoder,
-                               AdminValidationService userValidationService) {
+                               MovieValidationService movieValidationService, AdminValidationService userValidationService) {
         this.gmailClientService = gmailClientService;
         this.adminService = adminService;
         this.ticketService = ticketService;
@@ -45,6 +47,7 @@ public class AdminRestController {
         this.hallService = hallService;
         this.customerService = customerService;
         this.passwordEncoder = passwordEncoder;
+        this.movieValidationService = movieValidationService;
         this.userValidationService = userValidationService;
     }
 
@@ -229,7 +232,8 @@ public class AdminRestController {
         } catch (MovieNotFoundException e) {
             return null;
         }
-        return movieService.updateMovie(movie.getMovieID(), movieName, movieCategory, movieDescription, movieLanguage);
+        return movieService.updateMovie(movie.getMovieID(), movieName, movieCategory, movieDescription, movieLanguage,
+                movieValidationService);
     }
 
     @PostMapping("movies/all")
@@ -238,13 +242,14 @@ public class AdminRestController {
                           @RequestParam(value = "movieDescription", required = false) String movieDescription,
                           @RequestParam(value = "movieLanguage", required = false) String movieLanguage) {
         Admin admin = (Admin) session.getAttribute("user");
-        return movieService.addMovie(admin.getAdminId(), password, movieName, movieCategory, movieDescription, movieLanguage);
+        return movieService.addMovie(admin.getAdminId(), password, movieName, movieCategory, movieDescription,
+                movieLanguage, adminService, passwordEncoder, movieValidationService);
     }
 
     @DeleteMapping("movies/all")
     public Movie removeMovie(@RequestParam("movieID") Long movieID, @RequestParam("password") String password,
                              HttpSession session) {
         Admin admin = (Admin) session.getAttribute("user");
-        return movieService.removeMovie(movieID, admin.getAdminId(), password);
+        return movieService.removeMovie(movieID, admin.getAdminId(), password, adminService, passwordEncoder);
     }
 }

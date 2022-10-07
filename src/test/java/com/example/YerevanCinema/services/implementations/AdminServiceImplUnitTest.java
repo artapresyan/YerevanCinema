@@ -1,9 +1,8 @@
-package com.example.YerevanCinema.services.implementions;
+package com.example.YerevanCinema.services.implementations;
 
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.repositories.AdminRepository;
-import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
 import com.example.YerevanCinema.services.validations.AdminValidationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

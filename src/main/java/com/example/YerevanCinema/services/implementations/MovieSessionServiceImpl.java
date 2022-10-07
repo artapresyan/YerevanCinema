@@ -25,15 +25,10 @@ import java.util.Optional;
 public class MovieSessionServiceImpl implements MovieSessionService {
 
     private final MovieSessionRepository movieSessionRepository;
-    private final MovieSessionValidationService movieSessionValidationService;
     private final Logger logger = LogManager.getLogger();
-    private final PasswordEncoder passwordEncoder;
 
-    public MovieSessionServiceImpl(MovieSessionRepository movieSessionRepository, PasswordEncoder passwordEncoder,
-                                   MovieSessionValidationService movieSessionValidationService) {
+    public MovieSessionServiceImpl(MovieSessionRepository movieSessionRepository) {
         this.movieSessionRepository = movieSessionRepository;
-        this.movieSessionValidationService = movieSessionValidationService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -55,7 +50,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession addMovieSession(LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd, Integer movieSessionPrice,
-                                        Hall hall, Movie movie, Admin admin, String password) {
+                                        Hall hall, Movie movie, Admin admin, String password, PasswordEncoder passwordEncoder,
+                                        MovieSessionValidationService movieSessionValidationService) {
         try {
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 movieSessionValidationService.validateMovieSessionStart(movieSessionStart, hall);
@@ -74,7 +70,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public MovieSession removeMovieSession(Admin admin, String password, Long movieSessionID) {
+    public MovieSession removeMovieSession(Admin admin, String password, Long movieSessionID, PasswordEncoder passwordEncoder) {
         try {
             MovieSession movieSession = getMovieSessionByID(movieSessionID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
@@ -91,7 +87,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession updateMovieSession(Long movieSessionID, LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd,
-                                           Integer movieSessionPrice, Hall hall, Movie movie, Admin admin) {
+                                           Integer movieSessionPrice, Hall hall, Movie movie, Admin admin,
+                                           MovieSessionValidationService movieSessionValidationService) {
         try {
             MovieSession movieSession = getMovieSessionByID(movieSessionID);
             try {

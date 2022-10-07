@@ -6,6 +6,7 @@ import com.example.YerevanCinema.exceptions.MovieNotFoundException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.services.implementations.*;
 import com.example.YerevanCinema.services.validations.AdminValidationService;
+import com.example.YerevanCinema.services.validations.MovieSessionValidationService;
 import com.example.YerevanCinema.services.validations.MovieValidationService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,7 @@ public class AdminController {
     private final HallServiceImpl hallService;
     private final CustomerServiceImpl customerService;
     private final MovieValidationService movieValidationService;
+    private final MovieSessionValidationService movieSessionValidationService;
     private final PasswordEncoder passwordEncoder;
 
     private final AdminValidationService userValidationService;
@@ -38,7 +40,8 @@ public class AdminController {
                            TicketServiceImpl ticketService, MovieSessionServiceImpl movieSessionService,
                            MovieServiceImpl movieService, HallServiceImpl hallService,
                            CustomerServiceImpl customerService, MovieValidationService movieValidationService,
-                           PasswordEncoder passwordEncoder, AdminValidationService userValidationService) {
+                           MovieSessionValidationService movieSessionValidationService, PasswordEncoder passwordEncoder,
+                           AdminValidationService userValidationService) {
         this.gmailClientService = gmailClientService;
         this.adminService = adminService;
         this.ticketService = ticketService;
@@ -47,6 +50,7 @@ public class AdminController {
         this.hallService = hallService;
         this.customerService = customerService;
         this.movieValidationService = movieValidationService;
+        this.movieSessionValidationService = movieSessionValidationService;
         this.passwordEncoder = passwordEncoder;
         this.userValidationService = userValidationService;
     }
@@ -160,7 +164,7 @@ public class AdminController {
         } catch (MovieNotFoundException ignored) {
         }
         movieSessionService.updateMovieSession(movieSessionID, movieSessionStart, movieSessionEnd, movieSessionPrice,
-                hall, movie, admin);
+                hall, movie, admin, movieSessionValidationService);
         return "admin_sessions_all_view";
     }
 
@@ -182,7 +186,8 @@ public class AdminController {
             movie = movieService.getMovieByName(movieName);
         } catch (MovieNotFoundException ignored) {
         }
-        movieSessionService.addMovieSession(sessionStart, sessionEnd, sessionPrice, hall, movie, admin, password);
+        movieSessionService.addMovieSession(sessionStart, sessionEnd, sessionPrice, hall, movie, admin, password,
+                passwordEncoder,movieSessionValidationService);
         return "admin_sessions_all_view";
     }
 
@@ -192,7 +197,7 @@ public class AdminController {
         Admin admin = (Admin) session.getAttribute("user");
         try {
             Movie movie = movieService.getMovieByName(movieName);
-            movieSessionService.removeMovieSession(admin, password, movie.getMovieID());
+            movieSessionService.removeMovieSession(admin, password, movie.getMovieID(),passwordEncoder);
         } catch (MovieNotFoundException ignored) {
         }
         return "admin_sessions_all_view";

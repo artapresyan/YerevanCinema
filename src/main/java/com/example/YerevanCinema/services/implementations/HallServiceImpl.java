@@ -2,7 +2,6 @@ package com.example.YerevanCinema.services.implementations;
 
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Hall;
-import com.example.YerevanCinema.entities.Seat;
 import com.example.YerevanCinema.exceptions.HallNotFoundException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
 import com.example.YerevanCinema.exceptions.WrongPasswordException;
@@ -18,23 +17,15 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class HallServiceImpl implements HallService {
 
     private final HallRepository hallRepository;
-    private final HallValidationService hallValidationService;
-    private final AdminServiceImpl adminServiceImpl;
-    private final PasswordEncoder passwordEncoder;
     private final Logger logger = LogManager.getLogger();
 
-    public HallServiceImpl(HallRepository hallRepository, HallValidationService hallValidationService,
-                           AdminServiceImpl adminServiceImpl, PasswordEncoder passwordEncoder) {
+    public HallServiceImpl(HallRepository hallRepository) {
         this.hallRepository = hallRepository;
-        this.hallValidationService = hallValidationService;
-        this.adminServiceImpl = adminServiceImpl;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -54,14 +45,15 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public Hall addHall(Long adminID, String password, String hallName, Integer hallCapacity, Set<Seat> seats) {
+    public Hall addHall(Long adminID, String password, String hallName, Integer hallCapacity,
+                        HallValidationService hallValidationService, AdminServiceImpl adminService,
+                        PasswordEncoder passwordEncoder) {
         try {
-            Admin admin = adminServiceImpl.getAdminByID(adminID);
+            Admin admin = adminService.getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 hallValidationService.validateHallName(hallName);
                 hallValidationService.validateHallCapacity(hallCapacity);
                 Hall hall = new Hall(hallName, hallCapacity);
-                hall.setHallSeats(seats);
                 hallRepository.save(hall);
                 return hall;
             } else
@@ -73,9 +65,10 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public Hall removeHall(Long adminID, String password, Long hallID) {
+    public Hall removeHall(Long adminID, String password, Long hallID, AdminServiceImpl adminService,
+                           PasswordEncoder passwordEncoder) {
         try {
-            Admin admin = adminServiceImpl.getAdminByID(adminID);
+            Admin admin = adminService.getAdminByID(adminID);
             if (passwordEncoder.matches(password, admin.getAdminPassword())) {
                 Hall hall = getHallByID(hallID);
                 hallRepository.deleteById(hallID);
@@ -90,7 +83,7 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    public Hall updateHall(Long hallID, String hallName, Integer hallCapacity, Set<Seat> seats) {
+    public Hall updateHall(Long hallID, String hallName, Integer hallCapacity, HallValidationService hallValidationService) {
         try {
             Hall hall = getHallByID(hallID);
             try {
@@ -103,7 +96,6 @@ public class HallServiceImpl implements HallService {
                 hall.setHallCapacity(hallCapacity);
             } catch (IOException ignored) {
             }
-            hall.setHallSeats(seats);
             hallRepository.save(hall);
             return hall;
         } catch (HallNotFoundException e) {

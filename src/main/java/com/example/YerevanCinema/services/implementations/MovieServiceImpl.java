@@ -54,8 +54,10 @@ public class MovieServiceImpl implements MovieService {
                 try {
                     movieValidationService.validateMovieName(movieName);
                     movieValidationService.validateMovieCategory(movieCategory);
-                    movieValidationService.validateMovieDescription(movieDescription);
-                    movieValidationService.validateMovieLanguage(movieLanguage);
+                    if (movieDescription != null)
+                        movieValidationService.validateMovieDescription(movieDescription);
+                    if (movieLanguage != null)
+                        movieValidationService.validateMovieLanguage(movieLanguage);
                 } catch (IOException e) {
                     return null;
                 }

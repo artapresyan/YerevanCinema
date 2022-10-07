@@ -6,7 +6,9 @@ import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AdminDetailsService implements UserDetailsService {
 
     private final AdminServiceImpl adminService;
@@ -23,4 +25,5 @@ public class AdminDetailsService implements UserDetailsService {
             return null;
         }
     }
+
 }

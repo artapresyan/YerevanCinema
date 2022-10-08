@@ -1,5 +1,6 @@
 package com.example.YerevanCinema.entities;
 
+import jdk.jfr.Timestamp;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,7 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -25,11 +25,12 @@ public class MovieSession {
 
     @Column(name = "start")
     @NotNull
-    private LocalDateTime movieSessionStart;
+    private String movieSessionStart;
 
     @Column(name = "end")
     @NotNull
-    private LocalDateTime movieSessionEnd;
+    @Timestamp
+    private String movieSessionEnd;
 
     @Column(name = "price")
     @NotNull
@@ -51,7 +52,7 @@ public class MovieSession {
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
-    public MovieSession(LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd, Integer movieSessionPrice,
+    public MovieSession(String movieSessionStart, String movieSessionEnd, Integer movieSessionPrice,
                         Hall hall, Movie movie, Admin admin) {
         this.movieSessionStart = movieSessionStart;
         this.movieSessionEnd = movieSessionEnd;

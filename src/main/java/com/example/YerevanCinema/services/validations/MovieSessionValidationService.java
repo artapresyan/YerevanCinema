@@ -16,20 +16,21 @@ public class MovieSessionValidationService {
 
     private final Logger logger = LogManager.getLogger();
 
-    public void validateMovieSessionStart(LocalDateTime movieSessionStart, Hall hall)
+    public void validateMovieSessionStart(String movieSessionStart, Hall hall)
             throws IOException, MovieSessionAlreadyExistsException {
 
-        if (movieSessionStart == null || movieSessionStart.isBefore(LocalDateTime.now())) {
+        if (movieSessionStart == null || LocalDateTime.parse(movieSessionStart).isBefore(LocalDateTime.now())) {
             logger.log(Level.ERROR, String.format("Check movie session start date and time, ' %s ' is not valid",
                     movieSessionStart));
             throw new IOException();
         }
-        MovieSession movieSession = hall.getMovieSessions().stream().filter(registeredSession ->
-                        registeredSession.getMovieSessionStart().getYear() == movieSessionStart.getYear() &&
-                                registeredSession.getMovieSessionStart().getMonth() == movieSessionStart.getMonth() &&
-                                registeredSession.getMovieSessionStart().getDayOfMonth() == movieSessionStart.getDayOfMonth() &&
-                                (double) (movieSessionStart.getHour() - registeredSession.getMovieSessionStart().getHour()) < 1.5)
-                .findAny().orElse(null);
+        LocalDateTime start = LocalDateTime.parse(movieSessionStart);
+        MovieSession movieSession = hall.getMovieSessions().stream().filter(registeredSession -> {
+            LocalDateTime registeredTime = LocalDateTime.parse(registeredSession.getMovieSessionStart());
+            return registeredTime.getYear() == start.getYear() && registeredTime.getMonth() == start.getMonth()
+                    && registeredTime.getDayOfMonth() == start.getDayOfMonth() &&
+                    (double) (start.getHour() - registeredTime.getHour()) < 1.5;
+        }).findAny().orElse(null);
         if (movieSession != null) {
             logger.log(Level.ERROR, String.format("There is already registered session at ' %1$s '. Hall is occupied by %2$s session",
                     movieSessionStart, movieSession.getMovie().getMovieName()));
@@ -37,9 +38,9 @@ public class MovieSessionValidationService {
         }
     }
 
-    public void validateMovieSessionEnd(LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd)
+    public void validateMovieSessionEnd(String movieSessionStart, String movieSessionEnd)
             throws IOException {
-        if (movieSessionEnd == null || movieSessionEnd.isBefore(movieSessionStart)) {
+        if (movieSessionEnd == null || LocalDateTime.parse(movieSessionEnd).isBefore(LocalDateTime.now())) {
             logger.log(Level.ERROR, String.format("Check movie session end date and time. Start date and" +
                     " time is ' %1$s ', end date and time is ' %2$s '", movieSessionStart, movieSessionEnd));
             throw new IOException();

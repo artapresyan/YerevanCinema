@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +48,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public MovieSession addMovieSession(LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd, Integer movieSessionPrice,
+    public MovieSession addMovieSession(String movieSessionStart, String movieSessionEnd, Integer movieSessionPrice,
                                         Hall hall, Movie movie, Admin admin, String password, PasswordEncoder passwordEncoder,
                                         MovieSessionValidationService movieSessionValidationService) {
         try {
@@ -86,7 +85,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public MovieSession updateMovieSession(Long movieSessionID, LocalDateTime movieSessionStart, LocalDateTime movieSessionEnd,
+    public MovieSession updateMovieSession(Long movieSessionID, String movieSessionStart, String movieSessionEnd,
                                            Integer movieSessionPrice, Hall hall, Movie movie, Admin admin,
                                            MovieSessionValidationService movieSessionValidationService) {
         try {
@@ -118,7 +117,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public List<MovieSession> getAllMovieSessionsByStart(LocalDateTime movieSessionStart) {
+    public List<MovieSession> getAllMovieSessionsByStart(String movieSessionStart) {
         return movieSessionRepository.getByMovieSessionStart(movieSessionStart);
     }
 

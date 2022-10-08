@@ -44,23 +44,6 @@
                 <a href="/admin/contact">
                     <li>Contact</li>
                 </a>
-                <li>
-                    <div class="navbar">
-                        <div class="dropdown">
-                            <button class="dropbtn">Name Surname
-                                <i class="fa fa-caret-down"></i>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="/admin/details">Account Details</a>
-                                <a href="/admin/tickets">Tickets</a>
-                                <a href="/admin/movies">Movies</a>
-                                <a href="/admin/halls">Halls</a>
-                                <a href="/admin/customers">Customers</a>
-                                <a href="/admin/logout">Log out</a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>
@@ -76,11 +59,11 @@
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <label class="labels">Name</label>
-                            <input type="text" name="admin_name" class="form-control" value="">
+                            <input type="text" name="admin_name" class="form-control" th:attr="placeholder=${user.getAdminName()}">
                         </div>
                         <div class="col-md-6">
                             <label class="labels">Surname</label>
-                            <input type="text" name="admin_surname" class="form-control" value="">
+                            <input type="text" name="admin_surname" class="form-control" th:attr="placeholder=${user.getAdminSurname()}">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -90,20 +73,28 @@
                         </div>
                         <div style="margin-top: 10px" class="col-md-6">
                             <label class="labels">Username</label>
-                            <input type="text" name="admin_username" class="form-control" value="">
+                            <input type="text" name="admin_username" class="form-control" th:attr="placeholder=${user.getAdminUsername()}">
                         </div>
                         <div style="margin-top: 10px" class="col-md-6">
                             <label class="labels">Email</label>
-                            <input type="text" name="admin_email" class="form-control" value="">
+                            <input type="text" name="admin_email" class="form-control" th:attr="placeholder=${user.getAdminEmail()}">
                         </div>
                         <div style="margin-top: 10px" class="col-md-6">
                             <label class="labels">New Password</label>
-                            <input type="text" name="admin_new_password" class="form-control" value="">
+                            <input type="password" name="admin_new_password" class="form-control" placeholder="Enter new password">
+                        </div>
+                        <div style="margin-top: 10px" class="col-md-6">
+                            <label class="labels">Confirm New Password</label>
+                            <input type="password" required name="admin_new_password_confirm" class="form-control" placeholder="Enter new password">
+                        </div>
+                        <div style="margin-top: 10px" class="col-md-6">
+                            <label class="labels">Confirm Changes With Old Password</label>
+                            <input type="password" name="admin_password" class="form-control" placeholder="Enter old password">
                         </div>
                     </div>
                     <div class="mt-5 text-center">
                         <button class="btn btn-primary profile-button" type="submit">
-                            <a style="color: white;text-decoration:none">Save Profile</a>
+                            Save Changes
                         </button>
                     </div>
                 </form>

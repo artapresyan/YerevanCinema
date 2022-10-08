@@ -37,7 +37,9 @@
                     <li>Sessions</li>
                 </a>
                 <a href="/admin/about">
-                    <li>About</li>
+                    <li >
+                        About
+                    </li>
                 </a>
                 <a href="/admin/contact">
                     <li>Contact</li>
@@ -45,17 +47,18 @@
                 <li>
                     <div class="navbar">
                         <div class="dropdown">
-                            <button class="dropbtn">Name Surname
+                            <button class="dropbtn">
+                                <h3 data-placeholder="username" th:text="${user.getAdminUsername()}"></h3>
                                 <i class="fa fa-caret-down"></i>
                             </button>
                             <div class="dropdown-content">
                                 <a href="/admin/details">Account Details</a>
+                                <a href="/admin/customers/all">All Customers</a>
+                                <a href="/admin/halls/all">All Halls</a>
+                                <a href="/admin/movies/all"> All Movies</a>
                                 <a href="/admin/sessions/all">All Sessions</a>
-                                <a href="/admin/tickets">Tickets</a>
-                                <a href="/admin/movies">Movies</a>
-                                <a href="/admin/halls">Halls</a>
-                                <a href="/admin/customers">Customers</a>
-                                <a href="/admin/logout">Log out</a>
+                                <a href="/admin/tickets/all">All Tickets</a>
+                                <a href="/logout">Log out</a>
                             </div>
                         </div>
                     </div>
@@ -64,283 +67,37 @@
         </div>
     </div>
 </header>
-<div class="limiter">
+<div class="limiter" style="padding-top: 3%;">
 
-        <table style="margin-left: 30%;margin-top: 1%; border-radius: 10px">
+        <table style="margin-left: 30%; border-radius: 10px">
             <tr>
                 <th scope="col" class="first" style="width: 170px">ID</th>
-                <th scope="col" class="middle" style="width: 150px">Customer ID</th>
-                <th scope="col" class="last" style="width: 250px">Session ID</th>
+                <th scope="col" class="middle" style="width: 150px">Session ID</th>
+                <th scope="col" class="last" style="width: 250px">Customer Username</th>
             </tr>
-            <tr>
+            <tr th:each="ticket: ${tickets}">
                 <th scope="row" class="first" style="width: 170px">
                     <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
+                        <a style="font-size:.8rem;color: black;text-decoration: none">
+                            <p th:text="${ticket.ticketID}"></p>
+                        </a>
                     </button>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
+                    <button type="button" name="ticket_session_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
+                            <a style="font-size:.8rem;color: black;text-decoration: none">
+                                <p th:text="${ticket.session.sessionID}"></p>
+                            </a>
                         </a>
                     </button>
                 </th>
                 <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
+                    <button type="button" name="ticket_customer_id" style="cursor: none">
                         <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="customer_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 250px">
-                    <button type="button" name="session_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
+                            <a style="font-size:.8rem;color: black;text-decoration: none">
+                                <p th:text="${ticket.customer.customerUsername}"></p>
+                            </a>
                         </a>
                     </button>
                 </th>

@@ -45,21 +45,24 @@
                 <li>
                     <div class="navbar">
                         <div class="dropdown">
-                            <button class="dropbtn">Name Surname
+                            <button class="dropbtn">
+                                <h3 data-placeholder="username" th:text="${user.getAdminUsername()}"></h3>
                                 <i class="fa fa-caret-down"></i>
                             </button>
                             <div class="dropdown-content">
                                 <a href="/admin/details">Account Details</a>
-                                <a href="/admin/tickets">Tickets</a>
-                                <a href="/admin/movies">Movies</a>
-                                <a href="/admin/halls">Halls</a>
-                                <a href="/admin/customers">Customers</a>
-                                <a href="/admin/logout">Log out</a>
+                                <a href="/admin/customers/all">All Customers</a>
+                                <a href="/admin/halls/all">All Halls</a>
+                                <a href="/admin/movies/all"> All Movies</a>
+                                <a href="/admin/sessions/all">All Sessions</a>
+                                <a href="/admin/tickets/all">All Tickets</a>
+                                <a href="/logout">Log out</a>
                             </div>
                         </div>
                     </div>
                 </li>
             </ul>
+
         </div>
     </div>
 </header>

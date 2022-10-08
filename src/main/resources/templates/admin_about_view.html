@@ -45,16 +45,18 @@
                 <li>
                     <div class="navbar">
                         <div class="dropdown">
-                            <button class="dropbtn">Name Surname
+                            <button class="dropbtn">
+                                <h3 data-placeholder="username" th:text="${user.getAdminUsername()}"></h3>
                                 <i class="fa fa-caret-down"></i>
                             </button>
                             <div class="dropdown-content">
                                 <a href="/admin/details">Account Details</a>
-                                <a href="/admin/tickets">Tickets</a>
-                                <a href="/admin/movies">Movies</a>
-                                <a href="/admin/halls">Halls</a>
-                                <a href="/admin/customers">Customers</a>
-                                <a href="/admin/logout">Log out</a>
+                                <a href="/admin/customers/all">All Customers</a>
+                                <a href="/admin/halls/all">All Halls</a>
+                                <a href="/admin/movies/all"> All Movies</a>
+                                <a href="/admin/sessions/all">All Sessions</a>
+                                <a href="/admin/tickets/all">All Tickets</a>
+                                <a href="/logout">Log out</a>
                             </div>
                         </div>
                     </div>
@@ -65,13 +67,13 @@
     </div>
 </header>
 <div class="limiter">
-    <h1 style="padding-top: 35px;text-align: center;font-size: 55px;text-shadow: -2px -2px 8px;">
+    <h1 style="padding-top: 10px;text-align: center;font-size: 55px;text-shadow: -2px -2px 8px;">
         Biography and History <br> of YerevanCinema
     </h1>
     <div class="center-big">
         <div class="front-face">
             <div class="contents front">
-                <img class="img-big" src="/static/images/cinema_hall.jpg" alt="no_image"><br><br>
+                <img class="img-big" style="margin-top: 5% " src="/static/images/cinema_hall.jpg" alt="no_image"><br><br>
                 <a style="color: black; font-size: 15px">Cool cucumbers cayenne red grapes eating together Indian banana
                     bread and stormy ultimate vegan a
                     delicious meal ginger carrot spiced morning smoothie bowl red amazon pepper green tea

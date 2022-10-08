@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Movies</title>
+    <title>All Halls</title>
 
     <link rel="icon" type="image/png" href="/static/images/cinema_black_icon.png"/>
     <!--===============================================================================================-->
@@ -36,8 +36,8 @@
                 <a href="/admin/sessions">
                     <li>Sessions</li>
                 </a>
-                <a href="/admin/about">
-                    <li>About</li>
+                <a>
+                    <li href="/admin/about">About</li>
                 </a>
                 <a href="/admin/contact">
                     <li>Contact</li>
@@ -66,19 +66,22 @@
         </div>
     </div>
 </header>
-<div class="limiter">
-    <table style="margin-left: 35%">
+<div class="limiter" style="padding-top: 3%;">
+    <table style=";margin-left: 27%">
         <tr>
-            <th scope="col" class="first" style="width: 170px">ID</th>
-            <th scope="col" class="middle" style="width: 150px">Password</th>
-            <th scope="col" class="last" style="width: 120px">Remove</th>
+            <th scope="col" class="first" style="width: 150px">Name</th>
+            <th scope="col" class="middle" style="width: 120px">Capacity</th>
+            <th scope="col" class="middle" style="width: 120px">Password</th>
+            <th scope="col" class="last" style="width: 120px">Add</th>
         </tr>
         <tr>
-            <
-            <form action="/admin/movies/all_remove" method="post"
-                  style="padding-left: 10%;padding-top: 3%; padding-right: 10%;">
+            <form action="/admin/halls/all_add" method="post" style="margin-left: 40%;margin-top: 15px">
                 <th class="first">
-                    <input type="number" name="movie_id" required
+                    <input type="text" name="hall_name" required
+                           style="text-align: center;background: none;border: 1px solid black">
+                </th>
+                <th class="middle">
+                    <input type="number" name="hall_capacity" required
                            style="text-align: center;background: none;border: 1px solid black">
                 </th>
                 <th class="middle">
@@ -97,87 +100,31 @@
 
     </table>
 
-    <table style="margin-left: 3%;margin-top: 1%; margin-right: 2%; border-radius: 10px">
-        <tr>
-            <th scope="col" class="first" style="width: 150px">Name</th>
-            <th scope="col" class="middle" style="width: 250px">Category</th>
-            <th scope="col" class="middle" style="width: 250px">Description</th>
-            <th scope="col" class="middle" style="width: 150px">Language</th>
-            <th scope="col" class="last" style="width: 120px">Add</th>
-        </tr>
-        <tr>
-            <form action="/admin/movies/all_add" method="post"
-                  style="padding-left: 8%;padding-top: 3%; padding-right: 8%;">
-                <th scope="row" class="first" style="width: 170px">
-                    <input type="text" style="height: 25px;background: none;border: 1px solid black;text-align: center"
-                           name="movie_name" required>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <input type="text" style="height: 25px;background: none;border: 1px solid black;text-align: center"
-                           name="movie_category" required>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <input type="text" style="height: 25px;background: none;border: 1px solid black;text-align: center"
-                           name="movie_description">
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <input type="text" style="height: 25px;background: none;border: 1px solid black;text-align: center"
-                           name="movie_language">
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Add
-                        </a>
-                    </button>
-                </th>
-            </form>
-        </tr>
-    </table>
-
-    <table style="margin-top: 1%;margin-left: 15%; border-radius: 10px">
+    <table style="margin-left: 30%;margin-top: 30px; border-radius: 10px">
         <tr>
             <th scope="col" class="first" style="width: 170px">ID</th>
             <th scope="col" class="middle" style="width: 150px">Name</th>
-            <th scope="col" class="middle" style="width: 250px">Category</th>
-            <th scope="col" class="middle" style="width: 250px">Description</th>
-            <th scope="col" class="last" style="width: 150px">Language</th>
+            <th scope="col" class="last" style="width: 250px">Capacity</th>
         </tr>
-        <tr th:each="movie : ${allMovies}">
+        <tr th:each="hall : ${allHalls}">
             <th scope="row" class="first" style="width: 170px">
-                <button type="button" name="movie_id" style="cursor: none">
+                <button type="button" name="hall_id" style="cursor: none">
                     <a style="font-size:.8rem;color: black;text-decoration: none">
-                        <p th:text="${movie.movieID}"></p>
+                        <p th:text="${hall.hallID}"></p>
                     </a>
                 </button>
             </th>
             <th scope="row" class="middle" style="width: 150px">
-                <button type="button" name="movie_name" style="cursor: none">
+                <button type="button" name="hall_name" style="cursor: none">
                     <a style="font-size:.8rem;color: black;text-decoration: none">
-                        <p th:text="${movie.movieName}"></p>
+                        <p th:text="${hall.hallName}"></p>
                     </a>
                 </button>
             </th>
-            <th scope="row" class="middle" style="width: 250px">
-                <button type="button" name="movie_category" style="cursor: none">
+            <th scope="row" class="last" style="width: 250px">
+                <button type="button" name="hall_capacity" style="cursor: none">
                     <a style="font-size:.8rem;color: black;text-decoration: none">
-                        <p th:text="${movie.movieCategory}"></p>
-                    </a>
-                </button>
-            </th>
-            <th scope="row" class="middle" style="width: 250px">
-                <button style="cursor: none" name="movie_description">
-                    <a style="font-size:.8rem;color: black;text-decoration: none">
-                        <p th:text="${movie.movieDescription}"></p>
-                    </a>
-                </button>
-            </th>
-            <th scope="row" class="last" style="width: 150px">
-                <button type="button" name="movie_language" style="cursor: none">
-                    <a style="font-size:.8rem;color: black;text-decoration: none">
-                        <p th:text="${movie.movieLanguage}"></p>
+                        <p th:text="${hall.hallCapacity}">
                     </a>
                 </button>
             </th>

@@ -59,11 +59,11 @@
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <label class="labels">Name</label>
-                        <input type="text" readonly class="form-control" value="">
+                        <input type="text" readonly class="form-control" th:value="${user.getAdminName()}">
                     </div>
                     <div class="col-md-6">
                         <label class="labels">Surname</label>
-                        <input type="text" readonly class="form-control" value="">
+                        <input type="text" readonly class="form-control" th:value="${user.getAdminSurname()}">
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -73,11 +73,11 @@
                     </div>
                     <div style="margin-top: 10px" class="col-md-6">
                         <label class="labels">Username</label>
-                        <input type="text" readonly class="form-control" value="">
+                        <input type="text" readonly class="form-control" th:value="${user.getAdminUsername()}">
                     </div>
                     <div style="margin-top: 10px" class="col-md-6">
                         <label class="labels">Email</label>
-                        <input type="text" readonly class="form-control" value="">
+                        <input type="text" readonly class="form-control" th:value="${user.getAdminEmail()}">
                     </div>
                     <div style="margin-top: 10px" class="col-md-6">
                         <label class="labels">Password</label>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="mt-5 text-center">
                     <button class="btn btn-primary profile-button" type="button">
-                        <a style="color: white;text-decoration:none" href="/customer/details/edit">Edit Profile</a>
+                        <a style="color: white;text-decoration:none" href="/admin/details/edit">Edit Profile</a>
                     </button>
                 </div>
             </div>

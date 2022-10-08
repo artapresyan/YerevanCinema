@@ -45,769 +45,87 @@
                 <li>
                     <div class="navbar">
                         <div class="dropdown">
-                            <button class="dropbtn">Name Surname
+                            <button class="dropbtn">
+                                <h3 data-placeholder="username" th:text="${user.getAdminUsername()}"></h3>
                                 <i class="fa fa-caret-down"></i>
                             </button>
                             <div class="dropdown-content">
                                 <a href="/admin/details">Account Details</a>
+                                <a href="/admin/customers/all">All Customers</a>
+                                <a href="/admin/halls/all">All Halls</a>
+                                <a href="/admin/movies/all"> All Movies</a>
                                 <a href="/admin/sessions/all">All Sessions</a>
-                                <a href="/admin/tickets">Tickets</a>
-                                <a href="/admin/movies">Movies</a>
-                                <a href="/admin/halls">Halls</a>
-                                <a href="/admin/customers">Customers</a>
-                                <a href="/admin/logout">Log out</a>
+                                <a href="/admin/tickets/all">All Tickets</a>
+                                <a href="/logout">Log out</a>
                             </div>
                         </div>
                     </div>
                 </li>
             </ul>
+
         </div>
     </div>
 </header>
-<div class="limiter">
-    <form action="/admin/sessions/all_remove" method="post"
-          style="padding-left: 10%;padding-top: 3%; padding-right: 10%;">
-        <table style="border-radius: 10px">
-            <tr>
-                <th scope="col" class="first" style="width: 170px">Movie</th>
-                <th scope="col" class="middle" style="width: 150px">Category</th>
-                <th scope="col" class="middle" style="width: 250px">Start</th>
-                <th scope="col" class="middle" style="width: 250px">End</th>
-                <th scope="col" class="middle" style="width: 150px">Hall</th>
-                <th scope="col" class="middle" style="width: 150px">Price</th>
-                <th scope="col" class="middle" style="width: 300px">Description</th>
-                <th scope="col" class="last" style="width: 120px">Remove</th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
+<div class="limiter" style="padding-top: 30px;">
+    <table style="margin-left: 35%">
+        <tr>
+            <th scope="col" class="first" style="width: 170px">ID</th>
+            <th scope="col" class="middle" style="width: 150px">Password</th>
+            <th scope="col" class="last" style="width: 120px">Remove</th>
+        </tr>
+        <tr>
+            <form action="/admin/sessions/all_remove" method="post"
+                  style="padding-left: 10%;padding-top: 3%; padding-right: 10%;">
+                <th class="first">
+                    <input type="number" name="session_id" required
+                           style="text-align: center;background: none;border: 1px solid black">
                 </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
+                <th class="middle">
+                    <input type="password" name="password" required
+                           style="text-align: center;background: none;border: 1px solid black">
                 </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
+                <th class="last">
                     <button type="submit">
                         <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
+                            Confirm
                         </a>
                     </button>
                 </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_end" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_hall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_price" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button type="button" name="movie_description" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 350px">
-                    <input type="password" name="password" required style="text-align: center"
-                           placeholder="Enter password">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
-                            Remove
-                        </a>
-                    </button>
-                </th>
-            </tr>
-        </table>
-    </form>
+            </form>
+        </tr>
+    </table>
 
-    <form action="/admin/sessions/all_add" method="post" style="padding-left: 10%;padding-top: 3%; padding-right: 10%;">
-        <table style="border-radius: 10px">
-            <tr>
-                <th scope="col" class="first" style="width: 150px">Movie</th>
-                <th scope="col" class="middle" style="width: 150px">Start</th>
-                <th scope="col" class="middle" style="width: 150px">End</th>
-                <th scope="col" class="middle" style="width: 150px">Hall</th>
-                <th scope="col" class="middle" style="width: 150px">Price</th>
-                <th scope="col" class="last" style="width: 100px">Add Session</th>
-            </tr>
-            <tr>
+    <table style="margin-left: 5%;margin-top: 2%; border-radius: 10px">
+        <tr>
+            <th scope="col" class="first" style="width: 150px">Movie</th>
+            <th scope="col" class="middle" style="width: 150px">Start</th>
+            <th scope="col" class="middle" style="width: 150px">End</th>
+            <th scope="col" class="middle" style="width: 150px">Hall</th>
+            <th scope="col" class="middle" style="width: 150px">Price</th>
+            <th scope="col" class="last" style="width: 100px">Add Session</th>
+        </tr>
+        <tr>
+            <form action="/admin/sessions/all_add" method="post"
+                  style="padding-left: 10%;padding-top: 3%; padding-right: 10%;">
                 <th scope="row" class="first" style="width: 170px">
-                    <input type="text" style="height: 25px;background: none;border: 1px solid black" name="movie_name" required >
+                    <input type="text" style="height: 25px;background: none;border: 1px solid black" name="movie_name"
+                           required>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <input type="datetime-local" style="height: 25px;background: none;border: 1px solid black" name="session_start" required >
+                    <input type="datetime-local" style="height: 25px;background: none;border: 1px solid black"
+                           name="session_start" required>
                 </th>
                 <th scope="row" class="middle" style="width: 250px">
-                    <input type="datetime-local" style="height: 25px;background: none;border: 1px solid black" name="session_end" required >
+                    <input type="datetime-local" style="height: 25px;background: none;border: 1px solid black"
+                           name="session_end" required>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <input type="text" style="height: 25px;background: none;border: 1px solid black" name="session_hall" required >
+                    <input type="text" style="height: 25px;background: none;border: 1px solid black" name="session_hall"
+                           required>
                 </th>
                 <th scope="row" class="middle" style="width: 150px">
-                    <input type="number" style="height: 25px;background: none;border: 1px solid black" name="session_price" required >
+                    <input type="number" style="height: 25px;background: none;border: 1px solid black"
+                           name="session_price" required>
                 </th>
                 <th scope="row" class="last" style="width: 350px">
                     <input type="password" name="password" required style="text-align: center"
@@ -818,9 +136,72 @@
                         </a>
                     </button>
                 </th>
-            </tr>
-        </table>
-    </form>
+            </form>
+        </tr>
+    </table>
+
+    <table style="margin-left: 3.5%;margin-top: 2%;border-radius: 10px">
+        <tr>
+            <th scope="col" class="first" style="width: 170px">Movie</th>
+            <th scope="col" class="middle" style="width: 150px">Category</th>
+            <th scope="col" class="middle" style="width: 250px">Start</th>
+            <th scope="col" class="middle" style="width: 250px">End</th>
+            <th scope="col" class="middle" style="width: 150px">Hall</th>
+            <th scope="col" class="middle" style="width: 150px">Price</th>
+            <th scope="col" class="last" style="width: 300px">Description</th>
+        </tr>
+        <tr th:each="movie_session : ${movie_sessions_all}">
+            <th scope="row" class="first" style="width: 170px">
+                <button type="button" name="movie_name" style="cursor: none">
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_sessions.movie.movieName}"></p>
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 150px">
+                <button type="button" name="movie_category" style="cursor: none">
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_sessions.movie.movieCategory}"></p>
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 250px">
+                <button type="button" name="movie_start" style="cursor: none">
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_sessions.movieSessionStart}"></p>
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 250px">
+                <button type="button" name="movie_end" style="cursor: none">
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_sessions.movieSessionEnd}"></p>
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 150px">
+                <button type="button" name="movie_hall" style="cursor: none">
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_sessions.hall.hallName}"></p>
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 150px">
+                <button type="button" name="movie_price" style="cursor: none">
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_sessions.movieSessionPrice}"></p>
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="last" style="width: 350px">
+                <button type="button" name="movie_description" style="cursor: none">
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_sessions.movie.movieDescription}"></p>
+                    </a>
+                </button>
+            </th>
+        </tr>
+    </table>
 </div>
 <footer>
     <div class="box">

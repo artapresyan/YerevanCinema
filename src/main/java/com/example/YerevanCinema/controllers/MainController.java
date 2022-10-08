@@ -5,7 +5,10 @@ import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.entities.MovieSession;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
-import com.example.YerevanCinema.services.implementations.*;
+import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
+import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
+import com.example.YerevanCinema.services.implementations.GmailClientServiceImpl;
+import com.example.YerevanCinema.services.implementations.MovieSessionServiceImpl;
 import com.example.YerevanCinema.services.validations.AdminValidationService;
 import com.example.YerevanCinema.services.validations.CustomerValidationService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -33,7 +34,7 @@ public class MainController {
     private final AdminServiceImpl adminService;
     private final GmailClientServiceImpl gmailClientService;
     private final AdminValidationService userValidationService;
-    private final JwtTokenServiceImpl jwtTokenService;
+
     private final MovieSessionServiceImpl sessionService;
 
     private final CustomerValidationService customerValidationService;
@@ -41,13 +42,12 @@ public class MainController {
 
     public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService,
                           GmailClientServiceImpl gmailClientService, AdminValidationService userValidationService,
-                          JwtTokenServiceImpl jwtTokenService, MovieSessionServiceImpl sessionService,
-                          CustomerValidationService customerValidationService, PasswordEncoder passwordEncoder) {
+                          MovieSessionServiceImpl sessionService, PasswordEncoder passwordEncoder,
+                          CustomerValidationService customerValidationService) {
         this.customerService = customerService;
         this.adminService = adminService;
         this.gmailClientService = gmailClientService;
         this.userValidationService = userValidationService;
-        this.jwtTokenService = jwtTokenService;
         this.sessionService = sessionService;
         this.customerValidationService = customerValidationService;
         this.passwordEncoder = passwordEncoder;
@@ -63,28 +63,24 @@ public class MainController {
         return "login_view";
     }
 
-    @PostMapping("login_load")
+    @PostMapping("login")
     public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
-                            HttpServletRequest request, HttpServletResponse response, Model model) {
+                            HttpSession session, Model model) {
         try {
             Customer customer = customerService.getCustomerByUsername(username);
             if (customerService.passwordsAreMatching(customer, password, passwordEncoder)) {
-                String generatedToken = jwtTokenService.getCustomerJwtToken(customer.getCustomerUsername());
-                request.getSession().setAttribute("user", customer);
-
+                session.setAttribute("user", customer);
                 model.addAttribute("user", customer);
-                return "customer_main_view";
+                return "redirect:/customer/";
             }
         } catch (UserNotFoundException ignored) {
         }
         try {
             Admin admin = adminService.getAdminByUsername(username);
             if (adminService.passwordsAreMatching(admin, password, passwordEncoder)) {
-                String generatedToken = jwtTokenService.getAdminJwtToken(admin.getAdminUsername());
-                request.getSession().setAttribute("user", admin);
-                response.addHeader("Authorization", generatedToken);
+                session.setAttribute("user", admin);
                 model.addAttribute("user", admin);
-                return "admin_main_view";
+                return "redirect:/admin/";
             }
         } catch (UserNotFoundException ignored) {
         }
@@ -106,7 +102,7 @@ public class MainController {
                     customerValidationService, passwordEncoder);
             if (customer != null) {
                 session.setAttribute("user", customer);
-                return "login_view";
+                return "redirect:/login";
             }
         }
         return "signup_view";
@@ -128,7 +124,7 @@ public class MainController {
             userValidationService.validateEmail(email);
             gmailClientService.getSimpleMessage(email, message);
         } catch (MessagingException | RegisteredEmailException | IOException e) {
-            return "no_auth_contact_view";
+            return "redirect:/contact";
         }
         return "no_auth_main_view";
     }
@@ -136,7 +132,8 @@ public class MainController {
     @GetMapping("sessions")
     public String getSessions(Model model) {
         List<MovieSession> movieSessions = sessionService.getAllMovieSessions().stream()
-                .filter(movieSession -> movieSession.getMovieSessionStart().isBefore(LocalDateTime.now().plusDays(7)))
+                .filter(movieSession -> LocalDateTime.parse(movieSession.getMovieSessionStart())
+                        .isBefore(LocalDateTime.now().plusDays(7)))
                 .collect(Collectors.toList());
         model.addAttribute("movie_sessions", movieSessions);
         return "no_auth_sessions_view";
@@ -155,7 +152,7 @@ public class MainController {
             if (customerService.passwordsAreMatching(customer, password, passwordEncoder)) {
                 gmailClientService.sendSimpleMessage(customer, "If you asked for username recovery contact us by email",
                         "RESET USERNAME REQUEST");
-                return "login_view";
+                return "redirect:/";
             }
         } catch (UserNotFoundException | MessagingException ignored) {
         }
@@ -171,10 +168,14 @@ public class MainController {
                 gmailClientService.sendSimpleMessage(customer, "If you asked for password recovery contact us by email",
                         "RESET PASSWORD REQUEST");
             }
-            return "login_view";
+            return "redirect:/";
         } catch (UserNotFoundException |
                  MessagingException ignored) {
         }
         return "recover_view";
+    }
+    @GetMapping("/logout")
+    public String logout(){
+        return "redirect:/";
     }
 }

@@ -123,7 +123,7 @@ public class AdminController {
             admin = adminService.getAdminByID(admin.getAdminId());
             session.setAttribute("user", admin);
             model.addAttribute("user", admin);
-            return "admin_details_view";
+            return "redirect:/admin/details/edit";
         } catch (UserNotFoundException e) {
             return "admin_details_edit_view";
         }
@@ -180,7 +180,9 @@ public class AdminController {
         }
         movieSessionService.updateMovieSession(movieSessionID, movieSessionStart, movieSessionEnd,
                 movieSessionPrice, hall, movie, admin, movieSessionValidationService);
-        return "admin_sessions_all_view";
+        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions();
+        model.addAttribute("movie_sessions_all", movieSessions);
+        return "redirect:/admin/sessions/all";
     }
 
     @PostMapping("sessions/all_add")
@@ -204,10 +206,12 @@ public class AdminController {
         }
         movieSessionService.addMovieSession(sessionStart, sessionEnd, sessionPrice, hall, movie, admin, password,
                 passwordEncoder, movieSessionValidationService);
-        return "admin_sessions_all_view";
+        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions();
+        model.addAttribute("movie_sessions_all", movieSessions);
+        return "redirect:/admin/sessions/all";
     }
 
-    @DeleteMapping("sessions/all_remove")
+    @PostMapping("sessions/all_remove")
     public String removeSession(@RequestParam("session_id") Long movieSessionID,
                                 @RequestParam("password") String password, HttpSession session, Model model) {
         Admin admin = (Admin) session.getAttribute("user");
@@ -215,7 +219,7 @@ public class AdminController {
         movieSessionService.removeMovieSession(admin, password, movieSessionID, passwordEncoder);
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions();
         model.addAttribute("movie_sessions_all", movieSessions);
-        return "admin_sessions_all_view";
+        return "redirect:/admin/sessions/all";
     }
 
     @GetMapping("sessions/movie")
@@ -238,7 +242,6 @@ public class AdminController {
         Admin admin = (Admin) session.getAttribute("user");
         model.addAttribute("user", admin);
         model.addAttribute("movie_session_category", movieSessions);
-        model.addAttribute("by", "category");
         return "admin_sessions_category_selected_view";
     }
 
@@ -250,7 +253,6 @@ public class AdminController {
         Admin admin = (Admin) session.getAttribute("user");
         model.addAttribute("user", admin);
         model.addAttribute("movie_sessions_start", movieSessions);
-        model.addAttribute("by", "start");
         return "admin_sessions_start_selected_view";
     }
 
@@ -262,7 +264,6 @@ public class AdminController {
         Admin admin = (Admin) session.getAttribute("user");
         model.addAttribute("user", admin);
         model.addAttribute("movie_sessions_hall", movieSessions);
-        model.addAttribute("by", "hall");
         return "admin_sessions_hall_selected_view";
     }
 
@@ -283,7 +284,7 @@ public class AdminController {
         customerService.adminRemoveCustomer(customerID, admin, password, passwordEncoder);
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return "admin_customers_all_view";
+        return "redirect:/adimn/customers/all";
     }
 
     @GetMapping("movies/all")
@@ -308,11 +309,11 @@ public class AdminController {
         try {
             movie = movieService.getMovieByID(movieID);
         } catch (MovieNotFoundException e) {
-            return "admin_movies_all_view";
+            return "redirect:/admin/movies/all";
         }
         movieService.updateMovie(movie.getMovieID(), movieName, movieCategory, movieDescription, movieLanguage,
                 movieValidationService);
-        return "admin_movies_all_view";
+        return "redirect:/admin/movies/all";
     }
 
     @PostMapping("movies/all_add")
@@ -327,7 +328,7 @@ public class AdminController {
                 adminService, passwordEncoder, movieValidationService);
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("allMovies", movies);
-        return "admin_movies_all_view";
+        return "redirect:/admin/movies/all";
     }
 
     @PostMapping("movies/all_remove")
@@ -338,7 +339,7 @@ public class AdminController {
         movieService.removeMovie(movieID, admin.getAdminId(), password, adminService, passwordEncoder);
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("allMovies", movies);
-        return "admin_movies_all_view";
+        return "redirect:/admin/movies/all";
     }
 
     @GetMapping("halls/all")
@@ -359,6 +360,6 @@ public class AdminController {
                 adminService, passwordEncoder);
         List<Hall> halls = hallService.getAllHalls();
         model.addAttribute("allHalls", halls);
-        return "admin_halls_all_view";
+        return "redirect:/admin/halls/all";
     }
 }

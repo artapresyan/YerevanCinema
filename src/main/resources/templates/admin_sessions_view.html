@@ -86,44 +86,50 @@
             <th scope="row" class="first" style="width: 170px">
                 <button type="button" name="movie_name">
                     <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/movie">
-                        Movie_1
+                        <p th:text="${movie_session.movie.movieName}"></p>
                     </a>
                 </button>
             </th>
             <th scope="row" class="middle" style="width: 150px">
                 <button type="button" name="movie_category">
                     <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/category">
-                        Category_1
+                        <p th:text="${movie_session.movie.movieCategory}"></p>
                     </a>
                 </button>
             </th>
             <th scope="row" class="middle" style="width: 250px">
                 <button type="button" name="session_start">
                     <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/start">
-                        Start_1
+                        <p th:text="${movie_session.movieSessionStart}"></p>
                     </a>
                 </button>
             </th>
             <th scope="row" class="middle" style="width: 250px">
                 <button style="cursor: none" name="session_end">
-                    <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_session.movieSessionEnd}"></p>
+                    </a>
                 </button>
             </th>
             <th scope="row" class="middle" style="width: 150px">
                 <button type="button" name="session_hall">
                     <a style="font-size:.8rem;color: black;text-decoration: none" href="/admin/sessions/hall">
-                        Hall_1
+                        <p th:text="${movie_session.hall.hallName}"></p>
                     </a>
                 </button>
             </th>
             <th scope="row" class="middle" style="width: 150px">
                 <button style="cursor: none" name="session_price">
-                    <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_session.movieSessionPrice}"></p>
+                    </a>
                 </button>
             </th>
             <th scope="row" class="last" style="width: 400px">
                 <button style="cursor: none" name="movie_description">
-                    <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_session.movie.movieDescription}"></p>
+                    </a>
                 </button>
             </th>
         </tr>

@@ -62,30 +62,30 @@ public class AdminController {
 
     @GetMapping
     public String getAdminMainPage(HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         return "admin_main_view";
     }
 
     @GetMapping("about")
     public String getAdminAboutPage(HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         return "admin_about_view";
     }
 
     @GetMapping("contact")
     public String getAdminContactPage(HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         return "admin_contact_view";
     }
 
     @PostMapping("contact_post")
     public String sendMessage(HttpSession session, @RequestParam("message") String message, Model model) {
         try {
-            Admin admin = (Admin) session.getAttribute("user");
-            model.addAttribute("user", admin);
+            Admin admin = (Admin) session.getAttribute("admin");
+            model.addAttribute("admin", admin);
             gmailClientService.getSimpleMessage(admin.getAdminEmail(), message);
         } catch (MessagingException e) {
             return "admin_contact_view";
@@ -95,15 +95,15 @@ public class AdminController {
 
     @GetMapping("details")
     public String getAccountDetailsPage(HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         return "admin_details_view";
     }
 
     @GetMapping("details/edit")
     public String getAccountDetailsEditPage(HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         return "admin_details_edit_view";
     }
 
@@ -115,14 +115,14 @@ public class AdminController {
                                      @RequestParam(value = "admin_new_password", required = false) String newPassword,
                                      @RequestParam(value = "admin_new_password_confirm", required = false) String confirmNewPassword,
                                      @RequestParam("admin_password") String password, HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         if (newPassword.equals(confirmNewPassword))
             adminService.updateAdminData(admin.getAdminId(), newName, newSurname, newUsername,
                     newEmail, password, newPassword, userValidationService, passwordEncoder);
         try {
             admin = adminService.getAdminByID(admin.getAdminId());
-            session.setAttribute("user", admin);
-            model.addAttribute("user", admin);
+            session.setAttribute("admin", admin);
+            model.addAttribute("admin", admin);
             return "redirect:/admin/details/edit";
         } catch (UserNotFoundException e) {
             return "admin_details_edit_view";
@@ -132,8 +132,8 @@ public class AdminController {
     @GetMapping("tickets/all")
     public String getAllPurchasedTickets(HttpSession session, Model model) {
         List<Ticket> tickets = ticketService.getAllTickets();
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         model.addAttribute("tickets", tickets);
         return "admin_tickets_all_view";
     }
@@ -143,16 +143,16 @@ public class AdminController {
         List<MovieSession> sessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> LocalDateTime.parse(movieSession.getMovieSessionStart())
                         .isBefore(LocalDateTime.now().plusDays(14))).collect(Collectors.toList());
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         model.addAttribute("movie_sessions", sessions);
         return "admin_sessions_view";
     }
 
     @GetMapping("sessions/all")
     public String getAllSessions(HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions();
         model.addAttribute("movie_sessions_all", movieSessions);
         return "admin_sessions_all_view";
@@ -166,8 +166,8 @@ public class AdminController {
                                        @RequestParam(value = "movieSessionHall", required = false) Long movieSessionHallID,
                                        @RequestParam(value = "movieSessionMovie", required = false) Long movieSessionMovieID,
                                        HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         Hall hall = null;
         Movie movie = null;
         try {
@@ -192,8 +192,8 @@ public class AdminController {
                              @RequestParam("session_hall") String sessionHallName,
                              @RequestParam("session_price") Integer sessionPrice,
                              @RequestParam("password") String password, HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         Hall hall = null;
         Movie movie = null;
         try {
@@ -214,8 +214,8 @@ public class AdminController {
     @PostMapping("sessions/all_remove")
     public String removeSession(@RequestParam("session_id") Long movieSessionID,
                                 @RequestParam("password") String password, HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         movieSessionService.removeMovieSession(admin, password, movieSessionID, passwordEncoder);
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions();
         model.addAttribute("movie_sessions_all", movieSessions);
@@ -227,8 +227,8 @@ public class AdminController {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> movieSession.getMovie().getMovieName().equals(name))
                 .collect(Collectors.toList());
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         model.addAttribute("movie_sessions_movie", movieSessions);
         return "admin_sessions_movie_selected_view";
     }
@@ -239,8 +239,8 @@ public class AdminController {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(movieCategory))
                 .collect(Collectors.toList());
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         model.addAttribute("movie_session_category", movieSessions);
         return "admin_sessions_category_selected_view";
     }
@@ -250,8 +250,8 @@ public class AdminController {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> movieSession.getMovieSessionStart().equals(movieStart))
                 .collect(Collectors.toList());
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         model.addAttribute("movie_sessions_start", movieSessions);
         return "admin_sessions_start_selected_view";
     }
@@ -261,8 +261,8 @@ public class AdminController {
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> movieSession.getHall().getHallID().equals(hallID))
                 .collect(Collectors.toList());
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         model.addAttribute("movie_sessions_hall", movieSessions);
         return "admin_sessions_hall_selected_view";
     }
@@ -270,8 +270,8 @@ public class AdminController {
     @GetMapping("customers/all")
     public String getAllCustomers(HttpSession session, Model model) {
         List<Customer> customers = customerService.getAllCustomers();
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         model.addAttribute("customers", customers);
         return "admin_customers_all_view";
     }
@@ -279,8 +279,8 @@ public class AdminController {
     @PostMapping("customers/all_remove")
     public String removeCustomer(@RequestParam(value = "customer_id") Long customerID,
                                  @RequestParam(value = "password") String password, HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         customerService.adminRemoveCustomer(customerID, admin, password, passwordEncoder);
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
@@ -289,8 +289,8 @@ public class AdminController {
 
     @GetMapping("movies/all")
     public String getAllMovies(HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("allMovies", movies);
         return "admin_movies_all_view";
@@ -303,8 +303,8 @@ public class AdminController {
                                      @RequestParam(value = "movieDescription", required = false) String movieDescription,
                                      @RequestParam(value = "movieLanguage", required = false) String movieLanguage,
                                      HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         Movie movie;
         try {
             movie = movieService.getMovieByID(movieID);
@@ -322,8 +322,8 @@ public class AdminController {
                            @RequestParam(value = "movie_description", required = false) String movieDescription,
                            @RequestParam(value = "movie_language", required = false) String movieLanguage,
                            HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         movieService.addMovie(admin.getAdminId(), password, movieName, movieCategory, movieDescription, movieLanguage,
                 adminService, passwordEncoder, movieValidationService);
         List<Movie> movies = movieService.getAllMovies();
@@ -334,8 +334,8 @@ public class AdminController {
     @PostMapping("movies/all_remove")
     public String removeMovie(@RequestParam("movie_id") Long movieID, @RequestParam("password") String password,
                               HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         movieService.removeMovie(movieID, admin.getAdminId(), password, adminService, passwordEncoder);
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("allMovies", movies);
@@ -344,8 +344,8 @@ public class AdminController {
 
     @GetMapping("halls/all")
     public String getHalls(HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         List<Hall> halls = hallService.getAllHalls();
         model.addAttribute("allHalls", halls);
         return "admin_halls_all_view";
@@ -354,8 +354,8 @@ public class AdminController {
     @PostMapping("halls/all_add")
     public String addHall(@RequestParam("hall_name") String hallName, @RequestParam("hall_capacity") Integer hallCapacity,
                           @RequestParam("password") String password, HttpSession session, Model model) {
-        Admin admin = (Admin) session.getAttribute("user");
-        model.addAttribute("user", admin);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         hallService.addHall(admin.getAdminId(), password, hallName, hallCapacity, hallValidationService,
                 adminService, passwordEncoder);
         List<Hall> halls = hallService.getAllHalls();

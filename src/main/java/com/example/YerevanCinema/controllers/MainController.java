@@ -69,8 +69,8 @@ public class MainController {
         try {
             Customer customer = customerService.getCustomerByUsername(username);
             if (customerService.passwordsAreMatching(customer, password, passwordEncoder)) {
-                session.setAttribute("user", customer);
-                model.addAttribute("user", customer);
+                session.setAttribute("customer", customer);
+                model.addAttribute("customer", customer);
                 return "redirect:/customer/";
             }
         } catch (UserNotFoundException ignored) {
@@ -78,8 +78,8 @@ public class MainController {
         try {
             Admin admin = adminService.getAdminByUsername(username);
             if (adminService.passwordsAreMatching(admin, password, passwordEncoder)) {
-                session.setAttribute("user", admin);
-                model.addAttribute("user", admin);
+                session.setAttribute("admin", admin);
+                model.addAttribute("admin", admin);
                 return "redirect:/admin/";
             }
         } catch (UserNotFoundException ignored) {
@@ -101,7 +101,7 @@ public class MainController {
             Customer customer = customerService.registerCustomer(name, surname, age, username, email, password,
                     customerValidationService, passwordEncoder);
             if (customer != null) {
-                session.setAttribute("user", customer);
+                session.setAttribute("customer", customer);
                 return "redirect:/login";
             }
         }

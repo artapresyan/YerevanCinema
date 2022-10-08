@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.example.YerevanCinema.enums.UserRole.ADMIN;
 import static com.example.YerevanCinema.enums.UserRole.CUSTOMER;
 
 @Configuration
@@ -36,18 +37,20 @@ public class CustomerSecurityConfiguration extends WebSecurityConfigurerAdapter 
                         "/login*", "/recover/**", "/rest/api/**",
                         "/static/css/*", "/static/js/*", "/static/images/*", "/static/fonts/*", "/static/scss/*",
                         "/static/poppins/*", "/static/less/*").permitAll()
-                .antMatchers("/customer*", "/customer/**").hasAnyAuthority("ROLE_" + CUSTOMER.name())
+                .antMatchers("/customer*", "/customer/**").hasAuthority("ROLE_" + CUSTOMER.name())
+                .antMatchers("/admin*", "/admin/**").hasAuthority("ROLE_" + ADMIN.name())
+
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin().loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/customer/")
-                .failureUrl("/login").permitAll()
+                .formLogin()
+                .loginPage("/login")
                 .and()
-                .logout()
-                .logoutSuccessUrl("/")
-                .permitAll();
+                .logout().permitAll()
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID", "remember-me")
+                .logoutSuccessUrl("/");
     }
 
     @Override

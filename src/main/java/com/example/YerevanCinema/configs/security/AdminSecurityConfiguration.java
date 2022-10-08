@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.example.YerevanCinema.enums.UserRole.ADMIN;
+import static com.example.YerevanCinema.enums.UserRole.CUSTOMER;
 
 @Configuration
 @EnableWebSecurity
@@ -36,18 +37,19 @@ public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/login*", "/recover/**", "/rest/api/**",
                         "/static/css/*", "/static/js/*", "/static/images/*", "/static/fonts/*", "/static/scss/*",
                         "/static/poppins/*", "/static/less/*").permitAll()
-                .antMatchers("/admin*", "/admin/**").hasAnyAuthority("ROLE_" + ADMIN.name())
+                .antMatchers("/admin*", "/admin/**").hasAuthority("ROLE_" + ADMIN.name())
+                .antMatchers("/customer*","/customer/").hasAuthority("ROLE_"+CUSTOMER.name())
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin().loginPage("/login")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/admin/")
-                .failureUrl("/login").permitAll()
+                .formLogin()
+                .loginPage("/login")
                 .and()
                 .logout()
-                .logoutSuccessUrl("/")
-                .permitAll();
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID", "remember-me")
+                .logoutSuccessUrl("/");
     }
 
     @Override

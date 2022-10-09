@@ -45,13 +45,14 @@
                 <li>
                     <div class="navbar">
                         <div class="dropdown">
-                            <button class="dropbtn">Name Surname
+                            <button class="dropbtn">
+                                <h3 data-placeholder="username" th:text="${customer.getCustomerUsername()}"></h3>
                                 <i class="fa fa-caret-down"></i>
                             </button>
                             <div class="dropdown-content">
                                 <a href="/customer/details">Account Details</a>
                                 <a href="/customer/tickets">My Tickets</a>
-                                <a href="/customer/logout">Log out</a>
+                                <a href="/logout">Log out</a>
                             </div>
                         </div>
                     </div>
@@ -79,236 +80,56 @@
                 <th scope="col" class="middle" style="width: 300px">Description</th>
                 <th scope="col" class="last" style="width: 100px">Send Ticket to Email</th>
             </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 20px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 170px">
-                    <button type="button" name="movie_name" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Start_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Hall_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 350px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 120px">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Resend</a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 20px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 170px">
-                    <button type="button" name="movie_name">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category">
-                        <a style="font-size:.8rem;color: black;text-decoration: none"
-                           href="/customer/sessions/category">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/start">
-                            Start_2
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_2</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/hall">
-                            Hall_2
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_2</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 400px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 100px">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Resend</a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 20px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 170px">
-                    <button type="button" name="movie_name">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/movie">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category">
-                        <a style="font-size:.8rem;color: black;text-decoration: none"
-                           href="/customer/sessions/category">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/start">
-                            Start_3
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_3</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/hall">
-                            Hall_3
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_3</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 400px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 100px">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Resend</a>
-                    </button>
-                </th>
-            </tr>
-            <tr>
-                <th scope="row" class="first" style="width: 20px">
-                    <button type="button" name="ticket_id" style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">
-                            1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 170px">
-                    <button type="button" name="movie_name">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/movie">
-                            Movie_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movie_category">
-                        <a style="font-size:.8rem;color: black;text-decoration: none"
-                           href="/customer/sessions/category">
-                            Category_1
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button type="button" name="movie_start">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/start">
-                            Start_4
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 250px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">End_4</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button type="button" name="movieHall">
-                        <a style="font-size:.8rem;color: black;text-decoration: none" href="/customer/sessions/hall">
-                            Hall_4
-                        </a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 150px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Price_4</a>
-                    </button>
-                </th>
-                <th scope="row" class="middle" style="width: 400px">
-                    <button style="cursor: none">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Description_1</a>
-                    </button>
-                </th>
-                <th scope="row" class="last" style="width: 100px">
-                    <button type="submit">
-                        <a style="font-size:.8rem;color: black;text-decoration: none">Resend</a>
-                    </button>
-                </th>
+            <tr th:each="ticket : ${tickets}">
+                <form action="/customer/tickets" method="post">
+                    <th scope="row" class="first" style="width: 20px">
+                        <button type="button" style="cursor: none">
+                            <input name="ticket_id" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${ticket.ticketID}">
+                        </button>
+                    </th>
+                    <th scope="row" class="middle" style="width: 170px">
+                        <button type="button" style="cursor: none">
+                            <input name="movie_name" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${ticket.movieSession.movie.movieName}">
+                        </button>
+                    </th>
+                    <th scope="row" class="middle" style="width: 150px">
+                        <button type="button" style="cursor: none">
+                            <input name="movie_category" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${ticket.movieSession.movie.movieCategory}">
+                        </button>
+                    </th>
+                    <th scope="row" class="middle" style="width: 250px">
+                        <button type="button" style="cursor: none">
+                            <input name="movie_session_start" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${ticket.movieSession.movieSessionStart}">
+                        </button>
+                    </th>
+                    <th scope="row" class="middle" style="width: 250px">
+                        <button style="cursor: none">
+                            <input name="movie_session_end" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${ticket.movieSession.movieSessionEnd}">
+                        </button>
+                    </th>
+                    <th scope="row" class="middle" style="width: 150px">
+                        <button type="button" style="cursor: none">
+                            <input name="movie_hall" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${ticket.movieSession.hall.hallName}">
+                        </button>
+                    </th>
+                    <th scope="row" class="middle" style="width: 150px">
+                        <button style="cursor: none">
+                            <input name="movie_session_price" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${ticket.movieSession.movieSessionPrice}">
+                        </button>
+                    </th>
+                    <th scope="row" class="last" style="width: 120px">
+                        <button type="submit">
+                            <a style="font-size:.8rem;color: black;text-decoration: none">Resend</a>
+                        </button>
+                    </th>
+                </form>
             </tr>
         </table>
     </form>

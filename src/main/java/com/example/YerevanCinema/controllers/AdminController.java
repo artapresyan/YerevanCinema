@@ -225,51 +225,20 @@ public class AdminController {
         return "redirect:/admin/sessions/all";
     }
 
-    @GetMapping("sessions/movie")
-    public String getSessionsByMovieName(@RequestParam("movie_name") String name, HttpSession session, Model model) {
-        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
-                .filter(movieSession -> movieSession.getMovie().getMovieName().equals(name))
-                .collect(Collectors.toList());
-        Admin admin = (Admin) session.getAttribute("admin");
-        model.addAttribute("admin", admin);
-        model.addAttribute("movie_sessions_movie", movieSessions);
-        return "admin_sessions_movie_selected_view";
-    }
+    @PostMapping("sessions/selected")
+    public String getSessionsByMovieName(@RequestParam("key_value") String keyValue,
+                                         @RequestParam("selected") String selected, HttpSession session, Model model) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        model.addAttribute("customer", customer);
 
-    @GetMapping("sessions/category")
-    public String getSessionsByMovieCategory(@RequestParam("movie_category") String movieCategory, HttpSession session,
-                                             Model model) {
-        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
-                .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(movieCategory))
-                .collect(Collectors.toList());
-        Admin admin = (Admin) session.getAttribute("admin");
-        model.addAttribute("admin", admin);
-        model.addAttribute("movie_session_category", movieSessions);
-        return "admin_sessions_category_selected_view";
+        try {
+            List<MovieSession> movieSessions = getSelectedMovieSessions(keyValue,selected);
+            model.addAttribute("selected_movie_sessions", movieSessions);
+            return "customer_sessions_selected_view";
+        } catch (MovieNotFoundException | HallNotFoundException e) {
+            return "redirect:/customer/sessions";
+        }
     }
-
-    @GetMapping("sessions/start")
-    public String getSessionsByStart(@RequestParam("movie_start") String movieStart, HttpSession session, Model model) {
-        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
-                .filter(movieSession -> movieSession.getMovieSessionStart().equals(movieStart))
-                .collect(Collectors.toList());
-        Admin admin = (Admin) session.getAttribute("admin");
-        model.addAttribute("admin", admin);
-        model.addAttribute("movie_sessions_start", movieSessions);
-        return "admin_sessions_start_selected_view";
-    }
-
-    @GetMapping("sessions/hall")
-    public String getSessionsByHall(@RequestParam("movie_hall") Long hallID, HttpSession session, Model model) {
-        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
-                .filter(movieSession -> movieSession.getHall().getHallID().equals(hallID))
-                .collect(Collectors.toList());
-        Admin admin = (Admin) session.getAttribute("admin");
-        model.addAttribute("admin", admin);
-        model.addAttribute("movie_sessions_hall", movieSessions);
-        return "admin_sessions_hall_selected_view";
-    }
-
     @GetMapping("customers/all")
     public String getAllCustomers(HttpSession session, Model model) {
         List<Customer> customers = customerService.getAllCustomers();
@@ -365,4 +334,26 @@ public class AdminController {
         model.addAttribute("allHalls", halls);
         return "redirect:/admin/halls/all";
     }
+
+    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected) throws MovieNotFoundException, HallNotFoundException {
+        if (keyValue.equalsIgnoreCase("Movie"))
+            return movieSessionService.getAllMovieSessions().stream()
+                    .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected))
+                    .collect(Collectors.toList());
+        else if (keyValue.equalsIgnoreCase("Category"))
+            return movieSessionService.getAllMovieSessions().stream()
+                    .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected))
+                    .collect(Collectors.toList());
+        else if (keyValue.equalsIgnoreCase("Price"))
+            return movieSessionService.getAllMovieSessions().stream()
+                    .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected)))
+                    .collect(Collectors.toList());
+        else if (keyValue.equalsIgnoreCase("Hall"))
+            return movieSessionService.getAllMovieSessions().stream()
+                    .filter(movieSession -> movieSession.getHall().getHallName().equals(selected))
+                    .collect(Collectors.toList());
+        else
+            return List.of();
+    }
+
 }

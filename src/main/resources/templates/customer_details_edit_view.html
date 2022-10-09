@@ -59,29 +59,37 @@
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <label class="labels">Name</label>
-                            <input type="text" name="customer_name" class="form-control" value="">
+                            <input type="text" name="customer_name" class="form-control" th:attr="placeholder=${customer.getCustomerName()}">
                         </div>
                         <div class="col-md-6">
                             <label class="labels">Surname</label>
-                            <input type="text" name="customer_surname" class="form-control" value="">
+                            <input type="text" name="customer_surname" class="form-control" th:attr="placeholder=${customer.getCustomerSurname()}">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div style="margin-top: 10px" class="col-md-6">
                             <label class="labels">Age</label>
-                            <input type="number" name="customer_age" class="form-control" value="">
+                            <input type="text" name="customer_age" class="form-control" th:attr="placeholder=${customer.getCustomerAge()}">
                         </div>
                         <div style="margin-top: 10px" class="col-md-6">
                             <label class="labels">Username</label>
-                            <input type="text" name="customer_username" class="form-control" value="">
+                            <input type="text" name="customer_username" class="form-control" th:attr="placeholder=${customer.getCustomerUsername()}">
                         </div>
                         <div style="margin-top: 10px" class="col-md-6">
                             <label class="labels">Email</label>
-                            <input type="text" name="customer_email" class="form-control" value="">
+                            <input type="text" name="customer_email" class="form-control" th:attr="placeholder=${customer.getCustomerEmail()}">
                         </div>
                         <div style="margin-top: 10px" class="col-md-6">
                             <label class="labels">New Password</label>
-                            <input type="text" name="new_password" class="form-control" value="">
+                            <input type="password" name="new_password" class="form-control" value="">
+                        </div>
+                        <div style="margin-top: 10px" class="col-md-6">
+                            <label class="labels">Confirm New Password</label>
+                            <input type="password" name="new_password_confirm" class="form-control" value="">
+                        </div>
+                        <div style="margin-top: 10px" class="col-md-6">
+                            <label class="labels">Confirm Changes with Old Password</label>
+                            <input type="password" required name="password" class="form-control" value="">
                         </div>
                     </div>
                     <div class="mt-5 text-center">

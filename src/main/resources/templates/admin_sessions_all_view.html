@@ -140,8 +140,9 @@
         </tr>
     </table>
 
-    <table style="margin-left: 3.5%;margin-top: 2%;border-radius: 10px">
+    <table style="margin-top: 2%;border-radius: 10px">
         <tr>
+            <th scope="col" class="first" style="width: 70px">ID</th>
             <th scope="col" class="first" style="width: 170px">Movie</th>
             <th scope="col" class="middle" style="width: 150px">Category</th>
             <th scope="col" class="middle" style="width: 250px">Start</th>
@@ -152,6 +153,13 @@
         </tr>
         <tr th:each="movie_session : ${movie_sessions_all}">
             <th scope="row" class="first" style="width: 170px">
+                <button type="button" name="movie_id" style="cursor: none">
+                    <a style="font-size:.8rem;color: black;text-decoration: none">
+                        <p th:text="${movie_session.movie.movieID}"></p>
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 170px">
                 <button type="button" name="movie_name" style="cursor: none">
                     <a style="font-size:.8rem;color: black;text-decoration: none">
                         <p th:text="${movie_session.movie.movieName}"></p>

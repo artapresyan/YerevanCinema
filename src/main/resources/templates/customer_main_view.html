@@ -44,13 +44,14 @@
                 <li>
                     <div class="navbar">
                         <div class="dropdown">
-                            <button class="dropbtn">Name Surname
+                            <button class="dropbtn">
+                                <h3 data-placeholder="username" th:text="${customer.getCustomerUsername()}"></h3>
                                 <i class="fa fa-caret-down"></i>
                             </button>
                             <div class="dropdown-content">
                                 <a href="/customer/details">Account Details</a>
                                 <a href="/customer/tickets">My Tickets</a>
-                                <a href="/customer/logout">Log out</a>
+                                <a href="/logout">Log out</a>
                             </div>
                         </div>
                     </div>

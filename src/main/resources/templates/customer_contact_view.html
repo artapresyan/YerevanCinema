@@ -44,13 +44,14 @@
                 <li>
                     <div class="navbar">
                         <div class="dropdown">
-                            <button class="dropbtn">Name Surname
+                            <button class="dropbtn">
+                                <h3 data-placeholder="username" th:text="${customer.getCustomerUsername()}"></h3>
                                 <i class="fa fa-caret-down"></i>
                             </button>
                             <div class="dropdown-content">
                                 <a href="/customer/details">Account Details</a>
                                 <a href="/customer/tickets">My Tickets</a>
-                                <a href="/customer/logout">Log out</a>
+                                <a href="/logout">Log out</a>
                             </div>
                         </div>
                     </div>
@@ -60,7 +61,7 @@
     </div>
 </header>
 <div class="limiter">
-    <h1 style="margin-top: 40px;text-align: center;font-size: 55px;text-shadow: -2px -2px 8px;">
+    <h1 style="padding-top: 40px;text-align: center;font-size: 55px;text-shadow: -2px -2px 8px;">
         Contact us
     </h1>
     <div class="center-2">

@@ -68,6 +68,40 @@
         <img style="margin-left: 2%;margin-top: 1%;border-radius: 10px" width="1520" height="290"
              src="/static/images/music_ad.jpg" alt="no_image">
     </div>
+
+    <table style="margin-top: 20px;margin-left: 25%">
+        <tr>
+            <th scope="col" class="first" style="width: 170px">Session ID</th>
+            <th scope="col" class="middle" style="width: 100px">Ticket Count</th>
+            <th scope="col" class="middle" style="width: 150px">Password</th>
+            <th scope="col" class="last" style="width: 120px">Purchase</th>
+        </tr>
+        <tr>
+            <form action="/customer/session/purchase" method="post"
+                  style="padding-left: 10%;padding-top: 3%; padding-right: 10%;">
+                <th class="first">
+                    <input type="number" name="selected_session_id" required
+                           style="text-align: center;background: none;border: 1px solid black">
+                </th>
+                <th class="middle">
+                    <input type="number" min="1" name="ticket_count" required
+                           style="text-align: center;background: none;border: 1px solid black">
+                </th>
+                <th class="middle">
+                    <input type="password" name="password" required
+                           style="text-align: center;background: none;border: 1px solid black">
+                </th>
+                <th class="last">
+                    <button type="submit">
+                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
+                            Confirm
+                        </a>
+                    </button>
+                </th>
+            </form>
+        </tr>
+    </table>
+
     <table style="margin-left: 2%;margin-top: 1%; margin-right: 2%; border-radius: 10px">
         <tr>
             <th scope="col" class="first" style="width: 20px">ID</th>
@@ -78,7 +112,6 @@
             <th scope="col" class="middle" style="width: 150px">Hall</th>
             <th scope="col" class="middle" style="width: 150px">Price</th>
             <th scope="col" class="middle" style="width: 300px">Description</th>
-            <th scope="col" class="last" style="width: 100px">Purchase</th>
         </tr>
         <tr th:each="movie_session : ${selected_movie_sessions}">
             <th scope="row" class="first" style="width: 170px">
@@ -123,40 +156,15 @@
                         background: none;" th:text="${movie_session.movieSessionPrice}">
                 </button>
             </th>
-            <th scope="row" class="middle" style="width: 350px">
+            <th scope="row" class="last" style="width: 350px">
                 <button style="cursor: none">
                     <input readonly name="movie_description" style="width: 0; height: 0;font-size:.8rem;color: black;
                         background: none;" th:text="${movie_session.movie.movieDescription}">
                 </button>
             </th>
-            <th scope="row" class="last" style="width: 120px">
-                <select name="ticketCount">
-                    <option label="1" value="1"></option>
-                    <option label="2" value="2"></option>
-                    <option label="3" value="3"></option>
-                    <option label="4" value="4"></option>
-                    <option label="5" value="5"></option>
-                    <option label="6" value="6"></option>
-                    <option label="7" value="7"></option>
-                    <option label="8" value="8"></option>
-                    <option label="9" value="9"></option>
-                    <option label="11" value="11"></option>
-                    <option label="12" value="12"></option>
-                    <option label="13" value="13"></option>
-                    <option label="14" value="14"></option>
-                    <option label="15" value="15"></option>
-                    <option label="16" value="16"></option>
-                    <option label="17" value="17"></option>
-                    <option label="18" value="18"></option>
-                    <option label="19" value="19"></option>
-                    <option label="20" value="20"></option>
-                </select>
-                <button type="submit">
-                    <a style="font-size:.8rem;color: black;text-decoration: none">ticket(s)</a>
-                </button>
-            </th>
         </tr>
     </table>
+
 </div>
 <footer>
     <div class="box">

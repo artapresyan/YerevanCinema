@@ -3,14 +3,17 @@ package com.example.YerevanCinema.controllers;
 import com.example.YerevanCinema.entities.Admin;
 import com.example.YerevanCinema.entities.Customer;
 import com.example.YerevanCinema.entities.MovieSession;
+import com.example.YerevanCinema.entities.entityDetails.AdminDetails;
+import com.example.YerevanCinema.entities.entityDetails.CustomerDetails;
 import com.example.YerevanCinema.exceptions.RegisteredEmailException;
 import com.example.YerevanCinema.exceptions.UserNotFoundException;
-import com.example.YerevanCinema.services.implementations.AdminServiceImpl;
 import com.example.YerevanCinema.services.implementations.CustomerServiceImpl;
 import com.example.YerevanCinema.services.implementations.GmailClientServiceImpl;
 import com.example.YerevanCinema.services.implementations.MovieSessionServiceImpl;
 import com.example.YerevanCinema.services.validations.AdminValidationService;
 import com.example.YerevanCinema.services.validations.CustomerValidationService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,21 +34,16 @@ import java.util.stream.Collectors;
 public class MainController {
 
     private final CustomerServiceImpl customerService;
-    private final AdminServiceImpl adminService;
     private final GmailClientServiceImpl gmailClientService;
     private final AdminValidationService userValidationService;
-
     private final MovieSessionServiceImpl sessionService;
-
     private final CustomerValidationService customerValidationService;
     private final PasswordEncoder passwordEncoder;
 
-    public MainController(CustomerServiceImpl customerService, AdminServiceImpl adminService,
-                          GmailClientServiceImpl gmailClientService, AdminValidationService userValidationService,
-                          MovieSessionServiceImpl sessionService, PasswordEncoder passwordEncoder,
-                          CustomerValidationService customerValidationService) {
+    public MainController(CustomerServiceImpl customerService, GmailClientServiceImpl gmailClientService,
+                          AdminValidationService userValidationService,MovieSessionServiceImpl sessionService,
+                          PasswordEncoder passwordEncoder, CustomerValidationService customerValidationService) {
         this.customerService = customerService;
-        this.adminService = adminService;
         this.gmailClientService = gmailClientService;
         this.userValidationService = userValidationService;
         this.sessionService = sessionService;
@@ -56,35 +54,6 @@ public class MainController {
     @GetMapping
     public String getMainPage() {
         return "no_auth_main_view";
-    }
-
-    @GetMapping("login")
-    public String getLoginPage() {
-        return "login_view";
-    }
-
-    @PostMapping("login")
-    public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
-                            HttpSession session, Model model) {
-        try {
-            Customer customer = customerService.getCustomerByUsername(username);
-            if (customerService.passwordsAreMatching(customer, password, passwordEncoder)) {
-                session.setAttribute("customer", customer);
-                model.addAttribute("customer", customer);
-                return "redirect:/customer/";
-            }
-        } catch (UserNotFoundException ignored) {
-        }
-        try {
-            Admin admin = adminService.getAdminByUsername(username);
-            if (adminService.passwordsAreMatching(admin, password, passwordEncoder)) {
-                session.setAttribute("admin", admin);
-                model.addAttribute("admin", admin);
-                return "redirect:/admin/";
-            }
-        } catch (UserNotFoundException ignored) {
-        }
-        return "login_view";
     }
 
     @GetMapping("signup")
@@ -174,8 +143,32 @@ public class MainController {
         }
         return "recover_view";
     }
+
+    @GetMapping("home")
+    public String getHomePage(HttpSession session, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        try {
+            AdminDetails adminDetails = (AdminDetails) authentication.getPrincipal();
+            Admin admin = adminDetails.getAdmin();
+            session.setAttribute("admin", admin);
+            model.addAttribute("admin", admin);
+            return "redirect:/admin/";
+        } catch (ClassCastException ignored) {
+        }
+        try {
+            CustomerDetails customerDetails = (CustomerDetails) authentication.getPrincipal();
+            Customer customer = customerDetails.getCustomer();
+            session.setAttribute("customer", customer);
+            model.addAttribute("customer", customer);
+            return "redirect:/customer/";
+
+        } catch (ClassCastException e) {
+            return "redirect:/login";
+        }
+    }
+
     @GetMapping("/logout")
-    public String logout(){
+    public String logout() {
         return "redirect:/";
     }
 }

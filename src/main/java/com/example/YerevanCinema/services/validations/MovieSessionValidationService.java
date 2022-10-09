@@ -26,10 +26,11 @@ public class MovieSessionValidationService {
         }
         LocalDateTime start = LocalDateTime.parse(movieSessionStart);
         MovieSession movieSession = hall.getMovieSessions().stream().filter(registeredSession -> {
-            LocalDateTime registeredTime = LocalDateTime.parse(registeredSession.getMovieSessionStart());
-            return registeredTime.getYear() == start.getYear() && registeredTime.getMonth() == start.getMonth()
-                    && registeredTime.getDayOfMonth() == start.getDayOfMonth() &&
-                    (double) (start.getHour() - registeredTime.getHour()) < 1.5;
+            LocalDateTime registeredTimeStart = LocalDateTime.parse(registeredSession.getMovieSessionStart());
+            LocalDateTime registeredTimeEnd = LocalDateTime.parse(registeredSession.getMovieSessionEnd());
+            return registeredTimeEnd.getYear() == start.getYear() && registeredTimeEnd.getMonth() == start.getMonth()
+                    && registeredTimeEnd.getDayOfMonth() == start.getDayOfMonth()
+                    && (start.isBefore(registeredTimeEnd) && start.isAfter(registeredTimeStart));
         }).findAny().orElse(null);
         if (movieSession != null) {
             logger.log(Level.ERROR, String.format("There is already registered session at ' %1$s '. Hall is occupied by %2$s session",

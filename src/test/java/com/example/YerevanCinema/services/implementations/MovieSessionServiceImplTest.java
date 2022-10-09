@@ -44,8 +44,8 @@ public class MovieSessionServiceImplTest {
     public void getMovieSessionByIDTest() throws MovieSessionNotFoundException {
         MovieSession expectedMovieSession = new MovieSession();
         expectedMovieSession.setMovieSessionID(12L);
-        expectedMovieSession.setMovieSessionStart(LocalDateTime.now());
-        expectedMovieSession.setMovieSessionEnd(LocalDateTime.now().plusHours(2));
+        expectedMovieSession.setMovieSessionStart(LocalDateTime.now().toString());
+        expectedMovieSession.setMovieSessionEnd(LocalDateTime.now().plusHours(2).toString());
         Movie movie = new Movie();
         movie.setMovieID(10L);
         expectedMovieSession.setMovie(movie);
@@ -75,8 +75,8 @@ public class MovieSessionServiceImplTest {
     public void addMovieSessionTest() {
         fillMovieSessions();
         String decodedPassword = "ArtBab1234&";
-        MovieSession expectedMovieSession = new MovieSession(LocalDateTime.now().plusDays(28),
-                LocalDateTime.now().plusDays(28).plusHours(3), 2500, new Hall("Red",
+        MovieSession expectedMovieSession = new MovieSession(LocalDateTime.now().plusDays(28).toString(),
+                LocalDateTime.now().plusDays(28).plusHours(3).toString(), 2500, new Hall("Red",
                 100), new Movie("Avatar", "Fantasy", null,
                 "Armenian"), new Admin("Artak", "Babyan",
                 "artak.babyan@gmail.com", "artbabyan", passwordEncoder.encode(decodedPassword)));
@@ -128,16 +128,16 @@ public class MovieSessionServiceImplTest {
         fillMovieSessions();
 
         String decodedPassword = "ArtBab1234&";
-        MovieSession movieSession = new MovieSession(LocalDateTime.now().plusDays(28),
-                LocalDateTime.now().plusDays(28).plusHours(3), 2500, new Hall("Red",
+        MovieSession movieSession = new MovieSession(LocalDateTime.now().plusDays(28).toString(),
+                LocalDateTime.now().plusDays(28).plusHours(3).toString(), 2500, new Hall("Red",
                 100), new Movie("Avatar", "Fantasy", null,
                 "Armenian"), new Admin("Artak", "Babyan",
                 "artak.babyan@gmail.com", "artbabyan", passwordEncoder.encode(decodedPassword)));
         movieSession.setMovieSessionID(19L);
         movieSession.getHall().setMovieSessions(new HashSet<>(MOVIE_SESSIONS));
 
-        MovieSession expectedMovieSession = new MovieSession(LocalDateTime.now().plusDays(28),
-                LocalDateTime.now().plusDays(28).plusHours(3), 3500, new Hall("Blue",
+        MovieSession expectedMovieSession = new MovieSession(LocalDateTime.now().plusDays(28).toString(),
+                LocalDateTime.now().plusDays(28).plusHours(3).toString(), 3500, new Hall("Blue",
                 150), new Movie("Avatar", "Fantasy", null,
                 "English"), new Admin("Artak", "Babyan",
                 "artak.babyan@gmail.com", "artbabyan", passwordEncoder.encode(decodedPassword)));
@@ -162,11 +162,11 @@ public class MovieSessionServiceImplTest {
         LocalDateTime start = LocalDateTime.now();
         List<MovieSession> expectedMovieSessions = MOVIE_SESSIONS.stream()
                 .filter(movieSession -> movieSession.getHall().getHallCapacity() > 170)
-                .peek(movieSession -> movieSession.setMovieSessionStart(start)).collect(Collectors.toList());
+                .peek(movieSession -> movieSession.setMovieSessionStart(start.toString())).collect(Collectors.toList());
 
-        when(movieSessionRepository.getByMovieSessionStart(start)).thenReturn(expectedMovieSessions);
+        when(movieSessionRepository.getByMovieSessionStart(start.toString())).thenReturn(expectedMovieSessions);
 
-        List<MovieSession> actualMovieSessions = movieSessionService.getAllMovieSessionsByStart(start);
+        List<MovieSession> actualMovieSessions = movieSessionService.getAllMovieSessionsByStart(start.toString());
 
         assertTrue(actualMovieSessions.containsAll(expectedMovieSessions));
 
@@ -192,8 +192,9 @@ public class MovieSessionServiceImplTest {
 
     private void fillMovieSessions() {
         for (int i = 1, suffix = 'a'; i < 21; i++, suffix++) {
-            MovieSession movieSession = new MovieSession(LocalDateTime.now().plusHours(i), LocalDateTime.now().plusHours(i + 2),
-                    2000 + 150 * i, new Hall("HallName" + suffix, 60 + 10 * i),
+            MovieSession movieSession = new MovieSession(LocalDateTime.now().plusHours(i).toString(),
+                    LocalDateTime.now().plusHours(i + 2).toString(), 2000 + 150 * i,
+                    new Hall("HallName" + suffix, 60 + 10 * i),
                     new Movie("MovieName" + suffix, "MovieCategory" + suffix, null,
                             "MovieLanguage" + suffix), new Admin("AdminName" + suffix,
                     "AdminSurname" + suffix, "AdminEmail" + suffix,

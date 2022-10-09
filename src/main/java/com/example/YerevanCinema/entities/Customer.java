@@ -50,7 +50,7 @@ public class Customer {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "customer")
-    private List<Ticket> customerTickets = new java.util.ArrayList<>();
+    private List<Ticket> customerTickets;
 
     public Customer(String customerName, String customerSurname,
                     Integer customerAge, String customerUsername, String customerEmail, String customerPassword) {

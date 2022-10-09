@@ -51,7 +51,8 @@
         </div>
     </header>
     <div>
-    <img style="margin-left: 2%;margin-top: 1%;border-radius: 10px" width="1520" height="290" src="/static/images/music_ad.jpg" alt="no_image">
+        <img style="margin-left: 2%;margin-top: 1%;border-radius: 10px" width="1520" height="290"
+             src="/static/images/music_ad.jpg" alt="no_image">
     </div>
     <table style="margin-left: 2%;margin-top: 1%; border-radius: 10px">
         <tr>
@@ -63,78 +64,63 @@
             <th scope="col" class="middle" style="width: 150px">Price</th>
             <th scope="col" class="last" style="width: 400px">Description</th>
         </tr>
-        <tr>
-            <th scope="row" class="first" style="width: 170px">Movie_1</th>
-            <th scope="row" class="middle" style="width: 150px">Category_1</th>
-            <th scope="row" class="middle" style="width: 250px">Start_1</th>
-            <th scope="row" class="middle" style="width: 250px">End_1</th>
-            <th scope="row" class="middle" style="width: 150px">Hall_1</th>
-            <th scope="row" class="middle" style="width: 150px">Price_1</th>
-            <th scope="row" class="last" style="width: 400px">Description_1</th>
-        </tr>
-        <tr>
-            <th scope="row" class="first" style="width: 170px">Movie_2</th>
-            <th scope="row" class="middle" style="width: 150px">Category_2</th>
-            <th scope="row" class="middle" style="width: 250px">Start_2</th>
-            <th scope="row" class="middle" style="width: 250px">End_2</th>
-            <th scope="row" class="middle" style="width: 150px">Hall_2</th>
-            <th scope="row" class="middle" style="width: 150px">Price_2</th>
-            <th scope="row" class="last" style="width: 400px">Description_2</th>
-        </tr>
-        <tr>
-            <th scope="row" class="first" style="width: 170px">Movie_3</th>
-            <th scope="row" class="middle" style="width: 150px">Category_3</th>
-            <th scope="row" class="middle" style="width: 250px">Start_3</th>
-            <th scope="row" class="middle" style="width: 250px">End_3</th>
-            <th scope="row" class="middle" style="width: 150px">Hall_3</th>
-            <th scope="row" class="middle" style="width: 150px">Price_3</th>
-            <th scope="row" class="last" style="width: 400px">Description_3</th>
-        </tr>
-        <tr>
-            <th scope="row" class="first" style="width: 170px">Movie_3</th>
-            <th scope="row" class="middle" style="width: 150px">Category_3</th>
-            <th scope="row" class="middle" style="width: 250px">Start_3</th>
-            <th scope="row" class="middle" style="width: 250px">End_3</th>
-            <th scope="row" class="middle" style="width: 150px">Hall_3</th>
-            <th scope="row" class="middle" style="width: 150px">Price_3</th>
-            <th scope="row" class="last" style="width: 400px">Description_3</th>
-        </tr>
-        <tr>
-            <th scope="row" class="first" style="width: 170px">Movie_4</th>
-            <th scope="row" class="middle" style="width: 150px">Category_4</th>
-            <th scope="row" class="middle" style="width: 250px">Start_4</th>
-            <th scope="row" class="middle" style="width: 250px">End_4</th>
-            <th scope="row" class="middle" style="width: 150px">Hall_4</th>
-            <th scope="row" class="middle" style="width: 150px">Price_4</th>
-            <th scope="row" class="last" style="width: 400px">Description_4</th>
-        </tr>
-        <tr>
-            <th scope="row" class="first" style="width: 170px">Movie_5</th>
-            <th scope="row" class="middle" style="width: 150px">Category_5</th>
-            <th scope="row" class="middle" style="width: 250px">Start_5</th>
-            <th scope="row" class="middle" style="width: 250px">End_5</th>
-            <th scope="row" class="middle" style="width: 150px">Hall_5</th>
-            <th scope="row" class="middle" style="width: 150px">Price_5</th>
-            <th scope="row" class="last" style="width: 400px">Description_5</th>
-        </tr>
-        <tr>
-            <th scope="row" class="first" style="width: 170px">Movie_6</th>
-            <th scope="row" class="middle" style="width: 150px">Category_6</th>
-            <th scope="row" class="middle" style="width: 250px">Start_6</th>
-            <th scope="row" class="middle" style="width: 250px">End_6</th>
-            <th scope="row" class="middle" style="width: 150px">Hall_6</th>
-            <th scope="row" class="middle" style="width: 150px">Price_6</th>
-            <th scope="row" class="last" style="width: 400px">Description_6</th>
-        </tr>
-        <tr>
-            <th scope="row" class="first" style="width: 170px">Movie_7</th>
-            <th scope="row" class="middle" style="width: 150px">Category_7</th>
-            <th scope="row" class="middle" style="width: 250px">Start_7</th>
-            <th scope="row" class="middle" style="width: 250px">End_7</th>
-            <th scope="row" class="middle" style="width: 150px">Hall_7</th>
-            <th scope="row" class="middle" style="width: 150px">Price_7</th>
-            <th scope="row" class="last" style="width: 400px">Description_7</th>
-        </tr>
+        <tr th:each="movie_session : ${movie_sessions}">
+            <th scope="row" class="first" style="width: 170px">
+                <button type="button" style="cursor: none">
+                    <a>
+                        <input readonly name="movie_name" style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${movie_session.movie.movieName}">
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 150px">
+                <button type="button" style="cursor: none">
+                    <a>
+                        <input readonly name="movie_category" style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${movie_session.movie.movieCategory}">
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 250px">
+                <button type="button" style="cursor: none">
+                    <a>
+                        <input readonly name="movie_session_start" style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${movie_session.movieSessionStart}">
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 250px">
+                <button style="cursor: none">
+                    <a>
+                        <input readonly name="movie_session_end" style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${movie_session.movieSessionEnd}">
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 150px">
+                <button type="button" style="cursor: none">
+                    <a>
+                        <input readonly name="movie_session_hall" style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${movie_session.hall.hallName}">
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="middle" style="width: 150px">
+                <button style="cursor: none">
+                    <a>
+                        <input readonly name="movie_session_price" style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${movie_session.movieSessionPrice}">
+                    </a>
+                </button>
+            </th>
+            <th scope="row" class="last" style="width: 150px">
+                <button style="cursor: none">
+                    <a>
+                        <input readonly name="movie_description" style="width: 0; height: 0;font-size:.8rem;color: black;
+                        background: none;" th:text="${movie_session.movie.movieDescription}">
+                    </a>
+                </button>
+            </th>
     </table>
 </div>
 <footer>

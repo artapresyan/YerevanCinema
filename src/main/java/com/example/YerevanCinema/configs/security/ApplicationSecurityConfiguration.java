@@ -1,7 +1,7 @@
 package com.example.YerevanCinema.configs.security;
 
 
-import com.example.YerevanCinema.services.detailsServices.AdminDetailsService;
+import com.example.YerevanCinema.services.detailsServices.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,13 +16,13 @@ import static com.example.YerevanCinema.enums.UserRole.CUSTOMER;
 @Configuration
 @EnableWebSecurity
 @Order(1)
-public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final AdminDetailsService adminDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public AdminSecurityConfiguration(AdminDetailsService adminDetailsService, PasswordEncoder passwordEncoder) {
-        this.adminDetailsService = adminDetailsService;
+    public ApplicationSecurityConfiguration(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
+        this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -30,22 +30,21 @@ public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .antMatcher("/admin/**")
-                .antMatcher("/admin*")
                 .authorizeRequests()
                 .antMatchers("/", "/about", "/signup", "/contact", "/sessions", "/recover",
-                        "/login*", "/recover/**", "/rest/api/**",
+                        "/recover/**", "/rest/api/**",
                         "/static/css/*", "/static/js/*", "/static/images/*", "/static/fonts/*", "/static/scss/*",
                         "/static/poppins/*", "/static/less/*").permitAll()
+                .antMatchers("/customer*", "/customer/**").hasAuthority("ROLE_" + CUSTOMER.name())
                 .antMatchers("/admin*", "/admin/**").hasAuthority("ROLE_" + ADMIN.name())
-                .antMatchers("/customer*","/customer/").hasAuthority("ROLE_"+CUSTOMER.name())
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/home").permitAll()
                 .and()
-                .logout()
+                .logout().permitAll()
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID", "remember-me")
@@ -55,6 +54,6 @@ public class AdminSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(adminDetailsService).passwordEncoder(passwordEncoder);
+                .userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 }

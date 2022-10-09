@@ -80,7 +80,7 @@
             <th scope="col" class="middle" style="width: 300px">Description</th>
             <th scope="col" class="last" style="width: 100px">Purchase</th>
         </tr>
-        <tr th:each="movie_session : ${movie_sessions_movie}">
+        <tr th:each="movie_session : ${selected_movie_sessions}">
             <th scope="row" class="first" style="width: 170px">
                 <button type="button" style="cursor: none">
                     <input readonly name="movie_session_id" style="width: 0; height: 0;font-size:.8rem;color: black;

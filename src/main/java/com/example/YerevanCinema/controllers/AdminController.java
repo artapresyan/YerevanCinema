@@ -126,7 +126,7 @@ public class AdminController {
             admin = adminService.getAdminByID(admin.getAdminId());
             session.setAttribute("admin", admin);
             model.addAttribute("admin", admin);
-            return "redirect:/admin/details/edit";
+            return "redirect:/admin/details";
         } catch (UserNotFoundException e) {
             return "admin_details_edit_view";
         }
@@ -287,7 +287,7 @@ public class AdminController {
         customerService.adminRemoveCustomer(customerID, admin, password, passwordEncoder);
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return "redirect:/adimn/customers/all";
+        return "redirect:/admin/customers/all";
     }
 
     @GetMapping("movies/all")

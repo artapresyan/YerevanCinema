@@ -11,6 +11,10 @@ public class CustomerDetails implements UserDetails {
 
     private final Customer customer;
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
     public CustomerDetails(Customer customer){
         this.customer = customer;
     }

@@ -49,4 +49,8 @@ public class AdminDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public Admin getAdmin() {
+        return admin;
+    }
 }

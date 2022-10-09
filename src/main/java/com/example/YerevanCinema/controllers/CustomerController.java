@@ -163,40 +163,6 @@ public class CustomerController {
         }
     }
 
-//    @GetMapping("sessions/category")
-//    public String getSessionsByMovieCategory(@RequestParam("movie_category") String movieCategory, HttpSession session,
-//                                             Model model) {
-//        Customer customer = (Customer) session.getAttribute("customer");
-//        model.addAttribute("customer", customer);
-//        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
-//                .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(movieCategory))
-//                .collect(Collectors.toList());
-//        model.addAttribute("movie_sessions_category", movieSessions);
-//        return "customer_sessions_category_selected_view";
-//    }
-
-//    @GetMapping("sessions/start")
-//    public String getSessionsByStart(@RequestParam("movie_start") String movieStart, HttpSession session, Model model) {
-//        Customer customer = (Customer) session.getAttribute("customer");
-//        model.addAttribute("customer", customer);
-//        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
-//                .filter(movieSession -> movieSession.getMovieSessionStart().equals(movieStart))
-//                .collect(Collectors.toList());
-//        model.addAttribute("movie_sessions_start", movieSessions);
-//        return "customer_sessions_start_selected_view";
-//    }
-//
-//    @GetMapping("sessions/hall")
-//    public String getSessionsByHall(@RequestParam("movie_hall") Long hallID, HttpSession session, Model model) {
-//        Customer customer = (Customer) session.getAttribute("customer");
-//        model.addAttribute("customer", customer);
-//        List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions().stream()
-//                .filter(movieSession -> movieSession.getHall().getHallID().equals(hallID))
-//                .collect(Collectors.toList());
-//        model.addAttribute("movie_sessions_hall", movieSessions);
-//        return "customer_sessions_hall_selected_view";
-//    }
-
     @PostMapping("sessions/purchase")
     public String sendTicketToCustomer(@RequestParam("selected_session_id") Long movieSessionID, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("customer");

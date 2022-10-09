@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
@@ -24,7 +27,6 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/customer/")
 public class CustomerController {
-
     @Value("${qr.path}")
     private String qrPath;
     private final MovieSessionServiceImpl movieSessionService;
@@ -155,7 +157,7 @@ public class CustomerController {
         model.addAttribute("customer", customer);
 
         try {
-            List<MovieSession> movieSessions = getSelectedMovieSessions(keyValue,selected);
+            List<MovieSession> movieSessions = getSelectedMovieSessions(keyValue, selected);
             model.addAttribute("selected_movie_sessions", movieSessions);
             return "customer_sessions_selected_view";
         } catch (MovieNotFoundException | HallNotFoundException e) {
@@ -163,19 +165,26 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("sessions/purchase")
-    public String sendTicketToCustomer(@RequestParam("selected_session_id") Long movieSessionID, HttpSession session) {
+    @PostMapping("session/purchase")
+    public String sendTicketToCustomer(@RequestParam("selected_session_id") Long movieSessionID,
+                                       @RequestParam("ticket_count") Integer ticketCount,
+                                       @RequestParam("password") String password, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("customer");
-        try {
-            MovieSession movieSession = movieSessionService.getMovieSessionByID(movieSessionID);
-            Ticket ticket = ticketService.addTicket(customer, movieSession);
-            qrCodeService.generateQRCodeImage(customer);
-            gmailClientService.sendMessageWithAttachment(customer, String.format(qrPath, ticket.getTicketID(),
-                    customer.getCustomerUsername()));
-            return "redirect:/customer/tickets";
-        } catch (Exception e) {
-            return "redirect:/customer/sessions";
+        if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
+            try {
+                MovieSession movieSession = movieSessionService.getMovieSessionByID(movieSessionID);
+                for (int i = 0; i < ticketCount; i++) {
+                    Ticket ticket = ticketService.addTicket(customer, movieSession);
+                    qrCodeService.generateQRCodeImage(customer, ticket.getTicketID(), movieSession);
+                    gmailClientService.sendMessageWithAttachment(customer,
+                            String.format(qrPath, customer.getCustomerID(), customer.getCustomerEmail(), ticket.getTicketID()));
+                }
+                return "redirect:/customer/tickets";
+            } catch (Exception e) {
+                return "redirect:/customer/sessions";
+            }
         }
+        return "redirect:/customer/sessions";
     }
 
     @PostMapping("tickets/resend")
@@ -184,9 +193,9 @@ public class CustomerController {
         try {
             Ticket ticket = ticketService.getTicketByID(ticketID);
             if (customer.getCustomerID().equals(ticket.getCustomer().getCustomerID())) {
-                qrCodeService.generateQRCodeImage(customer);
-                gmailClientService.sendMessageWithAttachment(customer, String.format(qrPath, ticket.getTicketID(),
-                        customer.getCustomerUsername()));
+                qrCodeService.generateQRCodeImage(customer, ticketID,ticket.getMovieSession());
+                gmailClientService.sendMessageWithAttachment(customer, "qr/" + customer.getCustomerID()
+                        + customer.getCustomerEmail() + ticket.getTicketID());
                 return "redirect:/customer/tickets";
             } else
                 throw new TicketNotFoundException("No Such Ticket");

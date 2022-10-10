@@ -70,6 +70,13 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public List<Ticket> deleteAllTicketsBySessionID(Long sessionID) {
+        return ticketRepository.findAll().stream()
+                .filter(ticket -> ticket.getMovieSession().getMovieSessionID().equals(sessionID))
+                .peek( ticket -> ticketRepository.deleteById(ticket.getTicketID())).collect(Collectors.toList());
+    }
+
+    @Override
     public Ticket removeTicket(Long ticketID) {
         try {
             Ticket ticket = getTicketByID(ticketID);

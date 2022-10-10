@@ -16,5 +16,6 @@ public interface TicketService {
 
     Ticket updateTicket(Long ticketID, Customer customer, MovieSession movieSession);
 
+    List<Ticket> deleteAllTicketsByCustomerID(Long customerID);
     Ticket removeTicket(Long ticketID);
 }

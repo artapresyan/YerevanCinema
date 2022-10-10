@@ -95,15 +95,15 @@ public class MainController {
         } catch (MessagingException | RegisteredEmailException | IOException e) {
             return "redirect:/contact";
         }
-        return "no_auth_main_view";
+        return "redirect:/";
     }
 
     @GetMapping("sessions")
     public String getSessions(Model model) {
         List<MovieSession> movieSessions = sessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> LocalDateTime.parse(movieSession.getMovieSessionStart())
-                        .isBefore(LocalDateTime.now().plusDays(7)))
-                .collect(Collectors.toList());
+                        .isBefore(LocalDateTime.now().plusDays(8)) &&  LocalDateTime.parse(movieSession.getMovieSessionStart())
+                        .isAfter(LocalDateTime.now().minusDays(1))).collect(Collectors.toList());
         model.addAttribute("movie_sessions", movieSessions);
         return "no_auth_sessions_view";
     }

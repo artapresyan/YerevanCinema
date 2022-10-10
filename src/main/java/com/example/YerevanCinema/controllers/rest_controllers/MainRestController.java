@@ -78,8 +78,8 @@ public class MainRestController {
     public ResponseEntity<List<MovieSession>> getSessions() {
         return ResponseEntity.ok(sessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> LocalDateTime.parse(movieSession.getMovieSessionStart())
-                        .isBefore(LocalDateTime.now().plusDays(7)))
-                .collect(Collectors.toList()));
+                        .isBefore(LocalDateTime.now().plusDays(8)) &&  LocalDateTime.parse(movieSession.getMovieSessionStart())
+                        .isAfter(LocalDateTime.now().minusDays(1))).collect(Collectors.toList()));
     }
 
     @PostMapping("recover_username")

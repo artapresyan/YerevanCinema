@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Remove Account</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->
+  <link rel="icon" type="image/png" href="/static/images/cinema_black_icon.png"/>
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/css/animate.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/css/hamburgers.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/css/animsition.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/css/select2.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/css/daterangepicker.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/static/css/util.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/header.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/profile-nav.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/footer.css">
+  <!--===============================================================================================-->
+</head>
+<body>
+<header>
+  <div class="logo">
+    <div class="logo-img">
+      <a href="/customer/"><img src="/static/images/cinema_logo.png" alt="no_image"></a>
+    </div>
+    <div class="name">
+      <h2>YerevanCinema</h2>
+    </div>
+  </div>
+  <div class="header-menu">
+    <div class="menu">
+      <ul>
+        <a href="/customer/sessions">
+          <li>Sessions</li>
+        </a>
+        <a href="/customer/about">
+          <li>About</li>
+        </a>
+        <a href="/customer/contact">
+          <li>Contact</li>
+        </a>
+        <li>
+          <div class="navbar">
+            <div class="dropdown">
+              <button class="dropbtn">
+                <h3 data-placeholder="username" th:text="${customer.getCustomerUsername()}"></h3>
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="/customer/details">Account Details</a>
+                <a href="/customer/tickets">My Tickets</a>
+                <a href="/customer/details/remove">Deactivation</a>
+                <a href="/logout">Log out</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+<div class="limiter">
+
+  <div class="container-login100">
+    <div class="wrap-login100">
+                <span class="login100-form-title p-b-26">
+                        <a href="/">
+                            <img alt="no image" width="120" height="110" src="/static/images/cinema_logo.png">
+                        </a><br>
+                  <p style="color: black">By filling in your username, password and clicking remove account
+                    button your account will be deleted</p>
+                </span>
+      <form action="/customer/details/remove_account" method="post">
+        <div class="wrap-input100" data-validate="Invalid username">
+          <input class="input100" type="text" name="username">
+          <span class="focus-input100" data-placeholder="Username"></span>
+        </div>
+        <div class="wrap-input100" data-validate="Invalid password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+          <input class="input100" type="password" name="password">
+          <span class="focus-input100" data-placeholder="Password"></span>
+        </div>
+        <div class="container-login100-form-btn">
+          <div style="margin-top: 10px" class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn" type="submit">
+              Accept and Remove
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="box">
+    <div class="icons">
+      <a href="https://facebook.com" target="_blank">
+        <i class="fa fa-facebook-official" style="color: white; font-size: 20px;margin-top: 20px"></i>
+      </a>
+      <a href="https://instagram.com" target="_blank">
+        <i class="fa fa-instagram" style="color: white; font-size: 20px;margin-top: 20px"></i>
+      </a>
+      <a href="https://twitter.com" target="_blank">
+        <i class="fa fa-twitter" style="color: white; font-size: 20px;margin-top: 20px"></i>
+      </a>
+    </div>
+    <div class="text">
+      <p style="color: white">© YerevanCinema</p>
+      <p style="color: white">Komitas 99, Yerevan</p>
+      <p style="color: white">Tel. +374 10 10 10 10</p>
+    </div>
+  </div>
+</footer>
+<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="/static/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="/static/js/popper.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="/static/js/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="/static/js/moment.min.js"></script>
+<script src="/static/js/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="/static/js/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="/static/js/main.js"></script>
+
+</body>
+</html>

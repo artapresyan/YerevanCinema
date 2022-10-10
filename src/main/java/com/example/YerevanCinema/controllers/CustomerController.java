@@ -151,8 +151,8 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         List<MovieSession> sessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> LocalDateTime.parse(movieSession.getMovieSessionStart())
-                        .isBefore(LocalDateTime.now().plusDays(14)))
-                .collect(Collectors.toList());
+                        .isBefore(LocalDateTime.now().plusDays(15)) &&  LocalDateTime.parse(movieSession.getMovieSessionStart())
+                        .isAfter(LocalDateTime.now().minusDays(1))).collect(Collectors.toList());
         model.addAttribute("sessions", sessions);
         return "customer_sessions_view";
     }

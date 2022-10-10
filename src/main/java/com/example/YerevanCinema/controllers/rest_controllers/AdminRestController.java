@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +36,7 @@ public class AdminRestController {
     private final HallServiceImpl hallService;
     private final CustomerServiceImpl customerService;
     private final MovieValidationService movieValidationService;
+    private final GmailClientServiceImpl gmailClientService;
     private final MovieSessionValidationService movieSessionValidationService;
     private final HallValidationService hallValidationService;
     private final PasswordEncoder passwordEncoder;
@@ -41,8 +45,8 @@ public class AdminRestController {
     public AdminRestController(AdminServiceImpl adminService, TicketServiceImpl ticketService,
                                MovieSessionServiceImpl movieSessionService, MovieServiceImpl movieService,
                                HallServiceImpl hallService, CustomerServiceImpl customerService,
-                               MovieValidationService movieValidationService, PasswordEncoder passwordEncoder,
-                               MovieSessionValidationService movieSessionValidationService,
+                               MovieValidationService movieValidationService, GmailClientServiceImpl gmailClientService,
+                               PasswordEncoder passwordEncoder, MovieSessionValidationService movieSessionValidationService,
                                HallValidationService hallValidationService, AdminValidationService userValidationService) {
         this.adminService = adminService;
         this.ticketService = ticketService;
@@ -51,6 +55,7 @@ public class AdminRestController {
         this.hallService = hallService;
         this.customerService = customerService;
         this.movieValidationService = movieValidationService;
+        this.gmailClientService = gmailClientService;
         this.movieSessionValidationService = movieSessionValidationService;
         this.hallValidationService = hallValidationService;
         this.passwordEncoder = passwordEncoder;
@@ -59,47 +64,58 @@ public class AdminRestController {
 
     @GetMapping
     public ResponseEntity<Admin> getAdminMainPage(HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         if (admin != null) {
             return ResponseEntity.ok(admin);
-        }
-        return ResponseEntity.badRequest().build();
+        } else
+            return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("about")
     public ResponseEntity<Admin> getAdminAboutPage(HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         if (admin != null) {
             return ResponseEntity.ok(admin);
-        }
-        return ResponseEntity.badRequest().build();
+        } else
+            return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("contact")
     public ResponseEntity<Admin> getAdminContactPage(HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         if (admin != null) {
             return ResponseEntity.ok(admin);
+        } else
+            return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("contact_post")
+    public ResponseEntity<String> sendMessage(HttpSession session, @RequestParam("message") String message) {
+        try {
+            Admin admin = (Admin) session.getAttribute("admin");
+            MimeMessage mimeMessage = gmailClientService.getSimpleMessage(admin.getAdminEmail(), message);
+            return ResponseEntity.ok(mimeMessage.getContent().toString());
+        } catch (MessagingException | IOException e) {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("details")
     public ResponseEntity<Admin> getAccountDetailsPage(HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         if (admin != null) {
             return ResponseEntity.ok(admin);
-        }
-        return ResponseEntity.badRequest().build();
+        } else
+            return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("details/edit")
     public ResponseEntity<Admin> getAccountDetailsEditPage(HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         if (admin != null) {
             return ResponseEntity.ok(admin);
-        }
-        return ResponseEntity.badRequest().build();
+        } else
+            return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("details/edit_put")
@@ -110,13 +126,13 @@ public class AdminRestController {
                                                     @RequestParam(value = "admin_new_password", required = false) String newPassword,
                                                     @RequestParam(value = "admin_new_password_confirm", required = false) String confirmNewPassword,
                                                     @RequestParam("admin_password") String password, HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         if (newPassword.equals(confirmNewPassword))
             adminService.updateAdminData(admin.getAdminId(), newName, newSurname, newUsername,
                     newEmail, password, newPassword, userValidationService, passwordEncoder);
         try {
             admin = adminService.getAdminByID(admin.getAdminId());
-            session.setAttribute("user", admin);
+            session.setAttribute("admin", admin);
             return ResponseEntity.ok(admin);
         } catch (UserNotFoundException e) {
             return ResponseEntity.badRequest().build();
@@ -148,7 +164,7 @@ public class AdminRestController {
                                                              @RequestParam(value = "movieSessionHall", required = false) Long movieSessionHallID,
                                                              @RequestParam(value = "movieSessionMovie", required = false) Long movieSessionMovieID,
                                                              HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         Hall hall = null;
         Movie movie = null;
         try {
@@ -175,7 +191,7 @@ public class AdminRestController {
                                                    @RequestParam("session_hall") String sessionHallName,
                                                    @RequestParam("session_price") Integer sessionPrice,
                                                    @RequestParam("password") String password, HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         Hall hall = null;
         Movie movie = null;
         try {
@@ -198,7 +214,7 @@ public class AdminRestController {
     @PostMapping("sessions/all_remove")
     public ResponseEntity<MovieSession> removeSession(@RequestParam("session_id") Long movieSessionID,
                                                       @RequestParam("password") String password, HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         MovieSession movieSession = movieSessionService.removeMovieSession(admin, password, movieSessionID, passwordEncoder);
         if (movieSession != null) {
             return ResponseEntity.ok(movieSession);
@@ -207,32 +223,14 @@ public class AdminRestController {
         }
     }
 
-    @GetMapping("sessions/movie")
-    public ResponseEntity<List<MovieSession>> getSessionsByMovieName(@RequestParam("movie_name") String name) {
-        return ResponseEntity.ok(movieSessionService.getAllMovieSessions().stream()
-                .filter(movieSession -> movieSession.getMovie().getMovieName().equals(name))
-                .collect(Collectors.toList()));
-    }
-
-    @GetMapping("sessions/category")
-    public ResponseEntity<List<MovieSession>> getSessionsByMovieCategory(@RequestParam("movie_category") String movieCategory) {
-        return ResponseEntity.ok(movieSessionService.getAllMovieSessions().stream()
-                .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(movieCategory))
-                .collect(Collectors.toList()));
-    }
-
-    @GetMapping("sessions/start")
-    public ResponseEntity<List<MovieSession>> getSessionsByStart(@RequestParam("movie_start") String movieStart) {
-        return ResponseEntity.ok(movieSessionService.getAllMovieSessions().stream()
-                .filter(movieSession -> movieSession.getMovieSessionStart().equals(movieStart))
-                .collect(Collectors.toList()));
-    }
-
-    @GetMapping("sessions/hall")
-    public ResponseEntity<List<MovieSession>> getSessionsByHall(@RequestParam("movie_hall") Long hallID) {
-        return ResponseEntity.ok(movieSessionService.getAllMovieSessions().stream()
-                .filter(movieSession -> movieSession.getHall().getHallID().equals(hallID))
-                .collect(Collectors.toList()));
+    @PostMapping("sessions/selected")
+    public ResponseEntity<List<MovieSession>> getSessionsByMovieName(@RequestParam("key_value") String keyValue,
+                                                                     @RequestParam("selected") String selected) {
+        try {
+            return ResponseEntity.ok(getSelectedMovieSessions(keyValue, selected));
+        } catch (MovieNotFoundException | HallNotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("customers/all")
@@ -243,7 +241,7 @@ public class AdminRestController {
     @PostMapping("customers/all_remove")
     public ResponseEntity<Customer> removeCustomer(@RequestParam(value = "customer_id") Long customerID,
                                                    @RequestParam(value = "password") String password, HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         Customer customer = customerService.adminRemoveCustomer(customerID, admin, password, passwordEncoder);
         if (customer != null) {
             return ResponseEntity.ok(customer);
@@ -267,7 +265,7 @@ public class AdminRestController {
         try {
             movie = movieService.getMovieByID(movieID);
         } catch (MovieNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
         movie = movieService.updateMovie(movie.getMovieID(), movieName, movieCategory, movieDescription, movieLanguage,
                 movieValidationService);
@@ -284,8 +282,7 @@ public class AdminRestController {
                                           @RequestParam(value = "movie_description", required = false) String movieDescription,
                                           @RequestParam(value = "movie_language", required = false) String movieLanguage,
                                           HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
-
+        Admin admin = (Admin) session.getAttribute("admin");
         Movie movie = movieService.addMovie(admin.getAdminId(), password, movieName, movieCategory, movieDescription, movieLanguage,
                 adminService, passwordEncoder, movieValidationService);
         if (movie != null) {
@@ -298,7 +295,7 @@ public class AdminRestController {
     @PostMapping("movies/all_remove")
     public ResponseEntity<Movie> removeMovie(@RequestParam("movie_id") Long movieID, @RequestParam("password") String password,
                                              HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         Movie movie = movieService.removeMovie(movieID, admin.getAdminId(), password, adminService, passwordEncoder);
         if (movie != null) {
             return ResponseEntity.ok(movie);
@@ -313,9 +310,10 @@ public class AdminRestController {
     }
 
     @PostMapping("halls/all_add")
-    public ResponseEntity<Hall> addHall(@RequestParam("hall_name") String hallName, @RequestParam("hall_capacity") Integer hallCapacity,
+    public ResponseEntity<Hall> addHall(@RequestParam("hall_name") String hallName,
+                                        @RequestParam("hall_capacity") Integer hallCapacity,
                                         @RequestParam("password") String password, HttpSession session) {
-        Admin admin = (Admin) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         Hall hall = hallService.addHall(admin.getAdminId(), password, hallName, hallCapacity, hallValidationService,
                 adminService, passwordEncoder);
         if (hall != null) {
@@ -324,4 +322,27 @@ public class AdminRestController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected) throws
+            MovieNotFoundException, HallNotFoundException {
+        if (keyValue.equalsIgnoreCase("Movie"))
+            return movieSessionService.getAllMovieSessions().stream()
+                    .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected))
+                    .collect(Collectors.toList());
+        else if (keyValue.equalsIgnoreCase("Category"))
+            return movieSessionService.getAllMovieSessions().stream()
+                    .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected))
+                    .collect(Collectors.toList());
+        else if (keyValue.equalsIgnoreCase("Price"))
+            return movieSessionService.getAllMovieSessions().stream()
+                    .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected)))
+                    .collect(Collectors.toList());
+        else if (keyValue.equalsIgnoreCase("Hall"))
+            return movieSessionService.getAllMovieSessions().stream()
+                    .filter(movieSession -> movieSession.getHall().getHallName().equals(selected))
+                    .collect(Collectors.toList());
+        else
+            return List.of();
+    }
+
 }

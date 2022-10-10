@@ -188,20 +188,24 @@ public class CustomerController {
     }
 
     @PostMapping("tickets/resend")
-    public String resendTicketToCustomer(@RequestParam("ticket_id") Long ticketID, HttpSession session) {
+    public String resendTicketToCustomer(@RequestParam("ticket_id") Long ticketID,
+                                         @RequestParam("password") String password, HttpSession session) {
         Customer customer = (Customer) session.getAttribute("customer");
-        try {
-            Ticket ticket = ticketService.getTicketByID(ticketID);
-            if (customer.getCustomerID().equals(ticket.getCustomer().getCustomerID())) {
-                qrCodeService.generateQRCodeImage(customer, ticketID,ticket.getMovieSession());
-                gmailClientService.sendMessageWithAttachment(customer, "qr/" + customer.getCustomerID()
-                        + customer.getCustomerEmail() + ticket.getTicketID());
-                return "redirect:/customer/tickets";
-            } else
-                throw new TicketNotFoundException("No Such Ticket");
-        } catch (Exception e) {
-            return "redirect:/customer/";
+        if (passwordEncoder.matches(password, customer.getCustomerPassword())) {
+            try {
+                Ticket ticket = ticketService.getTicketByID(ticketID);
+                if (customer.getCustomerID().equals(ticket.getCustomer().getCustomerID())) {
+                    qrCodeService.generateQRCodeImage(customer, ticketID, ticket.getMovieSession());
+                    gmailClientService.sendMessageWithAttachment(customer,
+                            String.format(qrPath, customer.getCustomerID(), customer.getCustomerEmail(), ticket.getTicketID()));
+                    return "redirect:/customer/tickets";
+                } else
+                    throw new TicketNotFoundException("No Such Ticket");
+            } catch (Exception e) {
+                return "redirect:/customer/";
+            }
         }
+        return "redirect:/customer/";
     }
 
     private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected) throws MovieNotFoundException, HallNotFoundException {

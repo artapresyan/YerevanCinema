@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -59,6 +60,13 @@ public class TicketServiceImpl implements TicketService {
             logger.log(Level.ERROR, String.format("Cannot get ticket with %s id to update information", ticketID));
             return null;
         }
+    }
+
+    @Override
+    public List<Ticket> deleteAllTicketsByCustomerID(Long customerID) {
+        return ticketRepository.findAll().stream()
+                .filter(ticket -> ticket.getCustomer().getCustomerID().equals(customerID))
+                .peek( ticket -> ticketRepository.deleteById(ticket.getTicketID())).collect(Collectors.toList());
     }
 
     @Override

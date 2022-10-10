@@ -145,7 +145,8 @@ public class AdminController {
     public String getSessionsPage(HttpSession session, Model model) {
         List<MovieSession> sessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> LocalDateTime.parse(movieSession.getMovieSessionStart())
-                        .isBefore(LocalDateTime.now().plusDays(14))).collect(Collectors.toList());
+                        .isBefore(LocalDateTime.now().plusDays(15)) && LocalDateTime.parse(movieSession.getMovieSessionStart())
+                        .isAfter(LocalDateTime.now().minusDays(1))).collect(Collectors.toList());
         Admin admin = (Admin) session.getAttribute("admin");
         model.addAttribute("admin", admin);
         model.addAttribute("movie_sessions", sessions);
@@ -228,15 +229,15 @@ public class AdminController {
     @PostMapping("sessions/selected")
     public String getSessionsByMovieName(@RequestParam("key_value") String keyValue,
                                          @RequestParam("selected") String selected, HttpSession session, Model model) {
-        Customer customer = (Customer) session.getAttribute("customer");
-        model.addAttribute("customer", customer);
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
 
         try {
             List<MovieSession> movieSessions = getSelectedMovieSessions(keyValue,selected);
             model.addAttribute("selected_movie_sessions", movieSessions);
-            return "customer_sessions_selected_view";
+            return "admin_sessions_selected_view";
         } catch (MovieNotFoundException | HallNotFoundException e) {
-            return "redirect:/customer/sessions";
+            return "redirect:/admin/sessions";
         }
     }
     @GetMapping("customers/all")
@@ -253,6 +254,7 @@ public class AdminController {
                                  @RequestParam(value = "password") String password, HttpSession session, Model model) {
         Admin admin = (Admin) session.getAttribute("admin");
         model.addAttribute("admin", admin);
+        ticketService.deleteAllTicketsByCustomerID(customerID);
         customerService.adminRemoveCustomer(customerID, admin, password, passwordEncoder);
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);

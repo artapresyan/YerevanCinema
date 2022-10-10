@@ -140,10 +140,10 @@
         </tr>
     </table>
 
-    <table style="margin-top: 2%;border-radius: 10px">
+    <table style="margin-top: 2%;margin-left: 2%;border-radius: 10px">
         <tr>
             <th scope="col" class="first" style="width: 70px">ID</th>
-            <th scope="col" class="first" style="width: 170px">Movie</th>
+            <th scope="col" class="middle" style="width: 170px">Movie</th>
             <th scope="col" class="middle" style="width: 150px">Category</th>
             <th scope="col" class="middle" style="width: 250px">Start</th>
             <th scope="col" class="middle" style="width: 250px">End</th>
@@ -155,7 +155,7 @@
             <th scope="row" class="first" style="width: 170px">
                 <button type="button" name="movie_id" style="cursor: none">
                     <a style="font-size:.8rem;color: black;text-decoration: none">
-                        <p th:text="${movie_session.movie.movieID}"></p>
+                        <p th:text="${movie_session.movieSessionID}"></p>
                     </a>
                 </button>
             </th>

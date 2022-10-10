@@ -119,7 +119,7 @@ public class MainController {
         try {
             Customer customer = customerService.getCustomerByEmail(email);
             if (customerService.passwordsAreMatching(customer, password, passwordEncoder)) {
-                gmailClientService.sendSimpleMessage(customer, "If you asked for username recovery contact us by email",
+                gmailClientService.sendSimpleMessage(customer, "Your account username: " + customer.getCustomerUsername(),
                         "RESET USERNAME REQUEST");
                 return "redirect:/";
             }
@@ -129,7 +129,7 @@ public class MainController {
     }
 
     @PostMapping("recover_password")
-    public String recoverCustomerPassword(@RequestParam("pass_email") String passEmail,
+    public String recoverCustomerPassword(@RequestParam("email") String passEmail,
                                           @RequestParam("username") String username) {
         try {
             Customer customer = customerService.getCustomerByUsername(username);

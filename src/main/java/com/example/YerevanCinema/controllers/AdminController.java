@@ -145,8 +145,7 @@ public class AdminController {
     public String getSessionsPage(HttpSession session, Model model) {
         List<MovieSession> sessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> LocalDateTime.parse(movieSession.getMovieSessionStart())
-                        .isBefore(LocalDateTime.now().plusDays(15)) && LocalDateTime.parse(movieSession.getMovieSessionStart())
-                        .isAfter(LocalDateTime.now().minusDays(1))).collect(Collectors.toList());
+                        .isBefore(LocalDateTime.now().plusDays(14))).collect(Collectors.toList());
         Admin admin = (Admin) session.getAttribute("admin");
         model.addAttribute("admin", admin);
         model.addAttribute("movie_sessions", sessions);
@@ -162,7 +161,7 @@ public class AdminController {
         return "admin_sessions_all_view";
     }
 
-    @PostMapping("sessions/all")
+    @PostMapping("sessions/all_put")
     public String changeSessionDetails(@RequestParam("movieSessionID") Long movieSessionID,
                                        @RequestParam(value = "movieSessionStart", required = false) String movieSessionStart,
                                        @RequestParam(value = "movieSessionEnd", required = false) String movieSessionEnd,
@@ -220,6 +219,7 @@ public class AdminController {
                                 @RequestParam("password") String password, HttpSession session, Model model) {
         Admin admin = (Admin) session.getAttribute("admin");
         model.addAttribute("admin", admin);
+        ticketService.deleteAllTicketsBySessionID(movieSessionID);
         movieSessionService.removeMovieSession(admin, password, movieSessionID, passwordEncoder);
         List<MovieSession> movieSessions = movieSessionService.getAllMovieSessions();
         model.addAttribute("movie_sessions_all", movieSessions);
@@ -310,6 +310,7 @@ public class AdminController {
                               HttpSession session, Model model) {
         Admin admin = (Admin) session.getAttribute("admin");
         model.addAttribute("admin", admin);
+        movieSessionService.deleteAllMovieSessionsByMovieID(movieID);
         movieService.removeMovie(movieID, admin.getAdminId(), password, adminService, passwordEncoder);
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("allMovies", movies);

@@ -89,7 +89,14 @@ public class CustomerController {
         return "customer_details_view";
     }
 
-    @PostMapping("details")
+    @GetMapping("details/remove")
+    public String getDeactivationPage(HttpSession session, Model model) {
+        Customer customer = (Customer) session.getAttribute("customer");
+        model.addAttribute("customer", customer);
+        return "customer_account_deactivation_view";
+    }
+
+    @PostMapping("details/remove_account")
     public String removeAccount(HttpSession session, String password) {
         Customer customer = (Customer) session.getAttribute("customer");
         customerService.selfRemoveCustomer(customer.getCustomerID(), password, passwordEncoder);

@@ -67,8 +67,34 @@
              src="/static/images/music_ad.jpg" alt="no_image">
     </div>
 
-    <form action="/customer/sessions/resend" method="post">
-        <table style="margin-left: 2%;margin-top: 1%; margin-right: 2%; border-radius: 10px">
+    <table style="margin-left: 35%;margin-top: 10px;">
+        <tr>
+            <th scope="col" class="first" style="width: 170px">Ticket ID</th>
+            <th scope="col" class="middle" style="width: 150px">Password</th>
+            <th scope="col" class="last" style="width: 120px">Resend</th>
+        </tr>
+        <tr>
+            <form action="/customer/tickets/resend" method="post"
+                  style="padding-left: 10%;padding-top: 3%; padding-right: 10%;">
+                <th class="first">
+                    <input type="number" name="ticket_id" required
+                           style="text-align: center;background: none;border: 1px solid black">
+                </th>
+                <th class="middle">
+                    <input type="password" name="password" required
+                           style="text-align: center;background: none;border: 1px solid black">
+                </th>
+                <th class="last">
+                    <button type="submit">
+                        <a style="font-size:.8rem;color: black;text-decoration: none;background-color: #a986ff">
+                            Confirm
+                        </a>
+                    </button>
+                </th>
+            </form>
+        </tr>
+    </table>
+        <table style="margin-left: 11%;margin-top: 1%; border-radius: 10px">
             <tr>
                 <th scope="col" class="first" style="width: 20px">Ticket ID</th>
                 <th scope="col" class="middle" style="width: 170px">Movie</th>
@@ -76,31 +102,30 @@
                 <th scope="col" class="middle" style="width: 250px">Start</th>
                 <th scope="col" class="middle" style="width: 250px">End</th>
                 <th scope="col" class="middle" style="width: 150px">Hall</th>
-                <th scope="col" class="middle" style="width: 150px">Price</th>
-                <th scope="col" class="last" style="width: 100px">Send Ticket to Email</th>
+                <th scope="col" class="last" style="width: 150px">Price</th>
             </tr>
             <tr th:each="ticket : ${tickets}">
                 <form action="/customer/tickets" method="post">
                     <th scope="row" class="first" style="width: 20px">
-                        <button type="button" style="cursor: none">
+                        <button style="cursor: none">
                             <input name="ticket_id" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
                         background: none;" th:text="${ticket.ticketID}">
                         </button>
                     </th>
                     <th scope="row" class="middle" style="width: 170px">
-                        <button type="button" style="cursor: none">
+                        <button style="cursor: none">
                             <input name="movie_name" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
                         background: none;" th:text="${ticket.movieSession.movie.movieName}">
                         </button>
                     </th>
                     <th scope="row" class="middle" style="width: 150px">
-                        <button type="button" style="cursor: none">
+                        <button style="cursor: none">
                             <input name="movie_category" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
                         background: none;" th:text="${ticket.movieSession.movie.movieCategory}">
                         </button>
                     </th>
                     <th scope="row" class="middle" style="width: 250px">
-                        <button type="button" style="cursor: none">
+                        <button style="cursor: none">
                             <input name="movie_session_start" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
                         background: none;" th:text="${ticket.movieSession.movieSessionStart}">
                         </button>
@@ -112,26 +137,20 @@
                         </button>
                     </th>
                     <th scope="row" class="middle" style="width: 150px">
-                        <button type="button" style="cursor: none">
+                        <button style="cursor: none">
                             <input name="movie_hall" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
                         background: none;" th:text="${ticket.movieSession.hall.hallName}">
                         </button>
                     </th>
-                    <th scope="row" class="middle" style="width: 150px">
+                    <th scope="row" class="last" style="width: 150px">
                         <button style="cursor: none">
                             <input name="movie_session_price" readonly style="width: 0; height: 0;font-size:.8rem;color: black;
                         background: none;" th:text="${ticket.movieSession.movieSessionPrice}">
                         </button>
                     </th>
-                    <th scope="row" class="last" style="width: 120px">
-                        <button type="submit">
-                            <a style="font-size:.8rem;color: black;text-decoration: none">Resend</a>
-                        </button>
-                    </th>
                 </form>
             </tr>
         </table>
-    </form>
 </div>
 <footer>
     <div class="box">

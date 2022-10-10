@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
@@ -124,5 +125,13 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public List<MovieSession> getAllMovieSessionsByPrice(Integer movieSessionPrice) {
         return movieSessionRepository.getByMovieSessionPrice(movieSessionPrice);
+    }
+
+    @Override
+    public List<MovieSession> deleteAllMovieSessionsByMovieID(Long movieID) {
+        return getAllMovieSessions().stream()
+                .filter(movieSession -> movieSession.getMovie().getMovieID().equals(movieID))
+                .peek(movieSession -> movieSessionRepository.deleteById(movieSession.getMovieSessionID()))
+                .collect(Collectors.toList());
     }
 }

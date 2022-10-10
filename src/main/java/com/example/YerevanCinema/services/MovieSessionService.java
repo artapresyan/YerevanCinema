@@ -29,4 +29,6 @@ public interface MovieSessionService {
     List<MovieSession> getAllMovieSessionsByStart(String movieSessionStart);
 
     List<MovieSession> getAllMovieSessionsByPrice(Integer movieSessionPrice);
+
+    List<MovieSession> deleteAllMovieSessionsByMovieID(Long movieID);
 }

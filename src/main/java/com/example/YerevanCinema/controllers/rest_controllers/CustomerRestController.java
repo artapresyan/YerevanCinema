@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/customer/")
+@RequestMapping("rest/api/customer/")
 public class CustomerRestController {
     @Value("${qr.path}")
     private String qrPath;

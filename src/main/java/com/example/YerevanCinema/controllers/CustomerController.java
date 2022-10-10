@@ -99,6 +99,7 @@ public class CustomerController {
     @PostMapping("details/remove_account")
     public String removeAccount(HttpSession session, String password) {
         Customer customer = (Customer) session.getAttribute("customer");
+        ticketService.deleteAllTicketsByCustomerID(customer.getCustomerID());
         customerService.selfRemoveCustomer(customer.getCustomerID(), password, passwordEncoder);
         return "redirect:/";
     }

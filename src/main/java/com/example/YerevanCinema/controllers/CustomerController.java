@@ -216,23 +216,28 @@ public class CustomerController {
         return "redirect:/customer/";
     }
 
-    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected) throws MovieNotFoundException, HallNotFoundException {
+    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected)
+            throws MovieNotFoundException, HallNotFoundException {
         switch (keyValue) {
             case "Movie":
                 return movieSessionService.getAllMovieSessions().stream()
-                        .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected))
+                        .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected)
+                        && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
                         .collect(Collectors.toList());
             case "Category":
                 return movieSessionService.getAllMovieSessions().stream()
-                        .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected))
+                        .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected)
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
                         .collect(Collectors.toList());
             case "Price":
                 return movieSessionService.getAllMovieSessions().stream()
-                        .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected)))
+                        .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected))
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
                         .collect(Collectors.toList());
             case "Hall":
                 return movieSessionService.getAllMovieSessions().stream()
-                        .filter(movieSession -> movieSession.getHall().getHallName().equals(selected))
+                        .filter(movieSession -> movieSession.getHall().getHallName().equals(selected)
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
                         .collect(Collectors.toList());
         }
         return List.of();

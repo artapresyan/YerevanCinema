@@ -191,7 +191,7 @@ public class AdminController {
     @PostMapping("sessions/all_add")
     public String addSession(@RequestParam("movie_name") String movieName,
                              @RequestParam("session_start") String sessionStart,
-                             @RequestParam("session_end") String  sessionEnd,
+                             @RequestParam("session_end") String sessionEnd,
                              @RequestParam("session_hall") String sessionHallName,
                              @RequestParam("session_price") Integer sessionPrice,
                              @RequestParam("password") String password, HttpSession session, Model model) {
@@ -233,13 +233,14 @@ public class AdminController {
         model.addAttribute("admin", admin);
 
         try {
-            List<MovieSession> movieSessions = getSelectedMovieSessions(keyValue,selected);
+            List<MovieSession> movieSessions = getSelectedMovieSessions(keyValue, selected);
             model.addAttribute("selected_movie_sessions", movieSessions);
             return "admin_sessions_selected_view";
         } catch (MovieNotFoundException | HallNotFoundException e) {
             return "redirect:/admin/sessions";
         }
     }
+
     @GetMapping("customers/all")
     public String getAllCustomers(HttpSession session, Model model) {
         List<Customer> customers = customerService.getAllCustomers();
@@ -338,23 +339,28 @@ public class AdminController {
         return "redirect:/admin/halls/all";
     }
 
-    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected) throws MovieNotFoundException, HallNotFoundException {
+    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected)
+            throws MovieNotFoundException, HallNotFoundException {
         switch (keyValue) {
             case "Movie":
                 return movieSessionService.getAllMovieSessions().stream()
-                        .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected))
+                        .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected)
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
                         .collect(Collectors.toList());
             case "Category":
                 return movieSessionService.getAllMovieSessions().stream()
-                        .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected))
+                        .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected)
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
                         .collect(Collectors.toList());
             case "Price":
                 return movieSessionService.getAllMovieSessions().stream()
-                        .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected)))
+                        .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected))
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
                         .collect(Collectors.toList());
             case "Hall":
                 return movieSessionService.getAllMovieSessions().stream()
-                        .filter(movieSession -> movieSession.getHall().getHallName().equals(selected))
+                        .filter(movieSession -> movieSession.getHall().getHallName().equals(selected)
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
                         .collect(Collectors.toList());
         }
         return List.of();

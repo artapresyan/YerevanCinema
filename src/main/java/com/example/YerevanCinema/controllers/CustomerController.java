@@ -152,7 +152,7 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         List<MovieSession> sessions = movieSessionService.getAllMovieSessions().stream()
                 .filter(movieSession -> LocalDateTime.parse(movieSession.getMovieSessionStart())
-                        .isBefore(LocalDateTime.now().plusDays(15)) &&  LocalDateTime.parse(movieSession.getMovieSessionStart())
+                        .isBefore(LocalDateTime.now().plusDays(15)) && LocalDateTime.parse(movieSession.getMovieSessionStart())
                         .isAfter(LocalDateTime.now().minusDays(1))).collect(Collectors.toList());
         model.addAttribute("sessions", sessions);
         return "customer_sessions_view";
@@ -216,24 +216,30 @@ public class CustomerController {
         return "redirect:/customer/";
     }
 
-    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected) throws MovieNotFoundException, HallNotFoundException {
-        if (keyValue.equalsIgnoreCase("Movie"))
-            return movieSessionService.getAllMovieSessions().stream()
-                    .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected))
-                    .collect(Collectors.toList());
-        else if (keyValue.equalsIgnoreCase("Category"))
-            return movieSessionService.getAllMovieSessions().stream()
-                    .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected))
-                    .collect(Collectors.toList());
-        else if (keyValue.equalsIgnoreCase("Price"))
-            return movieSessionService.getAllMovieSessions().stream()
-                    .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected)))
-                    .collect(Collectors.toList());
-        else if (keyValue.equalsIgnoreCase("Hall"))
-            return movieSessionService.getAllMovieSessions().stream()
-                    .filter(movieSession -> movieSession.getHall().getHallName().equals(selected))
-                    .collect(Collectors.toList());
-        else
-            return List.of();
+    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected)
+            throws MovieNotFoundException, HallNotFoundException {
+        switch (keyValue) {
+            case "Movie":
+                return movieSessionService.getAllMovieSessions().stream()
+                        .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected)
+                        && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
+                        .collect(Collectors.toList());
+            case "Category":
+                return movieSessionService.getAllMovieSessions().stream()
+                        .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected)
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
+                        .collect(Collectors.toList());
+            case "Price":
+                return movieSessionService.getAllMovieSessions().stream()
+                        .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected))
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
+                        .collect(Collectors.toList());
+            case "Hall":
+                return movieSessionService.getAllMovieSessions().stream()
+                        .filter(movieSession -> movieSession.getHall().getHallName().equals(selected)
+                                && LocalDateTime.parse(movieSession.getMovieSessionStart()).isAfter(LocalDateTime.now()))
+                        .collect(Collectors.toList());
+        }
+        return List.of();
     }
 }

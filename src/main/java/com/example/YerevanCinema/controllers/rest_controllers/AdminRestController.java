@@ -323,26 +323,26 @@ public class AdminRestController {
         }
     }
 
-    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected) throws
-            MovieNotFoundException, HallNotFoundException {
-        if (keyValue.equalsIgnoreCase("Movie"))
-            return movieSessionService.getAllMovieSessions().stream()
-                    .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected))
-                    .collect(Collectors.toList());
-        else if (keyValue.equalsIgnoreCase("Category"))
-            return movieSessionService.getAllMovieSessions().stream()
-                    .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected))
-                    .collect(Collectors.toList());
-        else if (keyValue.equalsIgnoreCase("Price"))
-            return movieSessionService.getAllMovieSessions().stream()
-                    .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected)))
-                    .collect(Collectors.toList());
-        else if (keyValue.equalsIgnoreCase("Hall"))
-            return movieSessionService.getAllMovieSessions().stream()
-                    .filter(movieSession -> movieSession.getHall().getHallName().equals(selected))
-                    .collect(Collectors.toList());
-        else
-            return List.of();
+    private List<MovieSession> getSelectedMovieSessions(String keyValue, String selected) throws MovieNotFoundException, HallNotFoundException {
+        switch (keyValue) {
+            case "Movie":
+                return movieSessionService.getAllMovieSessions().stream()
+                        .filter(movieSession -> movieSession.getMovie().getMovieName().equals(selected))
+                        .collect(Collectors.toList());
+            case "Category":
+                return movieSessionService.getAllMovieSessions().stream()
+                        .filter(movieSession -> movieSession.getMovie().getMovieCategory().equals(selected))
+                        .collect(Collectors.toList());
+            case "Price":
+                return movieSessionService.getAllMovieSessions().stream()
+                        .filter(movieSession -> movieSession.getMovieSessionPrice().equals(Integer.parseInt(selected)))
+                        .collect(Collectors.toList());
+            case "Hall":
+                return movieSessionService.getAllMovieSessions().stream()
+                        .filter(movieSession -> movieSession.getHall().getHallName().equals(selected))
+                        .collect(Collectors.toList());
+        }
+        return List.of();
     }
 
 }
